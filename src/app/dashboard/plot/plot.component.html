@@ -1,0 +1,13 @@
+<!-- <div id="chart">
+  <apx-chart
+    [series]="chartOptions?.series"
+    [chart]="chartOptions?.chart"
+    [xaxis]="chartOptions?.xaxis"
+    [stroke]="chartOptions?.stroke"
+    [tooltip]="chartOptions?.tooltip"
+    [dataLabels]="chartOptions?.dataLabels"
+  ></apx-chart>
+</div> -->
+<div id="chart-container" style="position: relative; height:40vh;">
+    <canvas #myCanvas id="canvas" baseChart [chartType]="chartType" [datasets]="chartData" [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"></canvas>
+</div>

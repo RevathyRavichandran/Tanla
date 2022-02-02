@@ -1,0 +1,37 @@
+.form-control {
+  border-radius: 9999px;
+  border: 2px solid grey;
+  font-size: 15px;
+}
+
+button {
+  padding: 10px;
+  border-radius: 9999px;
+  border: 2px solid grey;
+  font-size: 15px;
+}
+
+#funkystyling {
+  background: white url(/assets/tanla_calendar_grey_128.svg) right no-repeat;
+  padding-right: 25px;
+}
+
+.align {
+  text-align: right;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+   opacity: 1;
+}
+
+.submit-btn {
+  border: none;
+  background-color: #2fd9a7; 
+  color: white;
+  margin-right: 0.35rem;
+}
+
+.btn {
+  width: 15%;
+}

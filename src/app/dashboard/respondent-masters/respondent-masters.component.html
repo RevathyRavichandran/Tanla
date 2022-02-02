@@ -1,0 +1,123 @@
+<div style="background: white">
+    <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
+        Template
+        <span style="right: 0; position: absolute; margin-right: 1rem">
+      <button
+        type="button"
+        class="btn"
+        (click)="downloadTemplate()"
+        style="background: #2d69eb; color: white"
+      >
+        Download template file
+        <img src="assets/tanla_download_128.svg" alt="" />
+      </button>
+    </span>
+    </h1>
+    <mat-divider class="mt-2"></mat-divider>
+</div>
+<div *ngIf="isLoad" class="loader-top">
+    <mat-spinner class="loader" diameter="50"></mat-spinner>
+    <span class="loader-text">Loading... Please wait</span>
+</div>
+<div class="row" style="padding: 1%">
+    <div class="col-lg-12" *ngIf="noRecords">
+        <mat-card>
+            <div style="text-align: center">
+                <img style="height: 300px; width: 300px" src="assets/no_files_records_256.png" alt="" />
+            </div>
+            <div style="text-align: center">
+                <h1 style="color: #2d69eb">No Records Found</h1>
+            </div>
+        </mat-card>
+    </div>
+    <div class="col-lg-12" *ngIf="!noRecords">
+        <div class="row" style="padding: 1%">
+            <div class="col-lg-12">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>SNo.</th>
+                        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element?.name }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="designation">
+                        <th mat-header-cell *matHeaderCellDef>Designation</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.designation }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="emailId">
+                        <th mat-header-cell *matHeaderCellDef>Email ID</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.emailId }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="phoneNo">
+                        <th mat-header-cell *matHeaderCellDef>Phone No</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.phoneNo }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="company">
+                        <th mat-header-cell *matHeaderCellDef>Company</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.company }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="department">
+                        <th mat-header-cell *matHeaderCellDef>Department</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.department }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="surveyName">
+                        <th mat-header-cell *matHeaderCellDef>Survey Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.surveyName }}
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <ngb-pagination style="margin-left: 1rem" [collectionSize]="totalPages" [(page)]="currentPage" [maxSize]="5" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="pageChanged(currentPage)" class="d-flex col-lg-6"></ngb-pagination>
+    <span class="input-group col-lg-3" style="padding-bottom: 2rem">
+    <input
+      id="fileName"
+      class="form-control"
+      name="fileName"
+      [(ngModel)]="fileName"
+      placeholder="Upload csv file"
+      aria-label="Search"
+    />
+    <input
+      type="file"
+      id="file"
+      (change)="changeListener($event.target.files)"
+      style="display: none"
+    />
+    <button
+      type="button"
+      class="btn"
+      (click)="fileUpload()"
+      style="background: #2d69eb; color: white; margin-right: 1rem"
+    >
+      <img src="assets\tanla_upload_128.svg" alt="" />
+
+      Upload
+    </button>
+  </span>
+
+    <button type="button" class="btn col-lg-2 apply-btn" (click)="submit()">
+    Submit
+  </button>
+</div>

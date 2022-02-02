@@ -1,0 +1,9 @@
+<app-header *ngIf="showHead"></app-header>
+<mat-drawer-container>
+  <mat-drawer *ngIf="showHead" mode="side" opened="true">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

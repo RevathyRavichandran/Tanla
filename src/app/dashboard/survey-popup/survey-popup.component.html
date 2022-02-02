@@ -1,0 +1,70 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h1 class="text-center" style="color: blue;" mat-dialog-title>Create Survey</h1>
+<form [formGroup]="fg" (ngSubmit)="saveSurvey()">
+    <mat-dialog-content class="mat-typography">
+        <div class="container">
+            <div class="form-group">
+                <h2 class="mb-2" for="name">Survey name:</h2>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="Enter your survey name here...." formControlName="name" name="name"></textarea>
+            </div>
+            <br>
+            <div formArrayName="category">
+                <label style="font-size: 1.2rem; font-weight: 500;">Category:</label> &nbsp; &nbsp;
+                <button type="button" class="btn add-btn mb-2" (click)="addcategory()">
+          Add <i class="fa fa-plus fa-1x"></i>
+        </button>
+                <div class="row" *ngFor="let category of fg.get('category')['controls']; index as i" [formGroupName]="i">
+                    <div class="col-lg-11">
+                        <div class="form-group">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="Enter your category here...." formControlName="category" name="category"></textarea>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-lg-1" *ngIf="fg.get('category')['controls'].length > 1">
+                        <button mat-button (click)="removecategory(i)">
+              <mat-icon style="color: red">remove_circle</mat-icon>
+            </button>
+                    </div>
+                </div>
+            </div>
+            <span class="input-group col-lg-3" style="padding-bottom: 1rem">
+                <input
+                  id="fileName"
+                  class="form-control"
+                  name="fileName"
+                  [(ngModel)]="fileName"
+                  placeholder="Upload csv file"
+                  aria-label="Search"
+                  [ngModelOptions]="{standalone: true}"
+                />
+                <input
+                  type="file"
+                  id="file"
+                  (change)="changeListener($event.target.files)"
+                  style="display: none"
+                />
+                <button
+                  type="button"
+                  class="btn"
+                  (click)="fileUpload()"
+                  style="background: #2d69eb; color: white; margin-right: 1rem"
+                >
+                  <img src="assets\tanla_upload_128.svg" alt="" />
+            
+                  Upload Survey
+                </button>
+              </span>
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="mb-1 mt-1" align="end">
+        <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
+            Save
+        </button>
+        <button type="button" class="btn mt-1" style="background-color: grey; color: white; width: 6rem;" (click)="cancelSurvey()">
+            Cancel
+        </button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,13 @@
+.nav-active {
+  border-left: 5px solid #de1f26;
+  color: #de1f26;
+}
+
+::ng-deep.mat-list-base .mat-list-item .mat-list-item-content {
+  display: list-item !important;
+  padding: 0 7px !important;
+}
+
+::ng-deep.mat-list-base .mat-list-item {
+  height: auto !important;
+}

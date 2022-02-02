@@ -1,0 +1,25 @@
+ul li {
+  list-style: none;
+}
+
+.mat-toolbar {
+  background-color: white;
+}
+
+.mat-elevation-z5 {
+  position: relative;
+  z-index: 2;
+}
+
+:host {
+  .profile-card {
+    text-align: center;
+    padding-top: 10%;
+    img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+}

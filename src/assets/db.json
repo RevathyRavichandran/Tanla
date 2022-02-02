@@ -1,0 +1,106 @@
+{
+  "questionaries": [
+    {
+      "id": 1,
+      "category": "SMS",
+      "questions": [
+        {
+          "id": "1b705c64-6b0d-4fdf-a108-2e6e522a4f66",
+          "question": "jjl",
+          "answers": [
+            {
+              "id": "c5c4e3bc-be5b-4fd0-beef-3d7035b443b1",
+              "answer": "doios"
+            },
+            {
+              "id": "8c9c0135-03ef-4db4-805e-efd60692d6e1",
+              "answer": "dsj"
+            }
+          ]
+        },
+        {
+          "id": "c8f6e73d-7be8-405f-9c58-58208ab5dacd",
+          "question": "jgh",
+          "answers": [
+            {
+              "id": "41044c8a-440f-4b03-81cb-97dd1b704cde",
+              "answer": "sda"
+            },
+            {
+              "id": "1f866aa2-af8c-48b5-a9fe-6715deb223cf",
+              "answer": "sd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "Email",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which product of tanla is highly critical to your business function?",
+          "answers": [
+            {
+              "id": 2,
+              "answer": "Very Likely"
+            },
+            {
+              "id": 3,
+              "answer": "Not Likely"
+            }
+          ]
+        },
+        {
+          "id": "bce0b6f6-07bd-493c-aa2b-018dd26f5784",
+          "question": "What is your email?",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "Very Likely"
+            },
+            {
+              "id": 2,
+              "answer": "Not Likely"
+            }
+          ]
+        },
+        {
+          "id": "3dd68caa-166a-4c3d-8b75-880b4d2612b9",
+          "question": "dfk",
+          "answers": [
+            {
+              "id": "913263d8-d750-43ba-b049-71e393ad77ac",
+              "answer": "jlsj"
+            },
+            {
+              "id": "4cf07cc9-1a3a-4ef3-88fc-fb0ceaeab5d6",
+              "answer": "lkjkl"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "Voice",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which product of tanla is highly critical to your business function?",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "Extremely Competent"
+            },
+            {
+              "id": 2,
+              "answer": "Decently Competent"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

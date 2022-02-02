@@ -1,0 +1,75 @@
+<div style=" background-color: white;">
+    <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a;">Dashboard</h1>
+    <mat-divider></mat-divider>
+</div>
+<div class="row" style="padding: 1%">
+    <div class="col-lg-4">
+        <mat-card style="height: 9rem;">
+            <mat-card-title-group>
+                <mat-card-title>
+                    <h1 style="color: #3cb371"><b>Promoters</b></h1>
+                    <br />
+                    <h1 style="color: #3cb371; font-size: 40px"><b>{{promotersPercentage}} %</b></h1>
+                </mat-card-title>
+                <circle-progress [percent]=promotersPercentage [radius]="55" [outerStrokeWidth]="16" [innerStrokeWidth]="8" [outerStrokeColor]="'#3CB371'" [innerStrokeColor]="'#90EE90'" [animation]="true" [titleFontSize]="30" [unitsFontSize]="25" [showTitle]="true" [animationDuration]="300"></circle-progress>
+            </mat-card-title-group>
+        </mat-card>
+    </div>
+    <div class="col-lg-4">
+        <mat-card style="height: 9rem;">
+            <mat-card-title-group>
+                <mat-card-title>
+                    <h1 style="color: #ef820d"><b>Passives</b></h1>
+                    <br />
+                    <h1 style="color: #ef820d; font-size: 40px"><b>{{passivesPercentage}} %</b></h1>
+                </mat-card-title>
+                <circle-progress [percent]=passivesPercentage [radius]="55" [outerStrokeWidth]="16" [innerStrokeWidth]="8" [outerStrokeColor]="'#ef820d'" [innerStrokeColor]="'#FFE5B4'" [animation]="true" [titleFontSize]="30" [unitsFontSize]="25" [showTitle]="true" [animationDuration]="300"></circle-progress>
+            </mat-card-title-group>
+        </mat-card>
+    </div>
+    <div class="col-lg-4">
+        <mat-card style="height: 9rem;">
+            <mat-card-title-group>
+                <mat-card-title>
+                    <h1 style="color: #dc143c"><b>Detractors</b></h1>
+                    <br />
+                    <h1 style="color: #dc143c; font-size: 40px"><b>{{detractorsPercentage}} %</b></h1>
+                </mat-card-title>
+                <circle-progress [percent]=detractorsPercentage [radius]="55" [outerStrokeWidth]="16" [innerStrokeWidth]="8" [outerStrokeColor]="'#DC143C'" [innerStrokeColor]="'#CEA09F'" [animation]="true" [titleFontSize]="30" [unitsFontSize]="25" [showTitle]="true"
+                    [animationDuration]="300"></circle-progress>
+            </mat-card-title-group>
+        </mat-card>
+    </div>
+</div>
+<div class="row" style="padding: 1%">
+    <div class="col-lg-12">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="row" style="width: 112%">
+                        <div class="col-lg-2">
+                            <h3 style="font-weight: bold; margin: 0px;">NPS</h3>
+                            <h4 style="margin: 0px;">Net promoter score</h4>
+                        </div>
+                        <div class="col-lg-2">
+                            <h3 class="text-center" style="font-weight: bold; margin: 0px;">
+                                Overall score
+                            </h3>
+                            <h4 style="margin: 0px;" class="text-center">{{overallScore}}</h4>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="example-button-row">
+                                <button style="background: #96d3e2;" id="week" mat-raised-button (click)="weekData('#96d3e2')"><img src="assets/tanla_calendar_grey_128.svg" alt=""> Week View</button>
+                                <button id="month" mat-raised-button (click)="monthData('#96d3e2')"><img src="assets/tanla_calendar_grey_128.svg" alt=""> Month View</button>
+                                <button id="year" mat-raised-button (click)="yearData('#96d3e2')"><img src="assets/tanla_calendar_grey_128.svg" alt=""> Year View</button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <app-plot></app-plot>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

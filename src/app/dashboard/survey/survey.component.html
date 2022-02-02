@@ -1,0 +1,58 @@
+<div style="background-color: white;">
+    <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
+        Survey Name
+        <span style="right: 0; position: absolute; margin-right: 1rem">
+      <button
+        type="button"
+        class="btn surveyCreate"
+        (click)="createSurvey()"
+        style="background: #2d69eb; color: white"
+      >
+        Create survey&nbsp;
+        <i class="fa fa-file fa-1x"></i>
+      </button>
+    </span>
+    </h1>
+    <mat-divider class="mt-3"></mat-divider>
+</div>
+<div class="row" style="padding: 1%">
+    <div class="col-lg-12">
+        <table>
+            <thead>
+                <tr style="color: blue">
+                    <th>SNo.</th>
+                    <th>Survey Name</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Live</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr #radio *ngFor="
+            let item of userList | slice: (page - 1) * pageSize:page * pageSize
+          ">
+
+                    <td>{{ item.sno }}</td>
+                    <td>{{ item.survey }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>
+                        <!-- <div class="radio" id="{{ item.sno }}"> -->
+                        <input type="radio" (change)="liveCheck($event)" name="radio" [(checked)]="item.isLive" />
+                        <!-- </div> -->
+                    </td>
+                    <td>
+                        <button mat-button>
+              <mat-icon
+                style="transform: scale(0.8); color: blue; cursor: pointer"
+                (click)="downloadTemplate()"
+                >file_download</mat-icon
+              >
+            </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

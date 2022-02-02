@@ -1,0 +1,75 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h1 class="text-center" style="color: blue" mat-dialog-title>{{ data ? 'Modify' : 'Create' }} User</h1>
+<form [formGroup]="fg" (ngSubmit)="saveUser()">
+  <mat-dialog-content class="mat-typography">
+    <div class="container">
+      <div class="form-group">
+        <label for="username"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">User Name:</h2></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          placeholder="User Name"
+          formControlName="username"
+        />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="email"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Email ID:</h2></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          placeholder="Email ID"
+          formControlName="emailId"
+        />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="password"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Password:</h2></label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+      <br />
+      <div class="form-group">
+        <label for="role"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Role:</h2></label
+        >
+        <input
+          type="role"
+          class="form-control"
+          id="role"
+          placeholder="Role"
+          formControlName="role"
+          readonly
+        />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mb-1 mt-1" align="end">
+    <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
+      Save
+    </button>
+    <button
+      type="button"
+      class="btn mt-1"
+      style="background-color: grey; color: white; width: 6rem"
+      (click)="cancelUser()"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</form>

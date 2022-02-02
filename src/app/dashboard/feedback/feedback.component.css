@@ -1,0 +1,67 @@
+table {
+    width: 100%;
+    background: white;
+}
+
+button {
+    padding: 10px;
+    border-radius: 9999px;
+    font-size: 15px;
+}
+
+.mat-header-cell {
+    font-size: 17px;
+    color: blue;
+    padding: 0.5rem;
+}
+
+th {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.mat-cell {
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0.8rem;
+}
+
+th,
+td {
+    border: solid 1px rgba(206, 202, 202, 0.2);
+    padding: 1rem;
+}
+
+.error-snack-bar {
+    background-color: red;
+    color: white;
+}
+
+.apply-btn {
+    border: none;
+    background-color: #2fd9a7;
+    color: white;
+    margin-right: 1rem;
+    width: 5rem;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+    padding: 10px;
+}
+
+.loader-text {
+    right: 60px;
+    position: relative;
+    top: 15px;
+    font-size: larger;
+    font-weight: 100;
+    color: #007fad;
+}
+
+.loader-top {
+    top: 45%;
+    left: 50%;
+    position: absolute;
+}

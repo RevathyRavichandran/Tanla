@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mat-drawer {
+  width: auto;
+}
+
+.mat-drawer-container {
+  height: 100%;
+}
+
+.mat-drawer-content {
+  overflow-x: hidden;
+  background: #f6f6f8;
+}

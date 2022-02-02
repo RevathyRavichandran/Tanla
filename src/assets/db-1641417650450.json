@@ -1,0 +1,72 @@
+{
+  "questionaries": [
+    {
+      "id": 1,
+      "category": "SMS",
+      "questions": [
+        {
+          "id": "36339eb1-5111-4915-8e26-ab00dfa6f397",
+          "question": "test-1?"
+        }
+      ],
+      "answers": [
+        {
+          "id": 1,
+          "answer": "Email"
+        },
+        {
+          "id": 3,
+          "answer": "Whatsapp"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "Email",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which product of tanla is highly critical to your business function?"
+        },
+        {
+          "id": "bce0b6f6-07bd-493c-aa2b-018dd26f5784",
+          "question": "What is your email?"
+        }
+      ],
+      "answers": [
+        {
+          "id": 1,
+          "answer": "Likely"
+        },
+        {
+          "id": 2,
+          "answer": "Very Likely"
+        },
+        {
+          "id": 3,
+          "answer": "Not Likely"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "Voice",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which product of tanla is highly critical to your business function?"
+        }
+      ],
+      "answers": [
+        {
+          "id": 1,
+          "answer": "Extremely Competent"
+        },
+        {
+          "id": 2,
+          "answer": "Decently Competent"
+        }
+      ]
+    }
+  ]
+}

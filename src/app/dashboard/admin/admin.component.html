@@ -1,0 +1,64 @@
+<div style="background-color: white">
+  <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
+    Admin/User
+    <span style="right: 0; position: absolute; margin-right: 1rem">
+      <button
+        type="button"
+        class="btn adminCreate"
+        (click)="createUser()"
+        style="background: #2d69eb; color: white; margin-right: 1rem"
+      >
+        Create User&nbsp;
+        <i class="fa fa-user fa-1x"></i>
+      </button>
+      <button
+        type="button"
+        class="btn adminCreate"
+        (click)="goToAudit()"
+        style="background: green; color: white"
+      >
+        Go to Audit&nbsp;
+        <i class="fa fa-history fa-1x"></i>
+      </button>
+    </span>
+  </h1>
+  <mat-divider class="mt-3"></mat-divider>
+</div>
+<div class="row" style="padding: 1%">
+  <div class="col-lg-12">
+    <table>
+      <thead>
+        <tr style="color: blue">
+          <th>User ID</th>
+          <th>User Name</th>
+          <th>Email ID</th>
+          <th>Role</th>
+          <th colspan="2" style="text-align: center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          #radio
+          *ngFor="
+            let item of userList | slice: (page - 1) * pageSize:page * pageSize
+          "
+        >
+          <td>{{ item.userid }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.emailId }}</td>
+          <td>{{ item.role }}</td>
+          <td>
+            <button mat-button (click)="modifyUser(item.userid)">
+              <mat-icon>edit</mat-icon> Modify
+            </button>
+          </td>
+          <td>
+            <button mat-button (click)="deactivateUser(item.userid)">
+              <mat-icon style="color: red">remove_circle</mat-icon> Deactivate
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="col-lg-12 row" style="background-color: white;">
+    <div class="col-lg-10">
+        <h1 style="padding-left: 1%; padding-top: 1%">Questionaries</h1>
+    </div>
+    <div class="col-lg-2 mt-3">
+        <button (click)="createQuestion()" class="btn btn-primary">Create Question &nbsp;
+      <i class="fa fa-plus-square fa-1x"></i>
+    </button>
+    </div>
+    <mat-divider class="mt-2"></mat-divider>
+</div>
+<div class="row" style="padding: 1%">
+    <div class="col-lg-12">
+        <mat-card>
+            <table cellSpacing="20">
+                <tr>
+                    <th class="header">SNo.</th>
+                    <th class="header">Category</th>
+                    <th class="header">
+                        <div class="row col-12">
+                            <div class="col-6 header set-border-right text-center">
+                                <div class="styleHead">Question</div>
+                            </div>
+                            <div class="col-4 set-border-right text-center">
+                                <div class="styleHead">Answer</div>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="styleHead">Action</div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                <tr *ngFor="let data of datas">
+                    <th>{{ data.id }}</th>
+                    <th>{{ data.category}}</th>
+                    <th>
+                        <div class="row col-12" [ngClass]="{ 'set-border': data.questions.length !== i+1 }" *ngFor="let question of data.questions; index as i">
+                            <div class="col-6 set-border-right">
+                                <div class="row col-12">
+                                    <div class="col-8">
+                                        {{ i+1 }}. {{ question.question }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 set-border-right" style="padding-left: 1rem;">
+                                <div *ngFor="let answer of question.answers; index as j">
+                                    <div class="row">
+                                        {{ j+1 }}. {{ answer.answer }}
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button mat-button (click)="editQuestion(data.category, question.id)">
+                  <mat-icon>edit</mat-icon> Edit
+                </button>
+                                <button mat-button (click)="removeQuestion(data.category, question.id)">
+                  <mat-icon style="color: red">remove_circle</mat-icon> Delete
+                </button>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </mat-card>
+    </div>
+</div>
