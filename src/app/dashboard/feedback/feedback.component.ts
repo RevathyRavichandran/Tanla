@@ -18,6 +18,7 @@ export class FeedbackComponent implements OnInit {
   isLoad = false;
   noRecords = false;
   fg: FormGroup;
+  fg1: FormGroup;
   displayedColumns: string[] = [
     'id',
     'surveyName',
@@ -57,6 +58,7 @@ export class FeedbackComponent implements OnInit {
       startDate: new FormControl(null),
       endDate: new FormControl(null),
     });
+    this.fg1 = new FormGroup({})
     this.searchContext = [];
     this.filteredSearch = this.fg.get('searchCtrl').valueChanges.pipe(
       startWith(''),

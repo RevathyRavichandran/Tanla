@@ -1,8 +1,8 @@
 <div style="background-color: white">
   <form class="example-form" [formGroup]="fg" (ngSubmit)="apply()">
     <div class="row" style="align-items: center">
-      <div class="col-1" style="width: 12%">
-        <h1 style="padding-left: 5px; color: #3a3a3a">Feedback</h1>
+      <div class="col-1 pt-3" style="width: 12%">
+        <h1 style="padding-left: 5px; color: #3a3a3a">Feedback Report</h1>
       </div>
       <div class="col-4">
         <div class="input-group">
@@ -25,7 +25,7 @@
           </div>
           <input
             class="form-control"
-            placeholder="Search Text"
+            placeholder="Search by Survey name"
             aria-label="Search"
             [matAutocomplete]="auto"
             formControlName="searchCtrl"
@@ -108,13 +108,132 @@
       </div>
     </div>
   </form>
-  <mat-chip-list>
+  <div class="center pb-2" style="text-align: center; color: #de1f26;">Advance filter <img src="assets/tanla_advanced_filter.svg" alt=""></div>
+  <form class="example-form" [formGroup]="fg1" (ngSubmit)="apply()">
+    <div class="row">
+      <label class="col-4" style="font-size: 20px; padding-left: 18px;">Advanced Filters</label>
+      <!-- <div class="col-7 mr-3" style="text-align: end; font-size: 15px; color: #de1f26;"><img src="assets/tanla_advanced_filter_clear.svg" alt="">Clear All</div> -->
+    </div>
+    <div class="row p-3">
+      <div class="form-group col-3">
+        <label for="mobile"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Mobile No:</h2></label
+        >
+        <input
+          type="text"
+          style="border-radius: 20px !important;"
+          class="form-control"
+          id="mobile"
+          placeholder="Mobile No"
+          formControlName="mobile"
+        />
+      </div>
+      <div class="col-3 form-group">
+      <label for="company"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Company Name:</h2></label
+        >
+        <input
+          type="text"
+          style="border-radius: 20px !important;"
+          class="form-control"
+          id="company"
+          placeholder="Company Name"
+          formControlName="company"
+        />
+      </div>
+      <div class="col-3 form-group">
+      <label for="question"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Question:</h2></label
+        >
+        <input
+          type="text"
+          style="border-radius: 20px !important;"
+          class="form-control"
+          id="question"
+          placeholder="Question"
+          formControlName="question"
+        />
+      </div>
+      <div class="col-3 form-group">
+      <label for="answer"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Answer:</h2></label
+        >
+        <input
+          type="text"
+          style="border-radius: 20px !important;"
+          class="form-control"
+          id="answer"
+          placeholder="Answer"
+          formControlName="answer"
+        />
+      </div>
+      <div class="col-3 form-group">
+      <label for="detractors"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Detractors:</h2></label
+        >
+        <input
+          type="text"
+          style="border-radius: 20px !important;"
+          class="form-control"
+          id="detractors"
+          placeholder="Detractors"
+          formControlName="detractors"
+        />
+      </div>
+      <br>
+      <div class="col-3 form-group">
+        <label for="passives"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Passives:</h2></label
+          >
+          <input
+            type="text"
+            style="border-radius: 20px !important;"
+            class="form-control"
+            id="passives"
+            placeholder="Passives"
+            formControlName="passives"
+          />
+        </div>
+        <br>
+        <div class="col-3 form-group">
+          <label for="promotors"
+              ><h2 style="font-size: 1rem; margin: 0 0 8px">Promotors:</h2></label
+            >
+            <input
+              type="text"
+              style="border-radius: 20px !important;"
+              class="form-control"
+              id="promotors"
+              placeholder="Promotors"
+              formControlName="promotors"
+            />
+          </div>
+          <br>
+          <div class="col-3 form-group">
+            <label for="name"
+                ><h2 style="font-size: 1rem; margin: 0 0 8px">Name:</h2></label
+              >
+              <input
+                type="text"
+                style="border-radius: 20px !important;"
+                class="form-control"
+                id="name"
+                placeholder="Name"
+                formControlName="name"
+              />
+            </div>
+            <br>
+    </div>
+    
+
+  </form>
+  <!-- <mat-chip-list>
     <mat-chip *ngFor="let val of values" (removed)="remove(val)">
       {{ val }}
       <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>
   </mat-chip-list>
-  <br *ngIf="values.length > 0" />
+  <br *ngIf="values.length > 0" /> -->
   <mat-divider></mat-divider>
 </div>
 <div *ngIf="isLoad" class="loader-top">

@@ -26,7 +26,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'feedback',
+    path: 'feedbackReport',
     component: FeedbackComponent,
   },
   {
