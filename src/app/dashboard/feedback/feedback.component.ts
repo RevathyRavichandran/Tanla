@@ -18,7 +18,6 @@ export class FeedbackComponent implements OnInit {
   isLoad = false;
   noRecords = false;
   fg: FormGroup;
-  fg1: FormGroup;
   displayedColumns: string[] = [
     'id',
     'surveyName',
@@ -33,39 +32,138 @@ export class FeedbackComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
   data = [];
+  advFilter = false;
+  img = 'assets/tanla_advanced_filter.svg';
 
   dataSource = new MatTableDataSource([]);
-  filteredSearch: Observable<any[]>;
-  selectedValue = { label: 'Phone', value: 'employeePhoneNumber' };
-  values = [];
-  searchByValues = [
-    { label: 'Question', value: 'feedbackQuestion' },
-    { label: 'Answer', value: 'feedbackAnswer' },
-    { label: 'Name', value: 'employeeName' },
-    { label: 'Phone', value: 'employeePhoneNumber' },
-    { label: 'Company', value: 'employeeCompany' },
-    { label: 'Detractor', value: 'detractor' },
-    { label: 'Passive', value: 'passive' },
-    { label: 'Promotor', value: 'promotor' }
-  ];
+  filteredSurveySearch: Observable<any[]>;
+  filteredMobileSearch: Observable<any[]>;
+  filteredCompanySearch: Observable<any[]>;
+  filteredQuestionSearch: Observable<any[]>;
+  filteredAnswerSearch: Observable<any[]>;
+  filteredDetractorsSearch: Observable<any[]>;
+  filteredPassivesSearch: Observable<any[]>;
+  filteredPromotorsSearch: Observable<any[]>;
+  filteredNameSearch: Observable<any[]>;
+  searchSurveyContext = [];
+  searchMobileContext = [];
+  searchCompanyContext = [];
+  searchQuestionContext = [];
+  searchAnswerContext = [];
+  searchDetractorsContext = [];
+  searchPassivesContext = [];
+  searchPromotorsContext = [];
+  searchNameContext = [];
 
-  searchContext = [];
-
-  constructor(private feedbackService: FeedbackService, private matSnackbar: MatSnackBar) {
+  constructor(
+    private feedbackService: FeedbackService,
+    private matSnackbar: MatSnackBar
+  ) {
     this.fg = new FormGroup({
-      searchByFun: new FormControl({ label: 'Phone', value: 'employeePhoneNumber' }),
-      searchCtrl: new FormControl(null),
+      survey: new FormControl(null),
       startDate: new FormControl(null),
       endDate: new FormControl(null),
+      mobile: new FormControl(null),
+      company: new FormControl(null),
+      question: new FormControl(null),
+      answer: new FormControl(null),
+      detractors: new FormControl(null),
+      passives: new FormControl(null),
+      promotors: new FormControl(null),
+      name: new FormControl(null),
     });
-    this.fg1 = new FormGroup({})
-    this.searchContext = [];
-    this.filteredSearch = this.fg.get('searchCtrl').valueChanges.pipe(
+    this.searchSurveyContext = [];
+    this.searchMobileContext = [];
+    this.searchCompanyContext = [];
+    this.searchQuestionContext = [];
+    this.searchAnswerContext = [];
+    this.searchDetractorsContext = [];
+    this.searchPassivesContext = [];
+    this.searchPromotorsContext = [];
+    this.searchNameContext = [];
+    this.filterCommonMethod();
+  }
+
+  filterCommonMethod() {
+    this.filteredSurveySearch = this.fg.get('survey').valueChanges.pipe(
       startWith(''),
       map((search) =>
-        search ? this.filterSearchContext(search) : this.searchContext.slice()
+        search
+          ? this.filterSearchContext(search, this.searchSurveyContext)
+          : this.searchSurveyContext.slice()
       )
     );
+    this.filteredMobileSearch = this.fg.get('mobile').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchMobileContext)
+          : this.searchMobileContext.slice()
+      )
+    );
+    this.filteredCompanySearch = this.fg.get('company').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchCompanyContext)
+          : this.searchCompanyContext.slice()
+      )
+    );
+    this.filteredQuestionSearch = this.fg.get('question').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchQuestionContext)
+          : this.searchQuestionContext.slice()
+      )
+    );
+    this.filteredAnswerSearch = this.fg.get('answer').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchAnswerContext)
+          : this.searchAnswerContext.slice()
+      )
+    );
+    this.filteredDetractorsSearch = this.fg.get('detractors').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchDetractorsContext)
+          : this.searchDetractorsContext.slice()
+      )
+    );
+    this.filteredPassivesSearch = this.fg.get('passives').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchPassivesContext)
+          : this.searchPassivesContext.slice()
+      )
+    );
+    this.filteredPromotorsSearch = this.fg.get('promotors').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchPromotorsContext)
+          : this.searchPromotorsContext.slice()
+      )
+    );
+    this.filteredNameSearch = this.fg.get('name').valueChanges.pipe(
+      startWith(''),
+      map((search) =>
+        search
+          ? this.filterSearchContext(search, this.searchNameContext)
+          : this.searchNameContext.slice()
+      )
+    );
+  }
+
+  toggle() {
+    this.advFilter = !this.advFilter;
+    this.img = this.advFilter
+      ? 'assets/tanla_advanced_filter_onclick.svg'
+      : 'assets/tanla_advanced_filter.svg';
   }
 
   pageChanged(event) {
@@ -74,74 +172,79 @@ export class FeedbackComponent implements OnInit {
   }
 
   apply() {
-    let filteredVal = this.fg.value;
-    let value = this.selectedValue.value;
-    let payload = {};
-    if (
-      filteredVal.searchCtrl &&
-      filteredVal.startDate &&
-      filteredVal.endDate && value === 'employeePhoneNumber'
-    ) {
-      const startDate = moment(filteredVal.startDate).format('YYYY-MM-DD');
-      const endDate = moment(filteredVal.endDate).format('YYYY-MM-DD');
-      payload = {
-        ProcessVariables: {
-          selectedField: '4',
-          selectedValue: filteredVal.searchCtrl,
-          fromDate: startDate,
-          toDate: endDate,
-        },
-      };
-    } else if (filteredVal.startDate && filteredVal.endDate) {
-      const startDate = moment(filteredVal.startDate).format('YYYY-MM-DD');
-      const endDate = moment(filteredVal.endDate).format('YYYY-MM-DD');
-      payload = {
-        ProcessVariables: {
-          selectedField: '3',
-          fromDate: startDate,
-          toDate: endDate,
-        },
-      };
-    } else if (filteredVal.searchCtrl) {
-      var select;
-      if (value == 'feedbackQuestion') {
-        select = '6';
-      } else if (value === 'employeeCompany') {
-        select = '5';
-      } else if (value === 'feedbackAnswer') {
-        select = '7';
-      } else if (value === 'employeeName') {
-        select = '11';
-      } else if (value === 'employeePhoneNumber') {
-        select = '2';
-      } else if (value === 'passive') {
-        select = '9';
-      } else if (value === 'detractor') {
-        select = '8';
-      } else if (value === 'promotor') {
-        select = '10';
-      }
-      payload = {
-        ProcessVariables: {
-          selectedField: select,
-          selectedValue: filteredVal.searchCtrl,
-        },
-      };
-    } else {
-      payload = { ProcessVariables: { selectedField: '1' } };
-    }
-    this.commonMethod(payload);
+    // let filteredVal = this.fg.value;
+    // let payload = {};
+    // if (
+    //   filteredVal.searchCtrl &&
+    //   filteredVal.startDate &&
+    //   filteredVal.endDate
+    // ) {
+    //   const startDate = moment(filteredVal.startDate).format('YYYY-MM-DD');
+    //   const endDate = moment(filteredVal.endDate).format('YYYY-MM-DD');
+    //   payload = {
+    //     ProcessVariables: {
+    //       selectedField: '4',
+    //       selectedValue: filteredVal.searchCtrl,
+    //       fromDate: startDate,
+    //       toDate: endDate,
+    //     },
+    //   };
+    // } else if (filteredVal.startDate && filteredVal.endDate) {
+    //   const startDate = moment(filteredVal.startDate).format('YYYY-MM-DD');
+    //   const endDate = moment(filteredVal.endDate).format('YYYY-MM-DD');
+    //   payload = {
+    //     ProcessVariables: {
+    //       selectedField: '3',
+    //       fromDate: startDate,
+    //       toDate: endDate,
+    //     },
+    //   };
+    // } else if (filteredVal.searchCtrl) {
+    //   var select;
+    // if (value == 'feedbackQuestion') {
+    //   select = '6';
+    // } else if (value === 'employeeCompany') {
+    //   select = '5';
+    // } else if (value === 'feedbackAnswer') {
+    //   select = '7';
+    // } else if (value === 'employeeName') {
+    //   select = '11';
+    // } else if (value === 'employeePhoneNumber') {
+    //   select = '2';
+    // } else if (value === 'passive') {
+    //   select = '9';
+    // } else if (value === 'detractor') {
+    //   select = '8';
+    // } else if (value === 'promotor') {
+    //   select = '10';
+    // }
+    //   payload = {
+    //     ProcessVariables: {
+    //       selectedField: select,
+    //       selectedValue: filteredVal.searchCtrl,
+    //     },
+    //   };
+    // } else {
+    //   payload = { ProcessVariables: { selectedField: '1' } };
+    // }
+    // this.commonMethod(payload);
   }
 
-  filterSearchContext(name: any) {
-    return this.searchContext.filter(
-      (search) => search.value.toString().toLowerCase().indexOf(name.toString().toLowerCase()) === 0
+  filterSearchContext(name: any, value: any) {
+    return value.filter(
+      (search) =>
+        search.value
+          .toString()
+          .toLowerCase()
+          .indexOf(name.toString().toLowerCase()) === 0
     );
   }
 
   downloadTemplate() {
     this.isLoad = true;
-    let payload = { ProcessVariables: { selectedField: '1', perPage: 1000000 } };
+    let payload = {
+      ProcessVariables: { selectedField: '1', perPage: 1000000 },
+    };
     this.feedbackService.getAllFeedback(payload).subscribe(
       (res) => {
         if (res['ProcessVariables']['lastMessageAuditList']) {
@@ -155,12 +258,16 @@ export class FeedbackComponent implements OnInit {
           this.isLoad = false;
         } else {
           this.isLoad = false;
-          this.matSnackbar.open('There is a problem downloading the data!!!', '', {
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            duration: 2000,
-            panelClass: ['error-snack-bar']
-          });
+          this.matSnackbar.open(
+            'There is a problem downloading the data!!!',
+            '',
+            {
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              duration: 2000,
+              panelClass: ['error-snack-bar'],
+            }
+          );
         }
       },
       (err) => {
@@ -170,56 +277,112 @@ export class FeedbackComponent implements OnInit {
           horizontalPosition: 'right',
           verticalPosition: 'top',
           duration: 2000,
-          panelClass: ['error-snack-bar']
+          panelClass: ['error-snack-bar'],
         });
       }
     );
   }
 
-  onSelectionChanged(event) {
-    console.log(event);
-    this.values.push(event.option.value);
-  }
+  onSurveyChanged(event) {}
 
-  onLoadDropdown() {
-    this.fg.get('searchCtrl').reset();
-    this.selectedValue = this.fg.get('searchByFun').value;
-    let value = this.selectedValue.value;
-    this.searchContext = [];
-    let arr = [];
-    if (value === "detractor") {
-      this.searchContext = [{ label: 6, value: 6 }, { label: 7, value: 7 }];
-    } else if (value === "passive") {
-      this.searchContext = [{ label: 7, value: 7 }, { label: 8, value: 8 }];
-    } else if (value === "promotor") {
-      [0, 1, 2, 3, 4, 5, 6].forEach(val => {
-        this.searchContext.push({ label: val, value: val });
-      })
-    } else {
-      this.data.forEach(element => {
-        if (!arr.includes(element[value])) {
-          arr.push(element[value]);
-          this.searchContext.push({ label: element[value], value: element[value] });
-        }
-      });
-    }
-    this.filteredSearch = this.fg.get('searchCtrl').valueChanges.pipe(
-      startWith(''),
-      map((search) =>
-        search ? this.filterSearchContext(search) : this.searchContext.slice()
+  onMobileChanged(event) {
+    this.onLoadDropdown(
+      this.data.filter(
+        (val) => val['employeePhoneNumber'] === event.option.value
       )
     );
   }
 
-  remove(value) {
-    this.values = this.values.filter(val => val !== value);
+  onQuestionChanged(event) {
+    this.onLoadDropdown(
+      this.data.filter((val) => val['feedbackQuestion'] === event.option.value)
+    );
   }
 
+  onAnswerChanged(event) {
+    this.onLoadDropdown(
+      this.data.filter((val) => val['feedbackAnswer'] === event.option.value)
+    );
+  }
+
+  onCompanyChanged(event) {
+    this.onLoadDropdown(
+      this.data.filter((val) => val['employeeCompany'] === event.option.value)
+    );
+  }
+
+  onNameChanged(event) {
+    this.onLoadDropdown(
+      this.data.filter((val) => val['employeeName'] === event.option.value)
+    );
+  }
+
+  onLoadDropdown(dataValue) {
+    this.searchDetractorsContext = [
+      { label: 6, value: 6 },
+      { label: 7, value: 7 },
+    ];
+    this.searchPassivesContext = [
+      { label: 7, value: 7 },
+      { label: 8, value: 8 },
+    ];
+    this.searchPromotorsContext = [];
+    this.searchCompanyContext = [];
+    this.searchQuestionContext = [];
+    this.searchAnswerContext = [];
+    this.searchNameContext = [];
+    [0, 1, 2, 3, 4, 5, 6].forEach((val) => {
+      this.searchPromotorsContext.push({ label: val, value: val });
+    });
+    let arr = [];
+    dataValue.forEach((element) => {
+      [
+        'employeeCompany',
+        'employeeName',
+        'employeePhoneNumber',
+        'feedbackAnswer',
+        'feedbackQuestion',
+      ].forEach((ele, index) => {
+        if (!arr.includes(element[ele])) {
+          arr.push(element[ele]);
+          if (index === 0) {
+            this.searchCompanyContext.push({
+              label: element[ele],
+              value: element[ele],
+            });
+          } else if (index === 1) {
+            this.searchNameContext.push({
+              label: element[ele],
+              value: element[ele],
+            });
+          } else if (index === 2) {
+            this.searchMobileContext.push({
+              label: element[ele],
+              value: element[ele],
+            });
+          } else if (index === 3) {
+            this.searchAnswerContext.push({
+              label: element[ele],
+              value: element[ele],
+            });
+          } else {
+            this.searchQuestionContext.push({
+              label: element[ele],
+              value: element[ele],
+            });
+          }
+        }
+      });
+    });
+    this.filterCommonMethod();
+  }
+
+  // remove(value) {
+  //   this.values = this.values.filter(val => val !== value);
+  // }
+
   clear() {
-    this.values = [];
     this.fg.reset();
-    this.selectedValue = { label: 'Phone', value: 'employeePhoneNumber' };
-    this.fg.get('searchByFun').setValue(this.selectedValue);
     let payload = { ProcessVariables: { selectedField: '1' } };
     this.commonMethod(payload);
   }
@@ -232,15 +395,34 @@ export class FeedbackComponent implements OnInit {
       this.currentPage = result['currentPage'];
       this.pageSize = result['perPage'];
       this.noRecords = result['lastMessageAuditList'] ? false : true;
-      result['lastMessageAuditList'].forEach(date => {
+      result['lastMessageAuditList'].forEach((date) => {
         date.creDate = '';
         date.phone = '';
-        let serv_utc = moment.utc(date.createdDate, "YYYY-MM-DD HH:mm:ss").toDate();
-        date.creDate = moment(serv_utc,"YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD HH:mm:ss");
-        if (date.employeePhoneNumber.startsWith("+")) {
-          date.phone =  date.employeePhoneNumber.substring(0, 3) + " " + date.employeePhoneNumber.substring(3, 8) + " " + date.employeePhoneNumber.substring(8, date.employeePhoneNumber.length);
+        let serv_utc = moment
+          .utc(date.createdDate, 'YYYY-MM-DD HH:mm:ss')
+          .toDate();
+        date.creDate = moment(serv_utc, 'YYYY-MM-DD HH:mm:ss').format(
+          'YYYY-MM-DD HH:mm:ss'
+        );
+        if (date.employeePhoneNumber.startsWith('+')) {
+          date.phone =
+            date.employeePhoneNumber.substring(0, 3) +
+            ' ' +
+            date.employeePhoneNumber.substring(3, 8) +
+            ' ' +
+            date.employeePhoneNumber.substring(
+              8,
+              date.employeePhoneNumber.length
+            );
         } else {
-          date.phone = '+91 ' + date.employeePhoneNumber.substring(0, 5) + " " + date.employeePhoneNumber.substring(5, date.employeePhoneNumber.length);
+          date.phone =
+            '+91 ' +
+            date.employeePhoneNumber.substring(0, 5) +
+            ' ' +
+            date.employeePhoneNumber.substring(
+              5,
+              date.employeePhoneNumber.length
+            );
         }
       });
       this.isLoad = false;
@@ -249,10 +431,10 @@ export class FeedbackComponent implements OnInit {
           horizontalPosition: 'right',
           verticalPosition: 'top',
           duration: 2000,
-          panelClass: ['error-snack-bar']
+          panelClass: ['error-snack-bar'],
         });
       }
-      this.onLoadDropdown();
+      this.onLoadDropdown(this.data);
       this.dataSource = new MatTableDataSource(result['lastMessageAuditList']);
     }),
       (err) => {
@@ -263,14 +445,14 @@ export class FeedbackComponent implements OnInit {
           horizontalPosition: 'right',
           verticalPosition: 'top',
           duration: 2000,
-          panelClass: ['error-snack-bar']
+          panelClass: ['error-snack-bar'],
         });
       };
   }
 
   ngOnInit(): void {
     let payload = { ProcessVariables: { selectedField: '1' } };
-    let body = { ProcessVariables: { selectedField: '1', perPage: 100000 }}
+    let body = { ProcessVariables: { selectedField: '1', perPage: 100000 } };
     this.feedbackService.getAllFeedback(body).subscribe((res) => {
       this.data = res['ProcessVariables']['lastMessageAuditList'];
       this.commonMethod(payload);

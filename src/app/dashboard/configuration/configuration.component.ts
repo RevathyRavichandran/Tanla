@@ -17,7 +17,9 @@ export class ConfigurationComponent implements OnInit {
   constructor(public config: ConfigService, private snackBar: MatSnackBar) {}
 
   submit() {
-    let a = moment(new Date(),'MM/DD/YYYY');
+    let d = new Date();
+    d.setHours(0, 0, 0, 0);
+    let a = moment(d,'MM/DD/YYYY');
     let b = moment(this.data.expiry_limit,'MM/DD/YYYY');
     let diffDays = b.diff(a, 'days');
     this.config.updateConfig({ ProcessVariables: {...this.data, expiry_limit: diffDays.toString(), skip_limit: this.data.skip_limit.toString() }}).subscribe(

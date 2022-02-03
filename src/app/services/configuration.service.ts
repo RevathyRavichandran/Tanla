@@ -10,7 +10,7 @@ export class ConfigService {
 
   updateConfig(config: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/Configuration_API',
+      this.dbUrl + 'NPS Feedback/api/updateConfiguration',
       config
     );
   }

@@ -7,35 +7,21 @@
       <div class="col-4">
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">
-              Search By - {{ selectedValue.label }}
-              <mat-select
-                placeholder="Search By"
-                formControlName="searchByFun"
-                (selectionChange)="onLoadDropdown()"
-              >
-                <mat-option
-                  *ngFor="let searchBy of searchByValues"
-                  [value]="searchBy"
-                >
-                  {{ searchBy.label }}
-                </mat-option>
-              </mat-select>
-            </span>
+            <span class="input-group-text" id="basic-addon1"> Search </span>
           </div>
           <input
             class="form-control"
-            placeholder="Search by Survey name"
+            placeholder="Search by Survey Name"
             aria-label="Search"
             [matAutocomplete]="auto"
-            formControlName="searchCtrl"
+            formControlName="survey"
           />
           <mat-autocomplete
             #auto="matAutocomplete"
-            (optionSelected)="onSelectionChanged($event)"
+            (optionSelected)="onSurveyChanged($event)"
           >
             <mat-option
-              *ngFor="let search of filteredSearch | async"
+              *ngFor="let search of filteredSurveySearch | async"
               [value]="search.value"
             >
               <span>{{ search.label }}</span>
@@ -107,125 +93,211 @@
         </span>
       </div>
     </div>
-  </form>
-  <div class="center pb-2" style="text-align: center; color: #de1f26;">Advance filter <img src="assets/tanla_advanced_filter.svg" alt=""></div>
-  <form class="example-form" [formGroup]="fg1" (ngSubmit)="apply()">
-    <div class="row">
-      <label class="col-4" style="font-size: 20px; padding-left: 18px;">Advanced Filters</label>
-      <!-- <div class="col-7 mr-3" style="text-align: end; font-size: 15px; color: #de1f26;"><img src="assets/tanla_advanced_filter_clear.svg" alt="">Clear All</div> -->
+    <div class="center pb-2" style="text-align: center; color: #de1f26">
+      Advance filter
+      <img [src]="img" alt="" (click)="toggle()" style="cursor: pointer" />
     </div>
-    <div class="row p-3">
-      <div class="form-group col-3">
-        <label for="mobile"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Mobile No:</h2></label
+    <div *ngIf="advFilter">
+      <div class="row">
+        <label class="col-4" style="font-size: 20px; padding-left: 18px"
+          >Advanced Filters</label
         >
-        <input
-          type="text"
-          style="border-radius: 20px !important;"
-          class="form-control"
-          id="mobile"
-          placeholder="Mobile No"
-          formControlName="mobile"
-        />
+        <!-- <div class="col-7 mr-3" style="text-align: end; font-size: 15px; color: #de1f26;"><img src="assets/tanla_advanced_filter_clear.svg" alt="">Clear All</div> -->
       </div>
-      <div class="col-3 form-group">
-      <label for="company"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Company Name:</h2></label
-        >
-        <input
-          type="text"
-          style="border-radius: 20px !important;"
-          class="form-control"
-          id="company"
-          placeholder="Company Name"
-          formControlName="company"
-        />
-      </div>
-      <div class="col-3 form-group">
-      <label for="question"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Question:</h2></label
-        >
-        <input
-          type="text"
-          style="border-radius: 20px !important;"
-          class="form-control"
-          id="question"
-          placeholder="Question"
-          formControlName="question"
-        />
-      </div>
-      <div class="col-3 form-group">
-      <label for="answer"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Answer:</h2></label
-        >
-        <input
-          type="text"
-          style="border-radius: 20px !important;"
-          class="form-control"
-          id="answer"
-          placeholder="Answer"
-          formControlName="answer"
-        />
-      </div>
-      <div class="col-3 form-group">
-      <label for="detractors"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Detractors:</h2></label
-        >
-        <input
-          type="text"
-          style="border-radius: 20px !important;"
-          class="form-control"
-          id="detractors"
-          placeholder="Detractors"
-          formControlName="detractors"
-        />
-      </div>
-      <br>
-      <div class="col-3 form-group">
-        <label for="passives"
+      <div class="row p-3">
+        <div class="form-group col-3">
+          <label for="mobile"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Mobile No:</h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="mobile"
+            placeholder="Mobile No"
+            [matAutocomplete]="auto1"
+            formControlName="mobile"
+          />
+          <mat-autocomplete
+            #auto1="matAutocomplete"
+            (optionSelected)="onMobileChanged($event)"
+          >
+            <mat-option
+              *ngFor="let search of filteredMobileSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-3 form-group">
+          <label for="company"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">
+              Company Name:
+            </h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="company"
+            placeholder="Company Name"
+            formControlName="company"
+            [matAutocomplete]="auto2"
+          />
+          <mat-autocomplete
+            #auto2="matAutocomplete"
+            (optionSelected)="onCompanyChanged($event)"
+          >
+            <mat-option
+              *ngFor="let search of filteredCompanySearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-3 form-group">
+          <label for="question"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Question:</h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="question"
+            placeholder="Question"
+            formControlName="question"
+            [matAutocomplete]="auto3"
+          />
+          <mat-autocomplete
+            #auto3="matAutocomplete"
+            (optionSelected)="onQuestionChanged($event)"
+          >
+            <mat-option
+              *ngFor="let search of filteredQuestionSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-3 form-group">
+          <label for="answer"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Answer:</h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="answer"
+            placeholder="Answer"
+            formControlName="answer"
+            [matAutocomplete]="auto4"
+          />
+          <mat-autocomplete
+            #auto4="matAutocomplete"
+            (optionSelected)="onAnswerChanged($event)"
+          >
+            <mat-option
+              *ngFor="let search of filteredAnswerSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-3 form-group">
+          <label for="detractors"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">
+              Detractors:
+            </h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="detractors"
+            placeholder="Detractors"
+            formControlName="detractors"
+            [matAutocomplete]="auto5"
+          />
+          <mat-autocomplete #auto5="matAutocomplete">
+            <mat-option
+              *ngFor="let search of filteredDetractorsSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <br />
+        <div class="col-3 form-group">
+          <label for="passives"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">Passives:</h2></label
           >
           <input
-            type="text"
-            style="border-radius: 20px !important;"
+            style="border-radius: 20px !important"
             class="form-control"
             id="passives"
             placeholder="Passives"
             formControlName="passives"
+            [matAutocomplete]="auto6"
           />
+          <mat-autocomplete #auto6="matAutocomplete">
+            <mat-option
+              *ngFor="let search of filteredPassivesSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
         </div>
-        <br>
+        <br />
         <div class="col-3 form-group">
           <label for="promotors"
-              ><h2 style="font-size: 1rem; margin: 0 0 8px">Promotors:</h2></label
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Promotors:</h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="promotors"
+            placeholder="Promotors"
+            formControlName="promotors"
+            [matAutocomplete]="auto7"
+          />
+          <mat-autocomplete #auto7="matAutocomplete">
+            <mat-option
+              *ngFor="let search of filteredPromotorsSearch | async"
+              [value]="search.value"
             >
-            <input
-              type="text"
-              style="border-radius: 20px !important;"
-              class="form-control"
-              id="promotors"
-              placeholder="Promotors"
-              formControlName="promotors"
-            />
-          </div>
-          <br>
-          <div class="col-3 form-group">
-            <label for="name"
-                ><h2 style="font-size: 1rem; margin: 0 0 8px">Name:</h2></label
-              >
-              <input
-                type="text"
-                style="border-radius: 20px !important;"
-                class="form-control"
-                id="name"
-                placeholder="Name"
-                formControlName="name"
-              />
-            </div>
-            <br>
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <br />
+        <div class="col-3 form-group">
+          <label for="name"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Name:</h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="name"
+            placeholder="Name"
+            formControlName="name"
+            [matAutocomplete]="auto8"
+          />
+          <mat-autocomplete
+            #auto8="matAutocomplete"
+            (optionSelected)="onNameChanged($event)"
+          >
+            <mat-option
+              *ngFor="let search of filteredNameSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <br />
+      </div>
     </div>
-    
-
   </form>
   <!-- <mat-chip-list>
     <mat-chip *ngFor="let val of values" (removed)="remove(val)">
