@@ -1,7 +1,7 @@
 <div style="background-color: white">
-  <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
-    Admin/User
-    <span style="right: 0; position: absolute; margin-right: 1rem">
+    <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
+        Admin/User
+        <span style="right: 0; position: absolute; margin-right: 1rem">
       <button
         type="button"
         class="btn adminCreate"
@@ -15,50 +15,55 @@
         type="button"
         class="btn adminCreate"
         (click)="goToAudit()"
-        style="background: green; color: white"
+        style="background: #2fd9a7; color: white"
       >
         Go to Audit&nbsp;
         <i class="fa fa-history fa-1x"></i>
       </button>
     </span>
-  </h1>
-  <mat-divider class="mt-3"></mat-divider>
+    </h1>
+    <mat-divider class="mt-3"></mat-divider>
 </div>
 <div class="row" style="padding: 1%">
-  <div class="col-lg-12">
-    <table>
-      <thead>
-        <tr style="color: blue">
-          <th>User ID</th>
-          <th>User Name</th>
-          <th>Email ID</th>
-          <th>Role</th>
-          <th colspan="2" style="text-align: center">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          #radio
-          *ngFor="
+    <div class="col-lg-12">
+        <table>
+            <thead>
+                <tr style="color: blue">
+                    <th class="sno">SNo.</th>
+                    <th>User Name</th>
+                    <th>Email ID</th>
+                    <th>Employee No</th>
+                    <th>Department</th>
+                    <th>Phone No</th>
+                    <th>Designation</th>
+                    <th>Active/Deactive</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr #radio *ngFor="
             let item of userList | slice: (page - 1) * pageSize:page * pageSize
-          "
-        >
-          <td>{{ item.userid }}</td>
-          <td>{{ item.username }}</td>
-          <td>{{ item.emailId }}</td>
-          <td>{{ item.role }}</td>
-          <td>
-            <button mat-button (click)="modifyUser(item.userid)">
-              <mat-icon>edit</mat-icon> Modify
+          ">
+                    <td>{{ item.userid }}</td>
+                    <td>{{ item.username }}</td>
+                    <td>{{ item.emailId }}</td>
+                    <td>{{ item.employeeNo }}</td>
+                    <td>{{ item.dept }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>{{ item.designation }}</td>
+                    <td>{{ item.ActiveDeActive }}</td>
+                    <td>
+                        <button mat-raised-button (click)="modifyUser(item.userid)">
+              <i class="fa fa-edit" style="font-size: 1.5rem; color: rgb(75, 151, 238);"></i>&nbsp; Modify
             </button>
-          </td>
-          <td>
-            <button mat-button (click)="deactivateUser(item.userid)">
+                    </td>
+                    <!-- <td>
+                        <button mat-button (click)="deactivateUser(item.userid)">
               <mat-icon style="color: red">remove_circle</mat-icon> Deactivate
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

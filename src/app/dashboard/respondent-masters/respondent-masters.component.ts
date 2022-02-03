@@ -55,6 +55,7 @@ export class RespondentMastersComponent implements OnInit {
         });
       }
       this.dataSource = new MatTableDataSource(result['employeeList']);
+      console.log(result['employeeList'])
     }),
       (err) => {
         this.isLoad = false;

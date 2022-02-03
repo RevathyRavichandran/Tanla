@@ -18,10 +18,13 @@ button {
 }
 
 .mat-header-cell {
-  font-size: 15px;
+  font-size: 1rem;
   color: blue;
-  font-weight: bolder;
+  font-weight: 500;
   padding-left: 0.5rem;
+}
+th {
+  font-size: 1rem;
 }
 
 .mat-cell {

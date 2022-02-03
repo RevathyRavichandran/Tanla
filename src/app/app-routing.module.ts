@@ -30,7 +30,7 @@ const routes: Routes = [
     component: FeedbackComponent,
   },
   {
-    path: 'questionaries',
+    path: 'questionnaire',
     component: QuestionariesComponent,
   },
   {

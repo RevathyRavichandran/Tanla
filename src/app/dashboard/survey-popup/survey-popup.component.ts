@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SurveyService } from '../../../app/services/survey.service';
-
+import { SurveyComponent } from '../survey/survey.component';
 @Component({
   selector: 'app-survey-popup',
   templateUrl: './survey-popup.component.html',
@@ -66,8 +66,8 @@ export class SurveyPopupComponent implements OnInit {
       "ProcessVariables": {"catagoryName":category,"surveyName":surveyName}
     }
     this.surveyService.createSurvey(payload).subscribe((res) => {
+      this.dialogRef.close(true);
     })
-    this.dialogRef.close();
   }
 
   cancelSurvey() {

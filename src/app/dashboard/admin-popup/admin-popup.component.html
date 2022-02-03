@@ -1,11 +1,13 @@
 <button mat-icon-button class="close-button" [mat-dialog-close]="true">
   <mat-icon class="close-icon" color="warn">close</mat-icon>
 </button>
-<h1 class="text-center" style="color: blue" mat-dialog-title>{{ data ? 'Modify' : 'Create' }} User</h1>
+<h1 class="text-center" style="color: blue" mat-dialog-title>
+  {{ data ? "Modify" : "Create" }} User
+</h1>
 <form [formGroup]="fg" (ngSubmit)="saveUser()">
   <mat-dialog-content class="mat-typography">
-    <div class="container">
-      <div class="form-group">
+    <div class="container row">
+      <div class="form-group col-6">
         <label for="username"
           ><h2 style="font-size: 1rem; margin: 0 0 8px">User Name:</h2></label
         >
@@ -18,7 +20,7 @@
         />
       </div>
       <br />
-      <div class="form-group">
+      <div class="form-group col-6">
         <label for="email"
           ><h2 style="font-size: 1rem; margin: 0 0 8px">Email ID:</h2></label
         >
@@ -31,30 +33,78 @@
         />
       </div>
       <br />
-      <div class="form-group">
-        <label for="password"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Password:</h2></label
+      <div class="form-group col-6">
+        <label for="Mobile No"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Mobile No:</h2></label
         >
         <input
-          type="password"
+          type="text"
           class="form-control"
-          id="password"
-          placeholder="Password"
-          formControlName="password"
+          id="mobile"
+          placeholder="Mobile No"
+          formControlName="mobile"
         />
       </div>
       <br />
-      <div class="form-group">
-        <label for="role"
-          ><h2 style="font-size: 1rem; margin: 0 0 8px">Role:</h2></label
+      <div class="form-group col-6">
+        <label for="Employee"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Employee No:</h2></label
         >
         <input
-          type="role"
+          type="text"
           class="form-control"
-          id="role"
-          placeholder="Role"
-          formControlName="role"
-          readonly
+          id="Employee"
+          placeholder="Employee No"
+          formControlName="Employee"
+        />
+      </div>
+      <br />
+      <div class="form-group col-6">
+        <label for="Department"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Department:</h2></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="Department"
+          placeholder="Department"
+          formControlName="Department"
+        />
+      </div>
+      <br />
+      <div class="form-group col-6">
+        <label for="Designation"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Designation:</h2></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="Designation"
+          placeholder="Designation"
+          formControlName="Designation"
+        />
+      </div>
+      <br />
+      <div *ngIf="data" class="form-group col-6">
+        <label for="status"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">User status:</h2></label
+        >
+        <select class="form-control form-select mb-3" id="status" (change)="showReason($event)">
+            <option value="1">Activate</option>
+            <option value="2">Deactivate</option>
+          </select>
+      </div>
+      <br />
+      <div *ngIf="data && reason" class="form-group col-6">
+        <label for="reason"
+          ><h2 style="font-size: 1rem; margin: 0 0 8px">Reason:</h2></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="reason"
+          placeholder="Reason"
+          formControlName="reason"
         />
       </div>
     </div>
@@ -65,8 +115,7 @@
     </button>
     <button
       type="button"
-      class="btn mt-1"
-      style="background-color: grey; color: white; width: 6rem"
+      class="btn mt-1 close-btn"
       (click)="cancelUser()"
     >
       Cancel

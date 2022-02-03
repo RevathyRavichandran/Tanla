@@ -15,5 +15,19 @@ export class SurveyService {
     );
   }
 
+  listSurvey(survey: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'NPS Feedback/api/surveyList',
+      survey
+    );
+  }
+
+  downloadSurvey(survey: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'NPS Feedback/api/csv download_survey',
+      survey
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

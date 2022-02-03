@@ -38,6 +38,7 @@
     "font-awesome": "^4.7.0",
     "json-server": "^0.17.0",
     "jw-angular-pagination": "^1.2.0",
+    "lodash": "^4.17.21",
     "mdb-angular-ui-kit": "^1.6.0",
     "moment": "^2.29.1",
     "ng-apexcharts": "^1.6.0",

@@ -8,9 +8,7 @@
             <div class="form-group">
                 <label class="mb-2" style="font-size: 1.2rem; font-weight: 500;" for="category">Select Category:</label>
                 <select class="form-control form-select mt-2" id="category" formControlName="category">
-          <option value="SMS">SMS</option>
-          <option value="Email">Email</option>
-          <option value="Voice">Voice</option>
+          <option [value]="cat" *ngFor="let cat of categories">{{ cat }}</option>
         </select>
             </div>
             <br>
@@ -47,7 +45,7 @@
       </button>
         </div>
 
-        <button type="button" class="btn mt-1" style="background-color: grey; color: white; width: 6rem;" (click)="cancelQuestion()">
+        <button type="button" class="btn mt-1 close-btn" (click)="cancelQuestion()">
         Cancel
       </button>
     </mat-dialog-actions>

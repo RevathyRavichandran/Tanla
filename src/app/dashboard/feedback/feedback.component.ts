@@ -20,6 +20,7 @@ export class FeedbackComponent implements OnInit {
   fg: FormGroup;
   displayedColumns: string[] = [
     'id',
+    'surveyName',
     'feedbackQuestion',
     'feedbackAnswer',
     'employeeName',

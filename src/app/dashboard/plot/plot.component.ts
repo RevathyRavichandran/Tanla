@@ -10,7 +10,7 @@ import {
   ApexFill,
 } from 'ng-apexcharts';
 import { dashboardService } from '../../../app/services/dashboard.service';
- 
+
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -20,7 +20,7 @@ export type ChartOptions = {
   dataLabels: ApexDataLabels;
   fill: ApexFill;
 };
- 
+
 @Component({
   selector: 'app-plot',
   templateUrl: './plot.component.html',
@@ -29,7 +29,7 @@ export type ChartOptions = {
 export class PlotComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
   // public chartOptions: Partial<ChartOptions>;
- 
+
   @ViewChild('myCanvas')
   public canvas: ElementRef;
   public context: CanvasRenderingContext2D;
@@ -38,7 +38,7 @@ export class PlotComponent implements OnInit {
   public chartLabels: any[];
   public chartColors: any[];
   public chartOptions: any;
- 
+
   weekProDate: any = [];
   monthProData: any = [];
   monthProDate: any = [];
@@ -51,7 +51,7 @@ export class PlotComponent implements OnInit {
   monthDetData: any = [];
   monthDetDate: any = [];
   weekDetData: any = [];
- 
+
   constructor(public dashboaService: dashboardService) {
     this.dashboaService.getChartData('1').subscribe((res) => {
       if (res && res.graphDateList && res.graphDateList.length > 1) {
@@ -59,28 +59,14 @@ export class PlotComponent implements OnInit {
           if (element.graphDate && !element.graphCount) {
             this.weekProDate.push(element.graphDate);
             this.weekProData.push(0);
+            this.weekPasData.push(0);
+            this.weekDetData.push(0);
           } else {
             this.weekProDate.push(element.graphDate);
             this.weekProData.push(element.graphCount);
-          }       
-        });
-        res.promoDataList.forEach((element) => {
-          if (element.graphDate && !element.promoCount) {
-            this.weekPasDate.push(element.graphDate);
-            this.weekPasData.push(0);
-          } else {
-            this.weekPasDate.push(element.graphDate);
             this.weekPasData.push(element.promoCount);
-          }          
-        });
-        res.detractDataList.forEach((element) => {
-          if (element.graphDate && !element.detractCount) {
-            this.weekDetDate.push(element.graphDate);
-            this.weekDetData.push(0);
-          } else {
-            this.weekDetDate.push(element.graphDate);
             this.weekDetData.push(element.detractCount);
-          }          
+          }
         });
       }
       this.chartData = [
@@ -159,7 +145,7 @@ export class PlotComponent implements OnInit {
       };
     });
   }
- 
+
   ngOnInit(): void {
     this.dashboaService.weekBtnObs().subscribe((opt) => {
       if (opt == 'week') {
@@ -175,28 +161,14 @@ export class PlotComponent implements OnInit {
               if (element.graphDate && !element.graphCount) {
                 this.weekProDate.push(element.graphDate);
                 this.weekProData.push(0);
+                this.weekPasData.push(0);
+                this.weekDetData.push(0);
               } else {
                 this.weekProDate.push(element.graphDate);
                 this.weekProData.push(element.graphCount);
-              }       
-            });
-            res.promoDataList.forEach((element) => {
-              if (element.graphDate && !element.promoCount) {
-                this.weekPasDate.push(element.graphDate);
-                this.weekPasData.push(0);
-              } else {
-                this.weekPasDate.push(element.graphDate);
                 this.weekPasData.push(element.promoCount);
-              }          
-            });
-            res.detractDataList.forEach((element) => {
-              if (element.graphDate && !element.detractCount) {
-                this.weekDetDate.push(element.graphDate);
-                this.weekDetData.push(0);
-              } else {
-                this.weekDetDate.push(element.graphDate);
                 this.weekDetData.push(element.detractCount);
-              }          
+              }
             });
           }
           this.chartData = [
@@ -276,7 +248,7 @@ export class PlotComponent implements OnInit {
         });
       }
     });
- 
+
     this.dashboaService.monthBtnObs().subscribe((opt) => {
       if (opt == 'month') {
         this.monthProDate = [];
@@ -291,28 +263,14 @@ export class PlotComponent implements OnInit {
               if (element.graphDate && !element.graphCount) {
                 this.monthProDate.push(element.graphDate);
                 this.monthProData.push(0);
+                this.monthPasData.push(0);
+                this.monthDetData.push(0);
               } else {
                 this.monthProDate.push(element.graphDate);
                 this.monthProData.push(element.graphCount);
-              }       
-            });
-            res.promoDataList.forEach((element) => {
-              if (element.graphDate && !element.promoCount) {
-                this.monthPasDate.push(element.graphDate);
-                this.monthPasData.push(0);
-              } else {
-                this.monthPasDate.push(element.graphDate);
                 this.monthPasData.push(element.promoCount);
-              }          
-            });
-            res.detractDataList.forEach((element) => {
-              if (element.graphDate && !element.detractCount) {
-                this.monthDetDate.push(element.graphDate);
-                this.monthDetData.push(0);
-              } else {
-                this.monthDetDate.push(element.graphDate);
                 this.monthDetData.push(element.detractCount);
-              }          
+              }
             });
           }
           this.chartData = [
@@ -388,7 +346,7 @@ export class PlotComponent implements OnInit {
                 },
               ],
             },
-          };        
+          };
         });
       }
     });

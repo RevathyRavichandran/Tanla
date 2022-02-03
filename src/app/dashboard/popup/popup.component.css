@@ -26,11 +26,3 @@ button {
  ::ng-deep .icon-outside .mat-dialog-container {
     overflow: unset
 }
-
-.add-btn {
-    border: none;
-    background-color: #2fd9a7;
-    color: white;
-    width: 6rem;
-    margin-right: 1rem;
-}
