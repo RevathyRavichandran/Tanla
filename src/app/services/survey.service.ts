@@ -15,6 +15,13 @@ export class SurveyService {
     );
   }
 
+  uploadFile(content: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'NPS Feedback/api/qusAnsUploadApi',
+      content
+    );
+  }
+
   listSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
       this.dbUrl + 'NPS Feedback/api/surveyList',

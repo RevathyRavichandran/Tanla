@@ -74,7 +74,7 @@ export class SurveyComponent implements OnInit {
 
   dataSource = new MatTableDataSource([]);
 
-  constructor(public dialog: MatDialog, public survey: SurveyService, 
+  constructor(public dialog: MatDialog, public survey: SurveyService,
     private cd: ChangeDetectorRef, private snackBar: MatSnackBar) {
     localStorage.setItem('survey', this.userList[0]['survey']);
   }
@@ -168,6 +168,7 @@ export class SurveyComponent implements OnInit {
           'Your survey has been moved to live successfully.',
           'success'
         );
+
         // this.radio['_results'].forEach((element, index) => {
         //   if (element.nativeElement.childNodes[0].childNodes[0].checked) {
         //   }

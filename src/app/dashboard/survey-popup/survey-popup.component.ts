@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SurveyService } from '../../../app/services/survey.service';
-import { SurveyComponent } from '../survey/survey.component';
+
 @Component({
   selector: 'app-survey-popup',
   templateUrl: './survey-popup.component.html',
@@ -17,7 +17,7 @@ export class SurveyPopupComponent implements OnInit {
   get categoryArr() {
     return this.fg.get('category') as FormArray;
   }
- 
+
   addcategory() {
     this.categoryArr.push(
       new FormGroup(
@@ -27,7 +27,7 @@ export class SurveyPopupComponent implements OnInit {
       )
     )
   }
- 
+
   removecategory(i) {
     this.categoryArr.removeAt(i);
   }
@@ -56,26 +56,43 @@ export class SurveyPopupComponent implements OnInit {
   }
 
   saveSurvey() {
-    let surveyName = this.fg.value.name;
-    let catArr = []
-    this.fg.value.category.forEach(element => {
-      catArr.push(element.category)
-    });
-    let category = catArr.toString();
-    var payload = {
-      "ProcessVariables": {"catagoryName":category,"surveyName":surveyName}
-    }
-    this.surveyService.createSurvey(payload).subscribe((res) => {
-      this.dialogRef.close(true);
-    })
+    let body = {
+      ProcessVariables: {
+        attachment: {
+          content: btoa(this.fileContent),
+          name: this.fileName,
+          operation: 'upload',
+          mime: 'application/vnd.ms-excel',
+          size: this.fileSize,
+        },
+      },
+    };
+    this.surveyService.uploadFile(body).subscribe(
+      res => {
+        let surveyName = this.fg.value.name;
+        let catArr = []
+        this.fg.value.category.forEach(element => {
+          catArr.push(element.category)
+        });
+        let category = catArr.toString();
+        var payload = {
+          "ProcessVariables": {"catagoryName":category,"surveyName":surveyName}
+        }
+        this.surveyService.createSurvey(payload).subscribe((res) => {
+          this.dialogRef.close(true);
+        })
+      }
+    )
   }
 
   cancelSurvey() {
     this.dialogRef.close();
   }
+
   fileUpload() {
     document.getElementById('file').click();
   }
+
   public changeListener(files: FileList) {
     if (files && files.length > 0) {
       let file: File = files.item(0);
@@ -83,7 +100,10 @@ export class SurveyPopupComponent implements OnInit {
       this.fileSize = file.size;
       let reader: FileReader = new FileReader();
       reader.readAsText(file);
+      reader.onload = (e) => {
+        let csv: string = reader.result as string;
+        this.fileContent = csv;
+      };
     }
   }
-
 }
