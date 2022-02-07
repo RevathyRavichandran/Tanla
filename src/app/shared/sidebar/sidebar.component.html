@@ -13,6 +13,12 @@
     </div>
     <mat-divider></mat-divider>
     <div style="text-align: center;">
+        <a mat-list-item #rla5="routerLinkActive" routerLinkActive="nav-active" routerLink="/survey"><img class="center" *ngIf="!rla5.isActive" src="/assets/tanla_survey_grey_128.svg" alt="">
+            <img class="center" *ngIf="rla5.isActive" src="/assets/tanla_survey_red_128.svg" alt="">
+            <br>Survey</a>
+    </div>
+    <mat-divider></mat-divider>
+    <div style="text-align: center;">
         <a mat-list-item #rla2="routerLinkActive" routerLinkActive="nav-active" routerLink="/questionnaire"><img class="center" *ngIf="!rla2.isActive" src="/assets/tanla_masters_grey_128.svg" alt="">
             <img class="center" *ngIf="rla2.isActive" src="/assets/tanla_masters_red_128.svg" alt="">
             <br>Questionnaire</a>
@@ -21,15 +27,9 @@
     <div style="text-align: center;">
         <a mat-list-item #rla4="routerLinkActive" routerLinkActive="nav-active" routerLink="/respondentMasters"><img class="center" *ngIf="!rla4.isActive" src="/assets/tanla_respondent_grey_128.svg" alt="">
             <img class="center" *ngIf="rla4.isActive" src="/assets/tanla_respondent_red_128.svg" alt="">
-            <br>Template</a>
+            <br>Respondent <br> Masters</a>
     </div>
-    <mat-divider></mat-divider>
-    <div style="text-align: center;">
-        <a mat-list-item #rla5="routerLinkActive" routerLinkActive="nav-active" routerLink="/survey"><img class="center" *ngIf="!rla5.isActive" src="/assets/tanla_survey_grey_128.svg" alt="">
-            <img class="center" *ngIf="rla5.isActive" src="/assets/tanla_survey_red_128.svg" alt="">
-            <br>Survey</a>
-    </div>
-    <mat-divider></mat-divider>
+    <mat-divider></mat-divider>    
     <div style="text-align: center;">
         <a mat-list-item #rla3="routerLinkActive" routerLinkActive="nav-active" routerLink="/configuration"><img class="center" *ngIf="!rla3.isActive" src="/assets/tanla_configuration_grey_128.svg" alt="">
             <img class="center" *ngIf="rla3.isActive" src="/assets/tanla_configuration_128.svg" alt="">

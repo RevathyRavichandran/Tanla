@@ -26,7 +26,8 @@ export class RespondentMastersComponent implements OnInit {
     'phoneNo',
     'company',
     'department',
-    'surveyName',
+    'col-1',
+    'col-2'
   ];
 
   dataSource = new MatTableDataSource([]);

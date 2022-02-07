@@ -52,6 +52,14 @@ body {
     margin-right: 1rem;
 }
 
+.add-btn1 {
+    border: none;
+    background-color: #2fd9a7;
+    color: white;
+    width: auto;
+    margin-right: 1rem;
+}
+
 .close-btn {
     background-color: grey; color: white; width: 6rem;
 }

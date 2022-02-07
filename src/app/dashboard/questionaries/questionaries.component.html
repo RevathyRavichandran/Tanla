@@ -21,7 +21,7 @@
                                 <div class="styleHead">Question</div>
                             </div>
                             <div class="col-4 set-border-right text-center">
-                                <div class="styleHead">Answer</div>
+                                <div class="styleHead">Answer & Score</div>
                             </div>
                             <div class="col-2 text-center">
                                 <div class="styleHead">Action</div>
@@ -44,7 +44,7 @@
                             <div class="col-4 set-border-right" style="padding-left: 1rem;">
                                 <div *ngFor="let answer of question.answers; index as j">
                                     <div class="row">
-                                        {{ j+1 }}. {{ answer.answer }}
+                                        {{ j+1 }}. {{ answer.answer }} & 10
                                     </div>
                                     <br>
                                 </div>

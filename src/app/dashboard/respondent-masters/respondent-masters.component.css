@@ -17,6 +17,11 @@ button {
   width: 45%;
 }
 
+#fileName::-webkit-search-cancel-button{
+  position:relative;
+  right:20px;    
+}
+
 .mat-header-cell {
   font-size: 1rem;
   color: blue;

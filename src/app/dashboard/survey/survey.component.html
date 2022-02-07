@@ -47,14 +47,14 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="surveyDate">
-                        <th mat-header-cell *matHeaderCellDef>Date</th>
+                        <th mat-header-cell *matHeaderCellDef>Survey Period</th>
                         <td mat-cell *matCellDef="let element">
-                            {{ element.surveyDate }}
+                            {{ element.surveyDate }} to {{ element.surveyDate }}
                         </td>
                     </ng-container>
                     <ng-container class="liveCol" matColumnDef="live">
-                        <th mat-header-cell *matHeaderCellDef>Live</th>
-                        <td mat-cell *matCellDef="let element">
+                        <th mat-header-cell *matHeaderCellDef style="text-align: center;">Live</th>
+                        <td mat-cell *matCellDef="let element" style="text-align: center;">
                             <input type="radio" (change)="liveCheck($event, element.surveyName)" name="radio" [(checked)]="isLive" />
                         </td>
                     </ng-container>

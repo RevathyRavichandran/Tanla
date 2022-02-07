@@ -17,7 +17,7 @@ button {
 }
 
 .align {
-  text-align: right;
+  text-align: center;
 }
 
 input[type=number]::-webkit-inner-spin-button, 

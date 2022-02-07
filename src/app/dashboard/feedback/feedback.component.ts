@@ -23,6 +23,7 @@ export class FeedbackComponent implements OnInit {
     'surveyName',
     'feedbackQuestion',
     'feedbackAnswer',
+    'score',
     'employeeName',
     'employeePhoneNumber',
     'employeeCompany',
