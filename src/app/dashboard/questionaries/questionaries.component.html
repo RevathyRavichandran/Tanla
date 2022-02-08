@@ -20,8 +20,11 @@
                             <div class="col-6 header set-border-right text-center">
                                 <div class="styleHead">Question</div>
                             </div>
-                            <div class="col-4 set-border-right text-center">
-                                <div class="styleHead">Answer & Score</div>
+                            <div class="col-3 set-border-right text-center">
+                                <div class="styleHead">Answer</div>
+                            </div>
+                            <div class="col-1 set-border-right text-center">
+                                <div class="styleHead">Score</div>
                             </div>
                             <div class="col-2 text-center">
                                 <div class="styleHead">Action</div>
@@ -41,10 +44,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 set-border-right" style="padding-left: 1rem;">
+                            <div class="col-3 set-border-right" style="padding-left: 1rem;">
                                 <div *ngFor="let answer of question.answers; index as j">
                                     <div class="row">
-                                        {{ j+1 }}. {{ answer.answer }} & 10
+                                        {{ j+1 }}. {{ answer.answer }}
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-1 set-border-right" style="padding-left: 2.5rem;">
+                                <div *ngFor="let answer of question.answers; index as j">
+                                    <div class="row">
+                                        10
                                     </div>
                                     <br>
                                 </div>

@@ -49,7 +49,7 @@ export class AdminComponent implements OnInit {
       userid: 4,
       username: 'Test4',
       employeeNo: 26,
-      ActiveDeActive: 'Deactive',
+      ActiveDeActive: 'Inactive',
       reason: 'Sample Reason',
       emailId: 'test4@gmail.com',
       password: 'test333',

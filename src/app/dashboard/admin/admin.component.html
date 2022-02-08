@@ -34,7 +34,7 @@
           <th>Department</th>
           <th>Phone No</th>
           <th>Designation</th>
-          <th>Active/Deactive</th>
+          <th>Active/Inactive</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -49,7 +49,7 @@
           <td>{{ item.phone }}</td>
           <td>{{ item.designation }}</td>
           <td>{{ item.ActiveDeActive }}&nbsp;
-            <span *ngIf="item.ActiveDeActive === 'Deactive'">
+            <span *ngIf="item.ActiveDeActive === 'Inactive'">
               <i [matTooltip]="item.reason" matTooltipPosition="right" class="fa
                 fa-info-circle" aria-hidden="true"></i></span>
           </td>

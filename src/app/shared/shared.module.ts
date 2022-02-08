@@ -11,6 +11,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
+import { AvatarModule } from 'ngx-avatar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [HeaderComponent, SidebarComponent],
@@ -20,10 +22,12 @@ import { RouterModule } from '@angular/router';
     MatDividerModule,
     MatToolbarModule,
     MatIconModule,
+    MatMenuModule,
     MatButtonModule,
     FlexLayoutModule,
     RouterModule,
     MatListModule,
+    AvatarModule
   ],
   providers: [],
   exports: [HeaderComponent, SidebarComponent],

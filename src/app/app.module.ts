@@ -12,9 +12,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiInterceptor } from './api.interceptor';
+import { PasswordSetComponent } from './password-set/password-set.component';
+import { SuccessPageComponent } from './success-page/success-page.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, PasswordSetComponent, SuccessPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

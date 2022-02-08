@@ -38,17 +38,31 @@
       </div>
       <br />
       <div formArrayName="answers">
-        <label style="font-size: 1.2rem; font-weight: 500">Answers:</label>
-        &nbsp; &nbsp;
+          <div class="row">
+              <div class="col-6">
+                  <label style="font-size: 1.2rem; font-weight: 500">Answers:</label>
+              </div>
+              <div class="col-4">
+                <label style="font-size: 1.2rem; font-weight: 500">Score:</label>
+              </div>
+              <div class="col-2" style="text-align: end;">
+                 <button type="button" class="btn add-btn mb-2" (click)="addAnswer()">
+                Add <i class="fa fa-plus fa-1x"></i>
+              </button> 
+              </div>
+              
+          </div>
+        
+        <!-- &nbsp; &nbsp;
         <button type="button" class="btn add-btn mb-2" (click)="addAnswer()">
           Add <i class="fa fa-plus fa-1x"></i>
-        </button>
+        </button> -->
         <div
           class="row"
           *ngFor="let answer of fg.get('answers')['controls']; index as i"
           [formGroupName]="i"
         >
-          <div class="col-lg-5">
+          <div class="col-lg-6">
             <div class="form-group">
               <textarea
                 class="form-control"
@@ -60,14 +74,6 @@
               ></textarea>
               <br />
             </div>
-          </div>
-          <div
-            class="col-lg-1"
-            *ngIf="fg.get('answers')['controls'].length > 2"
-          >
-            <button mat-button (click)="removeAnswer(i)">
-              <mat-icon style="color: red">remove_circle</mat-icon>
-            </button>
           </div>
           <div class="col-lg-5">
             <div class="form-group">

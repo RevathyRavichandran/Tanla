@@ -31,7 +31,8 @@ export class SurveyComponent implements OnInit {
     'catagoryName',
     'surveyDate',
     'live',
-    'download'
+    'download',
+    'downloadQues'
   ];
   isLive: boolean = false;
   userList: any[] = [

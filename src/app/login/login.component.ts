@@ -16,10 +16,17 @@ export class LoginComponent implements OnInit {
     this.fg = new FormGroup({
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)
-    })
+    });
   }
 
+  // tslint:disable-next-line: typedef
   login() {
-    this.router.navigateByUrl('/dashboard')
+    if (this.f.password.value === 'Inswit@123') {
+      this.router.navigateByUrl('/resetPassword');
+    } else {
+      this.router.navigateByUrl('/dashboard');
+    }
   }
+  // tslint:disable-next-line: typedef
+  get f() { return this.fg.controls; }
 }

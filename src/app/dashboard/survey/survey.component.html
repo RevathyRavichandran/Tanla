@@ -1,6 +1,6 @@
 <div style="background-color: white;">
     <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
-        Survey Name
+        Survey Configuration
         <span style="right: 0; position: absolute; margin-right: 1rem">
       <button
         type="button"
@@ -59,12 +59,23 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="download">
-                        <th class="downloadCol" mat-header-cell *matHeaderCellDef>Download</th>
+                        <th class="downloadCol" mat-header-cell *matHeaderCellDef>Respondent<br>Download</th>
                         <td mat-cell *matCellDef="let element">
                             <button mat-button>
                           <mat-icon
                             style="transform: scale(0.8); color: blue; cursor: pointer"
                             (click)="downloadSurvey(element.surveyName)"
+                            >file_download</mat-icon
+                          >
+                        </button>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="downloadQues">
+                        <th class="downloadCol" mat-header-cell *matHeaderCellDef>Questionnaire<br>Download</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-button>
+                          <mat-icon
+                            style="transform: scale(0.8); color: blue; cursor: pointer"
                             >file_download</mat-icon
                           >
                         </button>

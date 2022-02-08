@@ -336,7 +336,8 @@ export class FeedbackComponent implements OnInit {
       this.searchPromotorsContext.push({ label: val, value: val });
     });
     let arr = [];
-    dataValue.forEach((element) => {
+    if (dataValue) {
+      dataValue.forEach((element) => {
       [
         'employeeCompany',
         'employeeName',
@@ -375,6 +376,7 @@ export class FeedbackComponent implements OnInit {
         }
       });
     });
+    }
     this.filterCommonMethod();
   }
 
@@ -396,7 +398,8 @@ export class FeedbackComponent implements OnInit {
       this.currentPage = result['currentPage'];
       this.pageSize = result['perPage'];
       this.noRecords = result['lastMessageAuditList'] ? false : true;
-      result['lastMessageAuditList'].forEach((date) => {
+      if (!this.noRecords) {
+        result['lastMessageAuditList'].forEach((date) => {
         date.creDate = '';
         date.phone = '';
         let serv_utc = moment
@@ -426,6 +429,7 @@ export class FeedbackComponent implements OnInit {
             );
         }
       });
+      }
       this.isLoad = false;
       if (this.noRecords) {
         this.matSnackbar.open('No records found!!!', '', {

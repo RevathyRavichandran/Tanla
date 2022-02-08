@@ -1,16 +1,9 @@
 <mat-toolbar class="mat-elevation-z5">
   <mat-toolbar-row>
-    <span
-      ><img
-        src="./assets/tanla.jpg"
-        alt=""
-        style="height: 60px; width: 80px"
-      /><b style="font-size: 30px" class="mt-1">tanla</b></span
-    >
-
-    <!-- <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+    <span><img src="./assets/tanla_logo.png" alt="" /></span>
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
       <ul fxLayout="row">
-        <li class="mt-1">
+        <!-- <li class="mt-1">
           <button mat-button>
             <mat-icon>notifications_none</mat-icon>
           </button>
@@ -19,17 +12,36 @@
           <button mat-button>
             <mat-icon>settings</mat-icon>
           </button>
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <div class="profile-card">
-            <img
-              src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-              alt="Revathy"
-            />
+            <ngx-avatar bgColor="#de1f26" name="Revathy"></ngx-avatar>
           </div>
+        </li>         -->
+        <li class="mt-2">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <div class="row">
+              <div class="col-6">
+                <ngx-avatar
+                  size="45"
+                  bgColor="#de1f26"
+                  name="Revathy"></ngx-avatar>
+              </div>
+              <div class="col-3 mt-2">
+                <i class="fa fa-caret-down"></i>
+              </div>
+            </div>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="logout()" mat-menu-item>
+              Logout&nbsp;<i
+                class="fa fa-sign-out"
+                aria-hidden="true"
+                style="color: #de1f26; font-size: 1.4rem"></i>
+            </button>
+          </mat-menu>
         </li>
-        <li class="mt-1 ml-3"><span>Revathy</span></li>
       </ul>
-    </div> -->
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

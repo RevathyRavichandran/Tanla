@@ -9,6 +9,8 @@ import { RespondentMastersComponent } from './dashboard/respondent-masters/respo
 import { SurveyComponent } from './dashboard/survey/survey.component';
 import { AdminComponent } from './dashboard/admin/admin.component';
 import { AuditComponent } from './dashboard/audit/audit.component';
+import { PasswordSetComponent } from './password-set/password-set.component';
+import { SuccessPageComponent } from './success-page/success-page.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'resetPassword',
+    component: PasswordSetComponent
+  },
+  {
+    path: 'passwordChanged',
+    component: SuccessPageComponent
   },
   {
     path: 'dashboard',
