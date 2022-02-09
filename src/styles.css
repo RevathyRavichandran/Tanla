@@ -16,6 +16,11 @@ body {
     color: white;
 }
 
+.success-snack-bar {
+    background-color: green;
+    color: white;
+}
+
 .sno {
     width: 1rem;
     padding-left: 10px !important;

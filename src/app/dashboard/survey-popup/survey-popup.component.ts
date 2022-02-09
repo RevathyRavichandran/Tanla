@@ -67,8 +67,7 @@ export class SurveyPopupComponent implements OnInit {
         },
       },
     };
-    this.surveyService.uploadFile(body).subscribe(
-      res => {
+    // 
         let surveyName = this.fg.value.name;
         let catArr = []
         this.fg.value.category.forEach(element => {
@@ -79,10 +78,10 @@ export class SurveyPopupComponent implements OnInit {
           "ProcessVariables": {"catagoryName":category,"surveyName":surveyName}
         }
         this.surveyService.createSurvey(payload).subscribe((res) => {
+          console.log(res)
           this.dialogRef.close(true);
         })
-      }
-    )
+    //   
   }
 
   cancelSurvey() {

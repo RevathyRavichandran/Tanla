@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup,  Validators } from '@angular/forms';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-password-set',
@@ -11,11 +12,11 @@ export class PasswordSetComponent implements OnInit {
 
   fg: FormGroup;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, public login: LoginService) {}
 
   ngOnInit(): void {
-    const regex = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
     this.fg = new FormGroup({
+      email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       passwordNew: new FormControl(null, [
         Validators.required,
@@ -30,7 +31,12 @@ export class PasswordSetComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   submit() {
-    this.router.navigateByUrl('/passwordChanged');
+    let payload = {
+      "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.passwordNew.value}
+      }
+    this.login.resetPwd(payload).subscribe(reset => {
+      this.router.navigateByUrl('/passwordChanged');
+    })
   }
 
 }

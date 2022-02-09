@@ -1,7 +1,22 @@
 <div style="background: white">
-    <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
-        Respondent Masters
-        <span style="right: 0; position: absolute; margin-right: 1rem">
+    <div class="row">
+        <div class="col-3 mt-2">
+<h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
+        Respondent Master</h1>
+        </div>
+        <div class="col-4 mt-3">
+            <input
+            class="form-control"
+            id="survey"
+            style="font-family: FontAwesome, Arial; font-style: normal; border-radius: 20px !important"
+            placeholder="&#xF002; Search by Survey Name"
+          />
+        </div>
+        <div class="col-2 mt-3">
+            <button type="submit" class="btn btn-primary apply-btn">Apply</button>
+        </div>
+        <div class="col-3 mt-3">
+           <span style="right: 0; position: absolute; margin-right: 1rem">
       <button
         type="button"
         class="btn"
@@ -11,8 +26,11 @@
         <img src="assets/tanla_download_128.svg" alt="" />
         Respondent template
       </button>
-    </span>
-    </h1>
+    </span> 
+        </div>
+    </div>
+    
+        
     <mat-divider class="mt-2"></mat-divider>
 </div>
 <div *ngIf="isLoad" class="loader-top">
@@ -124,7 +142,7 @@
     </button>
   </span>
 
-    <button type="button" style="height: 4rem;" class="btn col-lg-2 apply-btn" (click)="submit()">
+    <button type="button" style="height: 4rem;" class="btn col-lg-2 upload-btn" (click)="submit()">
     Upload Respondent
   </button>
 </div>

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FeedbackService {
 
-  private dbUrl = "https://compute.twixor.digital/d/project/";
+  private dbUrl = "https://appiyo.karix.solutions/appiyo/d/project/";
 
   public getAllFeedback(feedback: any): Observable<any> {
     return this.http.post<any>(this.dbUrl + 'NPS Feedback/api/Feedback screen API', feedback);

@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SurveyService {
-  private dbUrl = 'https://compute.twixor.digital/d/project/';
+export class SurveyService {  
+  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/project/';
 
   createSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
@@ -24,7 +24,7 @@ export class SurveyService {
 
   listSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/surveyList',
+      this.dbUrl + 'NPS Feedback/api/list survey details',
       survey
     );
   }

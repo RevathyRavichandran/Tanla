@@ -19,7 +19,7 @@ export class dashboardService {
   }
 
   getDashboardPercentage(): Observable<any> {
-    let url = `https://compute.twixor.digital/d/project/NPS Feedback/api/Dashboard count API`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/`;
     let processVariables = {
       processVariables: {
         processId: '43bcca90720311ec843fcaa870889860',
