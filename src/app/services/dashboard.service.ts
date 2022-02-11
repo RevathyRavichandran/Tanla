@@ -19,7 +19,7 @@ export class dashboardService {
   }
 
   getDashboardPercentage(): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/project/`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/Dashboard count API`;
     let processVariables = {
       processVariables: {
         processId: '43bcca90720311ec843fcaa870889860',
@@ -30,7 +30,7 @@ export class dashboardService {
     };
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'ApTpbPTQ+S4nTNYHHBzmesprv7se9zQWF8DYnyxoFVwfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -43,7 +43,7 @@ export class dashboardService {
   }
 
   getChartData(axisValue): Observable<any> {
-    let url = `https://compute.twixor.digital/d/project/NPS Feedback/api/Dashboard Chart API`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/Dashboard Chart API`;
     let processVariables = {
       processVariables: {
         xAxis: axisValue

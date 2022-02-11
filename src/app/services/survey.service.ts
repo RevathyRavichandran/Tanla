@@ -22,6 +22,13 @@ export class SurveyService {
     );
   }
 
+  liveSurvey(live: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'NPS Feedback/api/changeSurveyLive',
+      live
+    );
+  }
+
   listSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
       this.dbUrl + 'NPS Feedback/api/list survey details',

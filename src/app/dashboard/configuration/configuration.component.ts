@@ -11,47 +11,75 @@ import moment from 'moment';
 export class ConfigurationComponent implements OnInit {
   isLoad = false;
   noRecords = false;
+  survey: boolean = false;
   companyList: any = [];
-  data = { selected_company: "", expiry_limit: null, skip_limit: null };
+  surveyList: any = [];
+  surveyname: string;
+  surveyDate: string;
+  company: boolean = false;
+  data = { selected_survey: "", selected_company: "", expiry_limit: null, skip_limit: null };
 
   constructor(public config: ConfigService, private snackBar: MatSnackBar) {}
 
   submit() {
-    let d = new Date();
+    if (this.surveyDate) {
+      let d = new Date(this.surveyDate);
     d.setHours(0, 0, 0, 0);
     let a = moment(d,'MM/DD/YYYY');
     let b = moment(this.data.expiry_limit,'MM/DD/YYYY');
     let diffDays = b.diff(a, 'days');
-    this.config.updateConfig({ ProcessVariables: {...this.data, expiry_limit: diffDays.toString(), skip_limit: this.data.skip_limit.toString() }}).subscribe(
+    this.config.updateConfig({ ProcessVariables: {selected_company: this.data.selected_company, selected_survey: this.data.selected_survey, validateTo: this.data.expiry_limit, expiry_limit: diffDays.toString(), skip_limit: this.data.skip_limit.toString() }}).subscribe(
       res => {
-        this.data = { selected_company: "", expiry_limit: null, skip_limit: null };
+        this.data = { selected_survey: "", selected_company: "", expiry_limit: null, skip_limit: null };
       }
     );
+    } else {
+      this.config.updateConfig({ ProcessVariables: {...this.data, skip_limit: this.data.skip_limit.toString() }}).subscribe(
+        res => {
+          this.data = { selected_survey: "", selected_company: "", expiry_limit: null, skip_limit: null };
+        }
+      );
+    }  
   }
 
   ngOnInit() {
     let payload = { ProcessVariables: { currentPage: 1 } };
-    this.commonMethod(payload);
+    this.commonMethod(payload, '');
   }
 
   showCompany(event) {
-    let payload = { ProcessVariables: { selected_company: event.target.value } }
-    this.commonMethod(payload);
+    console.log(event)
+    this.company = true;
+    let payload = { ProcessVariables: { selected_company: event.target.value, selected_survey: this.surveyname } }
+    this.commonMethod(payload, 'company');
   }
 
-  commonMethod(payload) {
+  showSurvey(event) {
+    this.survey = true;
+    this.surveyname = event.target.value;
+    let payload = { ProcessVariables: { selected_survey: event.target.value } }
+    this.commonMethod(payload, '');
+  }
+
+  commonMethod(payload, company) {
     this.isLoad = true;
     this.config.listConfig(payload).subscribe((res) => {
+      console.log(res)
       this.isLoad = false;
       let result = res['ProcessVariables'];
-      this.companyList = result['companyList'];
-      this.noRecords = result['companyList'] ? false : true;
+      this.surveyList = result['surveyList']
+      this.noRecords = result['surveyList'] ? false : true;
       this.isLoad = false;
-      if (result['selected_company'] !== '') {
-        let d = new Date();
+      if (result['surveyList'] !== '') {
+        console.log('true')
+        this.companyList = result['selected_company'];
+        this.data.skip_limit = result['skip_limit'];
+      }
+      if (company === 'company') {
+        this.surveyDate = result['validateFrom'][0];
+        let d = new Date(result['validateFrom'][0]);
         d.setDate(d.getDate() + +result['expiry_limit']);
         this.data.expiry_limit = d;
-        this.data.skip_limit = result['skip_limit'];
       }
       if (this.noRecords) {
         this.snackBar.open('There are no records found!!!', '', {

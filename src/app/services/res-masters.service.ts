@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResMastersService {
-  private dbUrl = 'https://compute.twixor.digital/d/project/';
+  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/project/';
 
   getAllRecord(feedback: any): Observable<any> {
     return this.http.post<any>(

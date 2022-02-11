@@ -4,7 +4,7 @@
 <h1 class="text-center" style="color: blue" mat-dialog-title>
   {{ data ? "Modify" : "Create" }} User
 </h1>
-<form [formGroup]="fg" (ngSubmit)="saveUser()">
+<form [formGroup]="fg" (ngSubmit)="saveUser(data)">
   <mat-dialog-content class="mat-typography">
     <div class="container row">
       <div class="form-group col-6">

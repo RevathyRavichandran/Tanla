@@ -7,7 +7,16 @@
 <form [formGroup]="fg" (ngSubmit)="submitQuestion()">
   <mat-dialog-content class="mat-typography">
     <div class="container">
-      <div class="form-group">
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="mb-2"
+          style="font-size: 1.2rem; font-weight: 500"
+          for="survey">Survey Name:
+          </label>
+          <input type="text" class="form-control mt-2" id="survey" placeholder="survey"
+            [readonly]="true" />
+        </div>
+        <div class="form-group col-6">
         <label
           class="mb-2"
           style="font-size: 1.2rem; font-weight: 500"
@@ -24,6 +33,8 @@
           </option>
         </select>
       </div>
+      </div>
+      
       <br />
       <div class="form-group">
         <label style="font-size: 1.2rem; font-weight: 500">Question:</label>

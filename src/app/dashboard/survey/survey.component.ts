@@ -151,7 +151,7 @@ export class SurveyComponent implements OnInit {
     })
   }
 
-  liveCheck(event, name) {
+  liveCheck(event, name, id) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Do you want to move this survey to live?',
@@ -164,12 +164,16 @@ export class SurveyComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.setItem('survey', name);
-        Swal.fire(
-          'Moved!',
-          'Your survey has been moved to live successfully.',
-          'success'
-        );
-
+        let payload = {
+          "ProcessVariables": {"id":id}
+        }
+        this.survey.liveSurvey(payload).subscribe(res=>{
+          Swal.fire(
+            'Moved!',
+            'Your survey has been moved to live successfully.',
+            'success'
+          );
+        })
         // this.radio['_results'].forEach((element, index) => {
         //   if (element.nativeElement.childNodes[0].childNodes[0].checked) {
         //   }

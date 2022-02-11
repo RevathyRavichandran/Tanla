@@ -6,15 +6,14 @@
       </div>
       <div class="col-4">
         <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"> Search </span>
-          </div>
           <input
             class="form-control"
-            placeholder="Search by Survey Name"
+            id="survey"
             aria-label="Search"
             [matAutocomplete]="auto"
             formControlName="survey"
+            style="font-family: FontAwesome, Arial; font-style: normal; border-radius: 20px !important"
+            placeholder="&#xF002; Search by Survey Name"
           />
           <mat-autocomplete
             #auto="matAutocomplete"
@@ -105,7 +104,7 @@
         <!-- <div class="col-7 mr-3" style="text-align: end; font-size: 15px; color: #de1f26;"><img src="assets/tanla_advanced_filter_clear.svg" alt="">Clear All</div> -->
       </div>
       <div class="row p-3">
-        <div class="form-group col-3">
+        <div class="form-group col-2">
           <label for="mobile"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">Mobile No:</h2></label
           >
@@ -129,7 +128,7 @@
             </mat-option>
           </mat-autocomplete>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="company"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">
               Company Name:
@@ -149,6 +148,29 @@
           >
             <mat-option
               *ngFor="let search of filteredCompanySearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-2 form-group">
+          <label for="detractors"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">
+              Detractor:
+            </h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="detractors"
+            placeholder="Detractors"
+            formControlName="detractors"
+            [matAutocomplete]="auto5"
+          />
+          <mat-autocomplete #auto5="matAutocomplete">
+            <mat-option
+              *ngFor="let search of filteredDetractorsSearch | async"
               [value]="search.value"
             >
               <span>{{ search.label }}</span>
@@ -203,33 +225,10 @@
             </mat-option>
           </mat-autocomplete>
         </div>
-        <div class="col-3 form-group">
-          <label for="detractors"
-            ><h2 style="font-size: 1rem; margin: 0 0 8px">
-              Detractors:
-            </h2></label
-          >
-          <input
-            style="border-radius: 20px !important"
-            class="form-control"
-            id="detractors"
-            placeholder="Detractors"
-            formControlName="detractors"
-            [matAutocomplete]="auto5"
-          />
-          <mat-autocomplete #auto5="matAutocomplete">
-            <mat-option
-              *ngFor="let search of filteredDetractorsSearch | async"
-              [value]="search.value"
-            >
-              <span>{{ search.label }}</span>
-            </mat-option>
-          </mat-autocomplete>
-        </div>
         <br />
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="passives"
-            ><h2 style="font-size: 1rem; margin: 0 0 8px">Passives:</h2></label
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Passive:</h2></label
           >
           <input
             style="border-radius: 20px !important"
@@ -249,9 +248,9 @@
           </mat-autocomplete>
         </div>
         <br />
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
           <label for="promotors"
-            ><h2 style="font-size: 1rem; margin: 0 0 8px">Promotors:</h2></label
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Promotor:</h2></label
           >
           <input
             style="border-radius: 20px !important"
@@ -271,6 +270,29 @@
           </mat-autocomplete>
         </div>
         <br />
+        <div class="col-2 form-group">
+          <label for="detractors"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">
+              Score:
+            </h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="detractors"
+            placeholder="Score"
+            formControlName="detractors"
+            [matAutocomplete]="auto5"
+          />
+          <mat-autocomplete #auto5="matAutocomplete">
+            <mat-option
+              *ngFor="let search of filteredDetractorsSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
         <div class="col-3 form-group">
           <label for="name"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">Name:</h2></label
@@ -296,6 +318,29 @@
           </mat-autocomplete>
         </div>
         <br />
+        <div class="col-3 form-group">
+          <label for="detractors"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">
+              Category:
+            </h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="detractors"
+            placeholder="Category"
+            formControlName="detractors"
+            [matAutocomplete]="auto5"
+          />
+          <mat-autocomplete #auto5="matAutocomplete">
+            <mat-option
+              *ngFor="let search of filteredDetractorsSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
       </div>
     </div>
   </form>
@@ -339,6 +384,12 @@
             <th mat-header-cell *matHeaderCellDef>Survey Name</th>
             <td mat-cell *matCellDef="let element">Sample</td>
           </ng-container>
+          <ng-container matColumnDef="catagoryName">
+            <th mat-header-cell *matHeaderCellDef>Category</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.catagoryName }}
+            </td>
+        </ng-container>
           <ng-container matColumnDef="feedbackQuestion">
             <th mat-header-cell *matHeaderCellDef>Question</th>
             <td mat-cell *matCellDef="let element" class="col-lg-3">

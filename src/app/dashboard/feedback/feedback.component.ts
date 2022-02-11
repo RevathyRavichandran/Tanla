@@ -21,6 +21,7 @@ export class FeedbackComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'surveyName',
+    'catagoryName',
     'feedbackQuestion',
     'feedbackAnswer',
     'score',

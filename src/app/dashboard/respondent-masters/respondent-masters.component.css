@@ -76,3 +76,9 @@ td {
   left: 50%;
   position: absolute;
 }
+
+input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  content: URL('assets/icons8-close.svg');
+  cursor: pointer;
+ }

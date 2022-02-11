@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
+import { UserService } from '../../../app/services/user.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin',
@@ -9,70 +12,75 @@ import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
-  page = 1;
+  isLoad = false;
+  totalPages = 100;
+  currentPage = 1;
   pageSize = 10;
-  userList: any[] = [
-    {
-      userid: 1,
-      username: 'Test1',
-      employeeNo: 22,
-      ActiveDeActive: 'Active',
-      emailId: 'test1@gmail.com',
-      password: 'test',
-      dept: 'IT',
-      designation: 'Developer',
-      phone: '2809029002',
-    },
-    {
-      userid: 2,
-      username: 'Test2',
-      employeeNo: 23,
-      ActiveDeActive: 'Active',
-      emailId: 'test2@gmail.com',
-      password: 'test1',
-      dept: 'IT',
-      designation: 'Developer',
-      phone: '2809029002',
-    },
-    {
-      userid: 3,
-      username: 'Test3',
-      employeeNo: 25,
-      ActiveDeActive: 'Active',
-      emailId: 'test3@gmail.com',
-      password: 'test22',
-      dept: 'IT',
-      designation: 'Developer',
-      phone: '2809029002',
-    },
-    {
-      userid: 4,
-      username: 'Test4',
-      employeeNo: 26,
-      ActiveDeActive: 'Inactive',
-      reason: 'Sample Reason',
-      emailId: 'test4@gmail.com',
-      password: 'test333',
-      dept: 'IT',
-      designation: 'Developer',
-      phone: '2809029002',
-    },
-    {
-      userid: 5,
-      username: 'Test5',
-      employeeNo: 27,
-      ActiveDeActive: 'Active',
-      emailId: 'test5@gmail.com',
-      password: 'test4444',
-      dept: 'IT',
-      designation: 'Developer',
-      phone: '2809029002',
-    },
+  noRecords = false;
+  fileName = null;
+  fileContent = '';
+  fileSize = 0;
+  displayedColumns: string[] = [
+    'userid',
+    'username',
+    'emailId',
+    'employeeNo',
+    'dept',
+    'phone',
+    'designation',
+    'ActiveDeActive',
+    'action'
   ];
 
-  constructor(public dialog: MatDialog, private router: Router) {}
+  dataSource = new MatTableDataSource([]);
+  userList : any = [];
 
-  ngOnInit(): void {}
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
+     public user: UserService, private router: Router) {}
+
+  ngOnInit() {
+    let payload = { ProcessVariables: { currentPage: 1 } };
+    this.commonMethod(payload);
+  }
+
+  commonMethod(payload) {
+    this.isLoad = true;
+    this.user.listUser(payload).subscribe((res) => {
+      this.isLoad = false;
+      let result = res['ProcessVariables'];
+      this.totalPages = result['totalPages'] * 10;
+      this.currentPage = result['currentPage'];
+      this.pageSize = result['perPage'];
+      this.noRecords = result['employeeDetails'] ? false : true;
+      this.isLoad = false;
+      if (this.noRecords) {
+        this.snackBar.open('There are no records found!!!', '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+      }
+      this.dataSource = new MatTableDataSource(result['employeeDetails']);
+      this.userList = result['employeeDetails'];
+    }),
+      (err) => {
+        this.isLoad = false;
+        this.noRecords = false;
+        this.snackBar.open(err, '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+        console.log(err);
+      };
+  }
+
+  pageChanged(event) {
+    let payload = { ProcessVariables: { currentPage: event } };
+    this.commonMethod(payload);
+  }
 
   createUser() {
     const dialogRef = this.dialog.open(AdminPopupComponent, {
@@ -81,7 +89,9 @@ export class AdminComponent implements OnInit {
   }
 
   modifyUser(id) {
-    let user = this.userList.filter((val) => val.userid === id)[0];
+    console.log(id)
+    let user = this.userList.filter((val) => val.id === id)[0];
+    console.log(user)
     const dialogRef = this.dialog.open(AdminPopupComponent, {
       width: '1000px',
       data: user,

@@ -12,6 +12,9 @@ export class DashboardComponent implements OnInit {
   passivesPercentage: any;
   detractorsPercentage: any;
   overallScore: any;
+  survey: boolean = true;
+  question: boolean = true;
+  date: boolean = false;
 
   ngOnInit() {
     this.dashboaService.getDashboardPercentage().subscribe((res) => {
@@ -24,18 +27,25 @@ export class DashboardComponent implements OnInit {
     });
   }
   weekData(color) {
-    this.dashboaService.weekBtn.next('week');
+    this.survey = true;
+    this.question = true;
+    this.date = false;
     document.getElementById("week").style.background = color;
     document.getElementById("month").style.background = 'none';
     document.getElementById("year").style.background = 'none';
   }
   monthData(color) {
-    this.dashboaService.monthBtn.next('month');
+    this.survey = true;
+    this.question = false;
+    this.date = false;
     document.getElementById("week").style.background = 'none';
     document.getElementById("month").style.background = color;
     document.getElementById("year").style.background = 'none';
   }
   yearData(color) {
+    this.survey = false;
+    this.question = false;
+    this.date = true;
     document.getElementById("week").style.background = 'none';
     document.getElementById("month").style.background = 'none';
     document.getElementById("year").style.background = color;

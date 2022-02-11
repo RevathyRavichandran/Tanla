@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ConfigService {
-  private dbUrl = 'https://compute.twixor.digital/d/project/';
+  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/project/';
 
   updateConfig(config: any): Observable<any> {
     return this.http.post<any>(

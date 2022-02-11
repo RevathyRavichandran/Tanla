@@ -11,7 +11,7 @@ button {
   font-size: 15px;
 }
 
-#funkystyling {
+.funkystyling {
   background: white url(/assets/tanla_calendar_grey_128.svg) right no-repeat;
   padding-right: 25px;
 }
@@ -34,4 +34,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 .btn {
   width: 15%;
+}
+
+select[readonly]{
+  background: #eee;
+  cursor:no-drop;
+}
+
+select[readonly] option{
+  display:none;
 }
