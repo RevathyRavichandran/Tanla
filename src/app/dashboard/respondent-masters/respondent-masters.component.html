@@ -1,120 +1,145 @@
 <div style="background: white">
-    <div class="row">
-        <div class="col-3 mt-2">
-<h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">
-        Respondent Master</h1>
-        </div>
-        <div class="col-4 mt-3">
-            <input
-            class="form-control"
-            id="survey"
-            style="font-family: FontAwesome, Arial; font-style: normal; border-radius: 20px !important"
-            placeholder="&#xF002; Search by Survey Name"
-          />
-        </div>
-        <div class="col-2 mt-3">
-            <button type="submit" class="btn btn-primary apply-btn">Apply</button>
-        </div>
-        <div class="col-3 mt-3">
-           <span style="right: 0; position: absolute; margin-right: 1rem">
-      <button
-        type="button"
-        class="btn"
-        (click)="downloadTemplate()"
-        style="background: #2d69eb; color: white"
-      >
-        <img src="assets/tanla_download_128.svg" alt="" />
-        Respondent template
-      </button>
-    </span> 
-        </div>
+  <div class="row">
+    <div class="col-3 mt-2">
+      <h1 style="padding-left: 2%; padding-top: 1%; font-weight: bold;">
+        Respondent Master
+      </h1>
     </div>
-    
-        
-    <mat-divider class="mt-2"></mat-divider>
+    <div class="col-4 mt-3">
+      <form class="example-form">
+        <input
+          class="form-control"
+          id="survey"
+          [formControl]="myControl"
+          style="
+            font-family: FontAwesome, Arial;
+            font-style: normal;
+            border-radius: 20px !important;
+          "
+          placeholder="&#xF002; Search by Survey Name"
+          [matAutocomplete]="auto8"
+        />
+        <mat-autocomplete #auto8="matAutocomplete">
+          <mat-option
+            *ngFor="let search of filteredOptions | async"
+            [value]="search"
+          >
+            <span>{{ search }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
+    <div class="col-2 mt-3">
+      <button type="submit" (click)="surveyApply(myControl.value)" class="btn btn-primary apply-btn">Apply</button>
+    </div>
+    <div class="col-3 mt-3">
+      <span style="right: 0; position: absolute; margin-right: 1rem">
+        <button
+          type="button"
+          class="btn"
+          (click)="downloadTemplate()"
+          style="background: #2d69eb; color: white"
+        >
+          <img src="assets/tanla_download_128.svg" alt="" />
+          Respondent template
+        </button>
+      </span>
+    </div>
+  </div>
+
+  <mat-divider class="mt-2"></mat-divider>
 </div>
 <div *ngIf="isLoad" class="loader-top">
-    <mat-spinner class="loader" diameter="50"></mat-spinner>
-    <span class="loader-text">Loading... Please wait</span>
+  <mat-spinner class="loader" diameter="50"></mat-spinner>
+  <span class="loader-text">Loading... Please wait</span>
 </div>
 <div class="row" style="padding: 1%">
-    <div class="col-lg-12" *ngIf="noRecords">
-        <mat-card>
-            <div style="text-align: center">
-                <img style="height: 300px; width: 300px" src="assets/no_files_records_256.png" alt="" />
-            </div>
-            <div style="text-align: center">
-                <h1 style="color: #2d69eb">No Records Found</h1>
-            </div>
-        </mat-card>
-    </div>
-    <div class="col-lg-12" *ngIf="!noRecords">
-        <div class="row" style="padding: 1%">
-            <div class="col-lg-12">
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <ng-container matColumnDef="id">
-                        <th class="sno" mat-header-cell *matHeaderCellDef>SNo.</th>
-                        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Name</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element?.name }}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="designation">
-                        <th mat-header-cell *matHeaderCellDef>Designation</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.designation }}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="emailId">
-                        <th mat-header-cell *matHeaderCellDef>Email ID</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.emailId }}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="phoneNo">
-                        <th mat-header-cell *matHeaderCellDef>Phone No</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.phoneNo }}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="company">
-                        <th mat-header-cell *matHeaderCellDef>Company</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.company }}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="department">
-                        <th mat-header-cell *matHeaderCellDef>Department</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.department }}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="col-1">
-                        <th mat-header-cell *matHeaderCellDef>Additional col-1</th>
-                        <td mat-cell *matCellDef="let element">
-                            
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="col-2">
-                        <th mat-header-cell *matHeaderCellDef>Additional col-2</th>
-                        <td mat-cell *matCellDef="let element">
-                            
-                        </td>
-                    </ng-container>
+  <div class="col-lg-12" *ngIf="noRecords">
+    <mat-card>
+      <div style="text-align: center">
+        <img
+          style="height: 300px; width: 300px"
+          src="assets/no_files_records_256.png"
+          alt=""
+        />
+      </div>
+      <div style="text-align: center">
+        <h1 style="color: #2d69eb">No Records Found</h1>
+      </div>
+    </mat-card>
+  </div>
+  <div class="col-lg-12" *ngIf="!noRecords">
+    <div class="row" style="padding: 1%">
+      <div class="col-lg-12">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <th class="sno" mat-header-cell *matHeaderCellDef>SNo.</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element?.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="designation">
+            <th mat-header-cell *matHeaderCellDef>Designation</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.designation }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="emailId">
+            <th mat-header-cell *matHeaderCellDef>Email ID</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.emailId }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="phoneNo">
+            <th mat-header-cell *matHeaderCellDef>Phone No</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.phoneNo }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="company">
+            <th mat-header-cell *matHeaderCellDef>Company</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.company }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.department }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="col-1">
+            <th mat-header-cell *matHeaderCellDef>Additional col-1</th>
+            <td mat-cell *matCellDef="let element"></td>
+          </ng-container>
+          <ng-container matColumnDef="col-2">
+            <th mat-header-cell *matHeaderCellDef>Additional col-2</th>
+            <td mat-cell *matCellDef="let element"></td>
+          </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-                </table>
-            </div>
-        </div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 <div class="row">
-    <ngb-pagination style="margin-left: 1rem" [collectionSize]="totalPages" [(page)]="currentPage" [maxSize]="5" [boundaryLinks]="true" [pageSize]="pageSize" (pageChange)="pageChanged(currentPage)" class="d-flex col-lg-6"></ngb-pagination>
-    <span class="input-group col-lg-3" style="padding-bottom: 2rem">
+  <ngb-pagination
+    style="margin-left: 1rem"
+    [collectionSize]="totalPages"
+    [(page)]="currentPage"
+    [maxSize]="5"
+    [boundaryLinks]="true"
+    [pageSize]="pageSize"
+    (pageChange)="pageChanged(currentPage)"
+    class="d-flex col-lg-6"
+  ></ngb-pagination>
+  <span class="input-group col-lg-3" style="padding-bottom: 2rem">
     <input
       id="fileName"
       type="search"
@@ -142,7 +167,12 @@
     </button>
   </span>
 
-    <button type="button" style="height: 4rem;" class="btn col-lg-2 upload-btn" (click)="submit()">
+  <button
+    type="button"
+    style="height: 4rem"
+    class="btn col-lg-2 upload-btn"
+    (click)="submit()"
+  >
     Upload Respondent
   </button>
 </div>

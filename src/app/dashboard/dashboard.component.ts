@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   detractorsPercentage: any;
   overallScore: any;
   survey: boolean = true;
-  question: boolean = true;
+  question: boolean = false;
   date: boolean = false;
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   }
   weekData(color) {
     this.survey = true;
-    this.question = true;
+    this.question = false;
     this.date = false;
     document.getElementById("week").style.background = color;
     document.getElementById("month").style.background = 'none';
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   }
   monthData(color) {
     this.survey = true;
-    this.question = false;
+    this.question = true;
     this.date = false;
     document.getElementById("week").style.background = 'none';
     document.getElementById("month").style.background = color;

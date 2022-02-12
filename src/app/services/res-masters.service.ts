@@ -10,7 +10,7 @@ export class ResMastersService {
 
   getAllRecord(feedback: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/respondantMasterList',
+      this.dbUrl + 'NPS Feedback/api/RespondantList',
       feedback
     );
   }

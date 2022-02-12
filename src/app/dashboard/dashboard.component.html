@@ -1,15 +1,15 @@
 <div style="background-color: white">
-  <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">Dashboard</h1>
+  <h1 style="padding-left: 1%; padding-top: 1%; font-weight: bold;">Dashboard</h1>
   <mat-divider></mat-divider>
 </div>
 <div class="row" style="padding: 1%">
   <div class="col-lg-3">
-    <mat-card style="height: 9rem">
+    <mat-card style="height: 10rem">
       <mat-card-title-group>
         <mat-card-title>
-          <h1 style="color: #3cb371"><b>Promoters</b></h1>
+          <h1 style="color: #3cb371"><b>Promoter</b></h1>
           <br />
-          <h1 style="color: #3cb371; font-size: 40px">
+          <h1 style="color: #3cb371; font-size: 25px">
             <b>{{ promotersPercentage }} %</b>
           </h1>
         </mat-card-title>
@@ -30,12 +30,12 @@
     </mat-card>
   </div>
   <div class="col-lg-3">
-    <mat-card style="height: 9rem">
+    <mat-card style="height: 10rem">
       <mat-card-title-group>
         <mat-card-title>
-          <h1 style="color: #ef820d"><b>Passives</b></h1>
+          <h1 style="color: #ef820d"><b>Passive</b></h1>
           <br />
-          <h1 style="color: #ef820d; font-size: 40px">
+          <h1 style="color: #ef820d; font-size: 30px">
             <b>{{ passivesPercentage }} %</b>
           </h1>
         </mat-card-title>
@@ -56,12 +56,12 @@
     </mat-card>
   </div>
   <div class="col-lg-3">
-    <mat-card style="height: 9rem">
+    <mat-card style="height: 10rem">
       <mat-card-title-group>
         <mat-card-title>
-          <h1 style="color: #dc143c"><b>Detractors</b></h1>
+          <h1 style="color: #dc143c"><b>Detractor</b></h1>
           <br />
-          <h1 style="color: #dc143c; font-size: 40px">
+          <h1 style="color: #dc143c; font-size: 30px">
             <b>{{ detractorsPercentage }} %</b>
           </h1>
         </mat-card-title>
@@ -82,12 +82,12 @@
     </mat-card>
   </div>
   <div class="col-lg-3">
-    <mat-card style="height: 9rem">
+    <mat-card style="height: 10rem">
       <mat-card-title-group>
         <mat-card-title>
           <h1 style="color: rgb(96 134 241)"><b>Overall</b></h1>
           <br />
-          <h1 style="color: rgb(96 134 241); font-size: 40px">
+          <h1 style="color: rgb(96 134 241); font-size: 30px">
             <b>{{ overallScore }} %</b>
           </h1>
         </mat-card-title>
@@ -112,8 +112,8 @@
   <div class="col-lg-12">
     <mat-card>
       <mat-card-title>
-        <div class="row">
-          <div class="col-6">
+        <div class="row pb-2">
+          <div class="col-6 pt-2">
             <label>Advanced Filter</label>
           </div>
           <div class="col-6 example-button-row">
@@ -123,11 +123,10 @@
               mat-raised-button
               (click)="weekData('#96d3e2')"
             >
-              <img src="assets/tanla_calendar_grey_128.svg" alt="" /> Questions
+              <img src="assets/tanla_calendar_grey_128.svg" alt="" /> Survey
             </button>
             <button id="month" mat-raised-button (click)="monthData('#96d3e2')">
-              <img src="assets/tanla_calendar_grey_128.svg" alt="" /> Survey
-              Name
+              <img src="assets/tanla_calendar_grey_128.svg" alt="" /> Questionnaire
             </button>
             <button id="year" mat-raised-button (click)="yearData('#96d3e2')">
               <img src="assets/tanla_calendar_grey_128.svg" alt="" /> Date Range
@@ -135,9 +134,9 @@
           </div>
         </div>
       </mat-card-title>
-      <br />
       <mat-card-content>
         <div class="row">
+          <div class="col-3" *ngIf="survey && !question"></div>
           <div class="col-6" *ngIf="survey">
             <input
               class="form-control"
@@ -162,24 +161,28 @@
               placeholder="&#xF002; Search by Question Name"
             />
           </div>
-          <div class="col-6" *ngIf="date">
+          <div class="col-3" *ngIf="date"></div>
+          <div class="col-3" style="font-size: 0.8rem;" *ngIf="date">
             <mat-form-field appearance="fill">
-              <mat-label>Enter a date range</mat-label>
-              <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Start date" />
-                <input matEndDate placeholder="End date" />
-              </mat-date-range-input>
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
-              <mat-date-range-picker #picker></mat-date-range-picker>
+              <mat-label>From date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle style='width: 1em' matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            </div>
+
+            <div class="col-3" style="font-size: 0.8rem;" *ngIf="date">
+            <mat-form-field appearance="fill">
+              <mat-label>To date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
         </div>
         <br *ngIf="!date" />
         <div class="row">
-          <div class="col-1">
+          <div class="col-1" style="width: 70px;">
             <span
               style="
                 background: grey;
@@ -194,8 +197,8 @@
               ><img src="assets/tanla_respondent_grey_128.svg" alt=""
             /></span>
           </div>
-          <div class="col-5">
-            <label style="color: grey; font-size: 1rem" for="">
+          <div class="col-5" [ngClass]="{'mb-4': date}">
+            <label style="color: grey; font-size: 1rem;" for="">
               Total Respondent</label
             >
             <br />
@@ -231,7 +234,7 @@
             <mat-card style="padding: 0 !important; border-radius: 10px">
               <mat-card-header
                 style="
-                  background-color: rgb(123 239 174);
+                  background-color: #3CB371;
                   color: white;
                   padding-left: 30%;
                   border-radius: 10px 10px 0 0;
@@ -243,7 +246,7 @@
               <mat-card-content
                 style="
                   border-radius: 0 0 10px 10px;
-                  background-color: rgb(240 253 246 / 50%);
+                  background-color: #a8e9a8;
                 "
                 class="text-center"
               >
@@ -255,31 +258,7 @@
             <mat-card style="padding: 0 !important; border-radius: 10px">
               <mat-card-header
                 style="
-                  background-color: rgb(243 215 14);
-                  color: white;
-                  padding-left: 30%;
-                  border-radius: 10px 10px 0 0;
-                "
-              >
-                <mat-card-title class="pt-3">Detractor</mat-card-title>
-              </mat-card-header>
-              <mat-divider></mat-divider>
-              <mat-card-content
-                style="
-                  border-radius: 0 0 10px 10px;
-                  background-color: rgb(247 235 151 / 50%);
-                "
-                class="text-center"
-              >
-                <h1 class="p-4">NA%</h1>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="col-3">
-            <mat-card style="padding: 0 !important; border-radius: 10px">
-              <mat-card-header
-                style="
-                  background-color: rgb(233 67 98);
+                  background-color: #ef820d;
                   color: white;
                   padding-left: 30%;
                   border-radius: 10px 10px 0 0;
@@ -291,7 +270,31 @@
               <mat-card-content
                 style="
                   border-radius: 0 0 10px 10px;
-                  background-color: rgb(241 188 205 / 50%);
+                  background-color: #FFE5B4;
+                "
+                class="text-center"
+              >
+                <h1 class="p-4">NA%</h1>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="col-3">
+            <mat-card style="padding: 0 !important; border-radius: 10px">
+              <mat-card-header
+                style="
+                  background-color: #DC143C;
+                  color: white;
+                  padding-left: 30%;
+                  border-radius: 10px 10px 0 0;
+                "
+              >
+                <mat-card-title class="pt-3">Detractor</mat-card-title>
+              </mat-card-header>
+              <mat-divider></mat-divider>
+              <mat-card-content
+                style="
+                  border-radius: 0 0 10px 10px;
+                  background-color: #CEA09F;
                 "
                 class="text-center"
               >
@@ -305,7 +308,7 @@
                 style="
                   background-color: rgb(96 134 241);
                   color: white;
-                  padding-left: 30%;
+                  padding-left: 25%;
                   border-radius: 10px 10px 0 0;
                 "
               >

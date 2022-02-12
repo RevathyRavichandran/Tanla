@@ -48,14 +48,14 @@ export class ConfigurationComponent implements OnInit {
   }
 
   showCompany(event) {
-    console.log(event)
-    this.company = true;
+    console.log(event.target.value, 'vaue')
+    this.company = event.target.value == '' ? false : true;
     let payload = { ProcessVariables: { selected_company: event.target.value, selected_survey: this.surveyname } }
     this.commonMethod(payload, 'company');
   }
 
   showSurvey(event) {
-    this.survey = true;
+    this.survey = event.target.value === '' ? false : true;
     this.surveyname = event.target.value;
     let payload = { ProcessVariables: { selected_survey: event.target.value } }
     this.commonMethod(payload, '');
