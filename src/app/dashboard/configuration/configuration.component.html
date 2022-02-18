@@ -1,49 +1,90 @@
-<div style="background-color: white;">
-    <h1 style="padding-left: 1%; padding-top: 1%; color: #3a3a3a">Configuration</h1>
-    <mat-divider></mat-divider>
+<div style="background-color: white">
+  <h1 style="padding-left: 1%; padding-top: 1%; font-weight: bold;">
+    Configuration
+  </h1>
+  <mat-divider></mat-divider>
 </div>
 <div class="row" style="padding: 1%">
-    <div class="col-lg-12">
-        <mat-card>
-            <mat-card-content>
-                <div class="row">
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-6 align-center">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <label for="company"><h2 style="font-size: 1rem; margin: 0 0 8px;">Select Company Name:</h2></label>
-                                <select class="form-control form-select mb-3" id="company">
-                  <option selected>Select Company</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+  <div class="col-lg-12">
+    <mat-card>
+      <mat-card-content>
+        
+          
+            <form class="form-inline" #form="ngForm" (ngSubmit)="submit()">
+              <div class="row p-4">
+                 <div class="form-group col-6">
+                <label for="company"
+                  ><h2 style="font-size: 1rem; margin: 0 0 3px">
+                    Select Survey:
+                  </h2></label
+                >
+                <select class="form-control form-select mb-3" (change)="showSurvey($event)" id="survey" name="selected_survey" [(ngModel)]="data.selected_survey">
+                  <option selected value="">Select Survey Name</option>
+                  <option *ngFor="let item of surveyList; index as i" value="{{item}}">{{item}}</option>
                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="expiry"><h2 style="font-size: 1rem; margin: 0 0 8px;">Expiry Limit:</h2></label>
-                                <input class="form-control" placeholder="Expiry Limit" [matDatepicker]="picker" (click)="picker.open()" id="funkystyling">
-                                <span class="input-group-addon">
+              </div>
+              <div class="form-group col-6">
+                <label for="company"
+                  ><h2 style="font-size: 1rem; margin: 0 0 3px">
+                    Select Company:
+                  </h2></label
+                >
+                <select [disabled]="!survey" class="form-control form-select mb-3" (change)="showCompany($event)" id="company" name="selected_company" [(ngModel)]="data.selected_company">
+                  <option selected value="">Select Company Name</option>
+                  <option *ngFor="let item of companyList; index as i" value="{{item}}">{{item}}</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="skip"
+                  ><h2 style="font-size: 1rem; margin: 0 0 3px">
+                    Skip Limit:
+                  </h2></label
+                >
+                <input [readonly]="survey ? false : true"
+                  type="number"
+                  class="form-control"
+                  id="skip"
+                  placeholder="Skip Limit"
+                  name="limit"
+                  [(ngModel)]="data.skip_limit"
+                />
+              </div>              
+              <br />
+              <div class="form-group col-6">
+                <label for="expiry"
+                  ><h2 style="font-size: 1rem; margin: 0 0 3px">
+                    Expiry Limit:
+                  </h2></label
+                >
+                <input [disabled]="!company"
+                  class="form-control"
+                  [ngClass]="{ 'funkystyling': company }"
+                  placeholder="Expiry Limit"
+                  [matDatepicker]="picker"
+                  (click)="picker.open()"
+                  name="expiry_limit"
+                  [(ngModel)]="data.expiry_limit"
+                />
+                <span class="input-group-addon">
                   <mat-datepicker #picker></mat-datepicker>
                 </span>
-                            </div>
-                            <br />
-                            <div class="form-group">
-                                <label for="skip"><h2 style="font-size: 1rem; margin: 0 0 8px;">Skip Limit:</h2></label>
-                                <input type="number" class="form-control" id="skip" placeholder="Skip Limit" />
-                            </div>
-                            <div class="align">
-                                <div class="mt-2">
-                                    <button type="submit" class="btn btn-primary submit-btn">
+              </div>
+              </div>
+              
+              <div class="align">
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary btn-lg submit-btn">
                     Submit
                   </button>
-                                    <button style="border-color: grey;" class="btn my-1">Cancel</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-3"></div>
+                  <button style="background-color: grey; font-size: 1.2rem; padding: 0.3rem; color: white;" class="btn btn-primary btn-lg submit-btn" type="button" (click)="form.reset()">
+                    Cancel
+                  </button>
                 </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+              </div>
+            </form>
+          
+        
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

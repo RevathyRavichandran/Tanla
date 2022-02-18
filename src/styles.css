@@ -1,10 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~font-awesome/css/font-awesome.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import '~font-awesome/css/font-awesome.css';
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .error-snack-bar {
-  background-color: red;
-  color: white;
+    background-color: red;
+    color: white;
 }
+
+.success-snack-bar {
+    background-color: green;
+    color: white;
+}
+
+.sno {
+    width: 1rem;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.downloadCol {
+    width: 1.3rem;
+}
+
+.liveCol {
+    width: 1.3rem;
+}
+
+.submit-btn {
+    border: none;
+    background-color: #2fd9a7; 
+    color: white;
+    margin-right: 0.35rem;
+  }
+
+  .apply-btn {
+    border: none;
+    background-color: #2fd9a7;
+    color: white;
+    margin-right: 1rem;
+    width: 5rem;
+}
+.add-btn {
+    border: none;
+    background-color: #2fd9a7;
+    color: white;
+    width: 6rem;
+    margin-right: 1rem;
+}
+
+.add-btn1 {
+    border: none;
+    background-color: #2fd9a7;
+    color: white;
+    width: auto;
+    margin-right: 1rem;
+}
+
+.close-btn {
+    background-color: grey; color: white; width: 6rem;
+}
+
+.footer {
+    bottom: 0; 
+    position: fixed; 
+    text-align: center; 
+    width: 100%;
+}
+

@@ -24,6 +24,7 @@ table {
 
 th {
   font-size: 1rem;
+  font-weight: 500;
 }
 
 th,
@@ -38,4 +39,26 @@ td {
   color: white;
   margin-right: 1rem;
   width: 5rem;
+}
+
+.mat-header-cell {
+  font-size: 1rem;
+  color: blue;
+  font-weight: 500;
+  padding-left: 0.5rem;
+}
+th {
+  font-size: 1rem;
+}
+
+.mat-cell {
+  font-size: 15px;
+  font-weight: 400;
+  padding-left: 0.5rem;
+}
+
+th,
+td {
+  border-right: solid 1px rgb(206, 202, 202);
+  border-left: solid 1px rgb(206, 202, 202);
 }

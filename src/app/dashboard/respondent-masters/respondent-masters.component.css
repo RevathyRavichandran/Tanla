@@ -4,7 +4,6 @@ table {
 }
 
 button {
-  padding: 10px;
   border-radius: 9999px;
   font-size: 15px;
 }
@@ -17,11 +16,19 @@ button {
   width: 45%;
 }
 
+#fileName::-webkit-search-cancel-button{
+  position:relative;
+  right:20px;    
+}
+
 .mat-header-cell {
-  font-size: 15px;
+  font-size: 1rem;
   color: blue;
-  font-weight: bolder;
+  font-weight: 500;
   padding-left: 0.5rem;
+}
+th {
+  font-size: 1rem;
 }
 
 .mat-cell {
@@ -41,7 +48,7 @@ td {
   color: white;
 }
 
-.apply-btn {
+.upload-btn {
   border: none;
   background-color: #2fd9a7;
   color: white;
@@ -69,3 +76,9 @@ td {
   left: 50%;
   position: absolute;
 }
+
+input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  content: URL('assets/icons8-close.svg');
+  cursor: pointer;
+ }

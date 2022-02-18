@@ -1,54 +1,129 @@
 <button mat-icon-button class="close-button" [mat-dialog-close]="true">
   <mat-icon class="close-icon" color="warn">close</mat-icon>
 </button>
-<h1 class="text-center" style="color: blue;" mat-dialog-title>{{ data.editMode ? 'Edit' : 'Add' }} Question</h1>
+<h1 class="text-center" style="color: blue" mat-dialog-title>
+  {{ data.editMode ? "Edit" : "Add" }} Question
+</h1>
 <form [formGroup]="fg" (ngSubmit)="submitQuestion()">
-    <mat-dialog-content class="mat-typography">
-        <div class="container">
-            <div class="form-group">
-                <label class="mb-2" style="font-size: 1.2rem; font-weight: 500;" for="category">Select Category:</label>
-                <select class="form-control form-select mt-2" id="category" formControlName="category">
-          <option value="SMS">SMS</option>
-          <option value="Email">Email</option>
-          <option value="Voice">Voice</option>
+  <mat-dialog-content class="mat-typography">
+    <div class="container">
+      <div class="row">
+        <div class="form-group col-6">
+          <label class="mb-2"
+          style="font-size: 1.2rem; font-weight: 500"
+          for="survey">Survey Name:
+          </label>
+          <input type="text" class="form-control mt-2" id="survey" placeholder="survey" formControlName="survey"
+            [readonly]="true" />
+        </div>
+        <div class="form-group col-6">
+        <label
+          class="mb-2"
+          style="font-size: 1.2rem; font-weight: 500"
+          for="category"
+          >Select Category:</label
+        >
+        <select
+          class="form-control form-select mt-2"
+          id="category"
+          formControlName="category"
+        >
+          <option [value]="cat" *ngFor="let cat of categories">
+            {{ cat }}
+          </option>
         </select>
-            </div>
-            <br>
-            <div class="form-group">
-                <label style="font-size: 1.2rem; font-weight: 500;">Question:</label>
-                <textarea class="form-control mt-2" id="exampleFormControlTextarea1" rows="3" placeholder="Enter your question here...." formControlName="question" name="question"></textarea>
-            </div>
-            <br>
-            <div formArrayName="answers">
-                <label style="font-size: 1.2rem; font-weight: 500;">Answers:</label> &nbsp; &nbsp;
-                <button type="button" class="btn add-btn mb-2" (click)="addAnswer()">
+      </div>
+      </div>
+      
+      <br />
+      <div class="form-group">
+        <label style="font-size: 1.2rem; font-weight: 500">Question:</label>
+        <textarea
+          class="form-control mt-2"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          placeholder="Enter your question here...."
+          formControlName="question"
+          name="question"
+        ></textarea>
+      </div>
+      <br />
+      <div formArrayName="answers">
+          <div class="row">
+              <div class="col-6">
+                  <label style="font-size: 1.2rem; font-weight: 500">Answers:</label>
+              </div>
+              <div class="col-4">
+                <label style="font-size: 1.2rem; font-weight: 500">Score:</label>
+              </div>
+              <div class="col-2" style="text-align: end;">
+                 <button type="button" class="btn add-btn mb-2" (click)="addAnswer()">
+                Add <i class="fa fa-plus fa-1x"></i>
+              </button> 
+              </div>
+              
+          </div>
+        
+        <!-- &nbsp; &nbsp;
+        <button type="button" class="btn add-btn mb-2" (click)="addAnswer()">
           Add <i class="fa fa-plus fa-1x"></i>
-        </button>
-                <div class="row" *ngFor="let answer of fg.get('answers')['controls']; index as i" [formGroupName]="i">
-                    <div class="col-lg-11">
-                        <div class="form-group">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="Enter your answer here...." formControlName="answer" name="answer"></textarea>
-                            <br>
-                        </div>
-                    </div>
-                    <div class="col-lg-1" *ngIf="fg.get('answers')['controls'].length > 2">
-                        <button mat-button (click)="removeAnswer(i)">
+        </button> -->
+        <div
+          class="row"
+          *ngFor="let answer of fg.get('answers')['controls']; index as i"
+          [formGroupName]="i"
+        >
+          <div class="col-lg-6">
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="1"
+                placeholder="Enter your answer here...."
+                formControlName="answer"
+                name="answer"
+              ></textarea>
+              <br />
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="1"
+                placeholder="Enter your score here...."
+                
+                name="score"
+              ></textarea>
+              <br />
+            </div>
+          </div>
+          <div
+            class="col-lg-1"
+            *ngIf="fg.get('answers')['controls'].length > 2"
+          >
+            <button mat-button (click)="removeAnswer(i)">
               <mat-icon style="color: red">remove_circle</mat-icon>
             </button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end" class="m-2">
-        <div matTooltip="Please fill all the fields!!" [matTooltipDisabled]="!fg.invalid" matTooltipPosition="above">
-            <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
-          Save
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="m-2">
+    <div
+      matTooltip="Please fill all the fields!!"
+      [matTooltipDisabled]="!fg.invalid"
+      matTooltipPosition="above"
+    >
+      <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
+        Save
       </button>
-        </div>
+    </div>
 
-        <button type="button" class="btn mt-1" style="background-color: grey; color: white; width: 6rem;" (click)="cancelQuestion()">
-        Cancel
-      </button>
-    </mat-dialog-actions>
+    <button type="button" class="btn mt-1 close-btn" (click)="cancelQuestion()">
+      Cancel
+    </button>
+  </mat-dialog-actions>
 </form>

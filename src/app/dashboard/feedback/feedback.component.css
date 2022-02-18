@@ -16,8 +16,7 @@ button {
 }
 
 th {
-    font-weight: 500;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .mat-cell {
@@ -35,14 +34,6 @@ td {
 .error-snack-bar {
     background-color: red;
     color: white;
-}
-
-.apply-btn {
-    border: none;
-    background-color: #2fd9a7;
-    color: white;
-    margin-right: 1rem;
-    width: 5rem;
 }
 
 th.mat-header-cell:first-of-type,

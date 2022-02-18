@@ -1,6 +1,33 @@
 <div class="col-lg-12 row" style="background-color: white;">
-    <div class="col-lg-10">
-        <h1 style="padding-left: 1%; padding-top: 1%">Questionaries</h1>
+    <div class="col-lg-3 mt-2">
+        <h1 style="padding-left: 3%; padding-top: 1%; font-weight: bold;">Questionnaire</h1>
+    </div>
+    <div class="col-4 mt-3">
+        <form class="example-form">
+            <input
+              class="form-control"
+              id="survey"
+              [formControl]="myControl"
+              style="
+                font-family: FontAwesome, Arial;
+                font-style: normal;
+                border-radius: 20px !important;
+              "
+              placeholder="&#xF002; Search by Survey Name"
+              [matAutocomplete]="auto8"
+            />
+            <mat-autocomplete #auto8="matAutocomplete">
+              <mat-option
+                *ngFor="let search of filteredOptions | async"
+                [value]="search"
+              >
+                <span>{{ search }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </form>
+    </div>
+    <div class="col-3 mt-3">
+        <button type="submit" (click)="surveyApply(myControl.value)" class="btn btn-primary apply-btn">Apply</button>
     </div>
     <div class="col-lg-2 mt-3">
         <button (click)="createQuestion()" class="btn btn-primary">Create Question &nbsp;
@@ -9,20 +36,40 @@
     </div>
     <mat-divider class="mt-2"></mat-divider>
 </div>
+<div *ngIf="isLoad" class="loader-top">
+    <mat-spinner class="loader" diameter="50"></mat-spinner>
+    <span class="loader-text">Loading... Please wait</span>
+  </div>
 <div class="row" style="padding: 1%">
-    <div class="col-lg-12">
+    <div class="col-lg-12" *ngIf="noRecords">
         <mat-card>
+          <div style="text-align: center">
+            <img
+              style="height: 300px; width: 300px"
+              src="assets/no_files_records_256.png"
+              alt=""
+            />
+          </div>
+          <div style="text-align: center">
+            <h1 style="color: #2d69eb">No Records Found</h1>
+          </div>
+        </mat-card>
+      </div>
+    <div *ngIf="!noRecords" class="col-lg-12">
             <table cellSpacing="20">
                 <tr>
-                    <th class="header">SNo.</th>
+                    <th class="header sno">SNo.</th>
                     <th class="header">Category</th>
                     <th class="header">
                         <div class="row col-12">
                             <div class="col-6 header set-border-right text-center">
                                 <div class="styleHead">Question</div>
                             </div>
-                            <div class="col-4 set-border-right text-center">
+                            <div class="col-3 set-border-right text-center">
                                 <div class="styleHead">Answer</div>
+                            </div>
+                            <div class="col-1 set-border-right text-center">
+                                <div class="styleHead">Score</div>
                             </div>
                             <div class="col-2 text-center">
                                 <div class="styleHead">Action</div>
@@ -42,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 set-border-right" style="padding-left: 1rem;">
+                            <div class="col-3 set-border-right" style="padding-left: 1rem;">
                                 <div *ngFor="let answer of question.answers; index as j">
                                     <div class="row">
                                         {{ j+1 }}. {{ answer.answer }}
@@ -50,9 +97,17 @@
                                     <br>
                                 </div>
                             </div>
+                            <div class="col-1 set-border-right" style="padding-left: 2.5rem;">
+                                <div *ngFor="let answer of question.answers; index as j">
+                                    <div class="row">
+                                        10
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
                             <div class="col-2">
                                 <button mat-button (click)="editQuestion(data.category, question.id)">
-                  <mat-icon>edit</mat-icon> Edit
+                                    <i class="fa fa-edit" style="font-size: 1.5rem; color: rgb(75, 151, 238);"></i> Edit
                 </button>
                                 <button mat-button (click)="removeQuestion(data.category, question.id)">
                   <mat-icon style="color: red">remove_circle</mat-icon> Delete
@@ -62,6 +117,6 @@
                     </th>
                 </tr>
             </table>
-        </mat-card>
+        
     </div>
 </div>

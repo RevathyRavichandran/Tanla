@@ -1,59 +1,59 @@
-<div style="background-color: white">
-  <div class="row" style="align-items: center">
-    <div class="col-1">
-      <h1 style="padding-left: 5px; color: #3a3a3a">Audit</h1>
+<div class="row pt-3" style="background-color: white;">
+    <div class="col-2">
+        <h1 style="padding-left: 3%; padding-top: 1%; font-weight: bold;">Admin/Audit</h1>
     </div>
-    <div class="col-6">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1"> Search By </span>
+    <div class="col-4">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"> Search By </span>
+            </div>
+            <input class="form-control" placeholder="Search by mobile number" aria-label="Search" />
         </div>
-        <input
-          class="form-control"
-          placeholder="Search Text"
-          aria-label="Search"
-        />
-      </div>
     </div>
     <div class="col-5">
-      <span style="right: 0; position: absolute; margin-right: 1rem">
+        <span style="right: 0; position: absolute; margin-right: 1rem">
         <button
           type="button"
           class="btn adminCreate"
           (click)="goToAdmin()"
-          style="background: green; color: white"
+          style="background: #2fd9a7; font-weight: 500; color: white"
         >
-          Go to Admin&nbsp;
+          Go to User&nbsp;
           <i class="fa fa-user fa-1x"></i>
         </button>
       </span>
     </div>
-  </div>
-  <mat-divider class="mt-3"></mat-divider>
-  <div class="row" style="padding: 1%">
+    <mat-divider class="mt-3"></mat-divider>
+
+</div>
+<div class="row" style="padding: 1%">
     <div class="col-lg-12">
-      <table>
-        <thead>
-          <tr style="color: blue">
-            <th>Audit ID</th>
-            <th>Audit Name</th>
-            <th>Email ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            #radio
-            *ngFor="
+        <table>
+            <thead>
+                <tr style="color: blue">
+                    <th class="sno">SNo.</th>
+                    <th>Mobile No</th>
+                    <th>Request</th>
+                    <th>Response</th>
+                    <th>API Name</th>
+                    <th>Created Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr #radio *ngFor="
               let item of auditList
                 | slice: (page - 1) * pageSize:page * pageSize
-            "
-          >
-            <td>{{ item.auditid }}</td>
-            <td>{{ item.auditname }}</td>
-            <td>{{ item.emailId }}</td>
-          </tr>
-        </tbody>
-      </table>
+            ">
+                    <td>{{ item.auditid }}</td>
+                    <td>{{ item.auditmobile }}</td>
+                    <td>{{ item.request }}</td>
+                    <td>{{ item.response }}</td>
+                    <td>{{ item.apiname }}</td>
+                    <td>{{ item.createdat }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
     </div>
-  </div>
 </div>

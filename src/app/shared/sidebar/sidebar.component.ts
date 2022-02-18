@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,7 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  showHead = false;
+  constructor(private router: Router) {
+    // on route change to '/login', set the variable showHead to false
+    router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        
+        if (event.url === '/audit') {
+          console.log('hello')
+          this.showHead = true;
+        } else {
+          this.showHead = false;
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {}
 }

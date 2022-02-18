@@ -2,11 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SurveyService } from '../../../app/services/survey.service';
+import { ToastrService } from 'ngx-toastr';
+import moment from 'moment';
 
 @Component({
   selector: 'app-survey-popup',
   templateUrl: './survey-popup.component.html',
-  styleUrls: ['./survey-popup.component.css']
+  styleUrls: ['./survey-popup.component.css'],
 })
 export class SurveyPopupComponent implements OnInit {
   fg: FormGroup;
@@ -17,65 +19,102 @@ export class SurveyPopupComponent implements OnInit {
   get categoryArr() {
     return this.fg.get('category') as FormArray;
   }
- 
+
   addcategory() {
     this.categoryArr.push(
-      new FormGroup(
-        {
-          category: new FormControl("", Validators.required)
-        }
-      )
-    )
+      new FormGroup({
+        category: new FormControl('', Validators.required),
+      })
+    );
   }
- 
+
   removecategory(i) {
     this.categoryArr.removeAt(i);
   }
-  constructor(public dialogRef: MatDialogRef<SurveyPopupComponent>, public surveyService: SurveyService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public dialogRef: MatDialogRef<SurveyPopupComponent>,
+    public surveyService: SurveyService,
+    public toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit(): void {
     let category = [];
-    let ansInit = [
-      {category: ''}
-    ]
-    ansInit.forEach(element => {
+    let ansInit = [{ category: '' }];
+    ansInit.forEach((element) => {
       category.push(
-        new FormGroup(
-          {
-            category: new FormControl(element.category, Validators.required)
-          }
-        )
-      )
+        new FormGroup({
+          category: new FormControl(element.category, Validators.required),
+        })
+      );
     });
-    this.fg = new FormGroup(
-      {
-        "name": new FormControl(null, Validators.required),
-        "category": new FormArray(category)
-      }
-    )
+    this.fg = new FormGroup({
+      name: new FormControl(null, Validators.required),
+      category: new FormArray(category),
+      start: new FormControl(null, Validators.required),
+      end: new FormControl(null, Validators.required)
+    });
   }
 
   saveSurvey() {
-    let surveyName = this.fg.value.name;
-    let catArr = []
-    this.fg.value.category.forEach(element => {
-      catArr.push(element.category)
-    });
-    let category = catArr.toString();
-    var payload = {
-      "ProcessVariables": {"catagoryName":category,"surveyName":surveyName}
+    let body = {
+      ProcessVariables: {
+        attachment: {
+          content: btoa(this.fileContent),
+          name: this.fileName,
+          operation: 'upload',
+          mime: 'application/vnd.ms-excel',
+          size: this.fileSize,
+        },
+      },
+    };
+    if (this.fileContent !== '' && this.fileContent !== null) {
+      this.surveyService.uploadFile(body).subscribe((res) => {
+        let surveyName = this.fg.value.name;
+        let catArr = [];
+        this.fg.value.category.forEach((element) => {
+          catArr.push(element.category);
+        });
+        let category = catArr.toString();
+        var payload = {
+          ProcessVariables: { catagoryName: category, surveyName: surveyName },
+        };
+        this.surveyService.createSurvey(payload).subscribe((res) => {
+          this.dialogRef.close(true);
+        });
+      });
+    } else {
+      let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
+      let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
+      let surveyName = this.fg.value.name;
+      let catArr = [];
+      this.fg.value.category.forEach((element) => {
+        catArr.push(element.category);
+      });
+      let category = catArr.toString();
+      var payload = {
+        ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate },
+      };
+      this.surveyService.createSurvey(payload).subscribe((res) => {
+        if (!res.ProcessVariables.isTrue) {
+          this.toastr.error('Survey name should be unique', 'Error');
+        } else {
+          this.toastr.success('Survey created successfully', 'Success');
+          this.dialogRef.close(true);
+        }
+        
+      });
     }
-    this.surveyService.createSurvey(payload).subscribe((res) => {
-    })
-    this.dialogRef.close();
   }
 
   cancelSurvey() {
     this.dialogRef.close();
   }
+
   fileUpload() {
     document.getElementById('file').click();
   }
+
   public changeListener(files: FileList) {
     if (files && files.length > 0) {
       let file: File = files.item(0);
@@ -83,7 +122,10 @@ export class SurveyPopupComponent implements OnInit {
       this.fileSize = file.size;
       let reader: FileReader = new FileReader();
       reader.readAsText(file);
+      reader.onload = (e) => {
+        let csv: string = reader.result as string;
+        this.fileContent = csv;
+      };
     }
   }
-
 }

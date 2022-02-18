@@ -11,13 +11,13 @@ button {
   font-size: 15px;
 }
 
-#funkystyling {
+.funkystyling {
   background: white url(/assets/tanla_calendar_grey_128.svg) right no-repeat;
   padding-right: 25px;
 }
 
 .align {
-  text-align: right;
+  text-align: center;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -29,9 +29,20 @@ input[type=number]::-webkit-outer-spin-button {
   border: none;
   background-color: #2fd9a7; 
   color: white;
+  font-size: 1.2rem;
   margin-right: 0.35rem;
+  padding: 0.3rem;
 }
 
 .btn {
-  width: 15%;
+  width: 12%;
+}
+
+select[readonly]{
+  background: #eee;
+  cursor:no-drop;
+}
+
+select[readonly] option{
+  display:none;
 }

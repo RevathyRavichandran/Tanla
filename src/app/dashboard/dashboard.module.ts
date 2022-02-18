@@ -25,7 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { CountUpModule } from 'ngx-countup';
-import { MatDatepickerModule } from '@angular/material/Datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -43,6 +43,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AdminComponent } from './admin/admin.component';
 import { AdminPopupComponent } from './admin-popup/admin-popup.component';
 import { AuditComponent } from './audit/audit.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,13 @@ import { AuditComponent } from './audit/audit.component';
   ],
   imports: [
     BrowserModule,
+ BrowserAnimationsModule,
+ ToastrModule.forRoot({
+    timeOut: 3000,
+    positionClass: 'toast-top-right',
+    preventDuplicates: true,
+    closeButton: true
+ }),
     MatDialogModule,
     CommonModule,
     MatTooltipModule,
@@ -75,7 +83,6 @@ import { AuditComponent } from './audit/audit.component';
     NgbModule,
     ChartsModule,
     NgApexchartsModule,
-    BrowserAnimationsModule,
     MatDividerModule,
     MatCardModule,
     CountUpModule,

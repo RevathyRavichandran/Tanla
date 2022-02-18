@@ -3,6 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ResMastersService } from '../../../app/services/res-masters.service';
 import { saveAs } from 'file-saver';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SurveyService } from '../../../app/services/survey.service';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-respondent-masters',
@@ -17,7 +21,9 @@ export class RespondentMastersComponent implements OnInit {
   noRecords = false;
   fileName = null;
   fileContent = '';
+  name = '';
   fileSize = 0;
+  surveyNameList: any = [];
   displayedColumns: string[] = [
     'id',
     'name',
@@ -26,15 +32,48 @@ export class RespondentMastersComponent implements OnInit {
     'phoneNo',
     'company',
     'department',
-    'surveyName',
+    'col-1',
+    'col-2'
   ];
 
   dataSource = new MatTableDataSource([]);
 
   constructor(
     public resMastersService: ResMastersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public survey: SurveyService
   ) {}
+
+  ngOnInit(): void {
+    let payloadSur = { ProcessVariables: {} };
+    this.survey.listSurvey(payloadSur).subscribe((res) => {
+      let result = res['ProcessVariables'];
+      result['surveyList'].forEach(element => {
+        this.surveyNameList.push(element.surveyName);
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value)),
+        );
+      });
+      if (this.noRecords) {
+        this.snackBar.open('There are no records found!!!', '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+      }
+      this.dataSource = new MatTableDataSource(result['surveyList']);
+    })
+    let payload = { ProcessVariables: { currentPage: 1 } };
+    this.commonMethod(payload);
+  }
+
+  surveyApply(name) {
+    this.name =  name;
+    let payload = { ProcessVariables: { "selectedField": "1", "selectedValue": name } };
+    this.commonMethod(payload);
+  }
 
   commonMethod(payload) {
     this.isLoad = true;
@@ -54,7 +93,9 @@ export class RespondentMastersComponent implements OnInit {
           panelClass: ['error-snack-bar'],
         });
       }
-      this.dataSource = new MatTableDataSource(result['employeeList']);
+      setTimeout(() => {
+        this.dataSource = new MatTableDataSource(result['employeeList']);
+      }, 200);      
     }),
       (err) => {
         this.isLoad = false;
@@ -70,20 +111,29 @@ export class RespondentMastersComponent implements OnInit {
   }
 
   pageChanged(event) {
-    let payload = { ProcessVariables: { currentPage: event } };
-    this.commonMethod(payload);
+    if (this.name === null || this.name === '') {
+      let payload = { ProcessVariables: { currentPage: event } };
+      this.commonMethod(payload);
+    } else {
+      let payload = { ProcessVariables: { "currentPage": event, "selectedField": "1", "selectedValue": this.name } };
+      this.commonMethod(payload);
+    }    
   }
 
-  ngOnInit(): void {
-    let payload = { ProcessVariables: { currentPage: 1 } };
-    this.commonMethod(payload);
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.surveyNameList.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   downloadTemplate() {
     let content =
-      'Employee Name,Designation,Email ID,Phone Number,Company,Department,,\n';
+      'Employee Name,Designation,Email ID,Phone Number,Company,Department,column1,column2,\n';
     content +=
-      'Sample name,Developer,sample@gmail.com,89844xxxxx,Inswit,IT,Aug-2021,,';
+      'Sample name,Developer,sample@gmail.com,89844xxxxx,Inswit,IT,,,';
     const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
     saveAs(file, 'template');
   }

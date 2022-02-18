@@ -1,32 +1,73 @@
+<img class="mt-5" src="assets/tanla_bg_logo.png" alt="">
 <div class="login_container">
-    <div class="row">
-        <div class="col-lg-3 col-md-6"></div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 border-container" style="background-color: white;">
-            <img class="img-wid" src="./assets/tanla.jpg" style="height: 80px; width: 90px" /><b style="font-size: 30px" class="">tanla</b>
-            <form class="col-12" style="background-color: white;" [formGroup]="fg" (ngSubmit)="login()">
-                <div class="main-content">
-                    <div class="mtb-15">
-                        <div class="col-md-12">
-                            <label for="username" class="col-12 mar-top-10 blue_text text-center">Use your Account</label>
-                            <label for="email" class="col-12 col-form-label font-weight-bold"><b>Email:</b></label>
+  <div class="row contain">
+    <div class="col-lg-3 col-md-6"></div>
+    <div
+      class="col-lg-6 col-md-6 col-sm-12 col-xs-12 border-container"
+      style="background-color: white"
+    >
+      <img class="mb-4"
+        src="./assets/tanla_logo.png"        
+      />
+      <form
+        class="col-12"
+        style="background-color: white"
+        [formGroup]="fg"
+        (ngSubmit)="login()"
+      >
+        
+          <div class="">
+            <div class="">
+              <h1 class="mb-3"><b>Login</b></h1>
+              <div>
+                 <label class="label"
+                >Email ID</label
+              >
 
-                            <div class="col-md-12">
-                                <input type="text" class="col-10 margin" placeholder="E-mail" name="email" formControlName="email">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="password" class="col-12 col-form-label "><b>Password:</b></label>
-                            <div class="col-md-12">
-                                <input type="password" class="col-10 margin" placeholder="Password" name="password" formControlName="password">
-                            </div>
-                        </div>
-                        <div class="col-md-12  text-center">
-                            <button type="submit" class="btn btn-animate btn-blue submit-btn m-3 p-2" data-toggle="modal" data-target="#myModal_newcampaign" [disabled]="fg.invalid">Sign In
-                        </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+              <div class="">
+                <input
+                  type="text"
+                  class="margin"
+                  placeholder="Enter your Email id"
+                  name="email"
+                  formControlName="email"
+                />
+              </div>
+            </div>
+            <div class="">
+              <label class="label"
+                >Password</label
+              >
+              <div class="">
+                <input
+                  type="password"
+                  class="margin"
+                  placeholder="Enter your Password"
+                  name="password"
+                  formControlName="password"
+                />
+              </div> 
+              </div>
+              
+            </div>
+            <div>
+                <a href="/resetPassword">Reset Password</a>
+            </div>
+            <br>
+            <div class="col-md-12 text-center">
+              <button
+                type="submit"
+                class="btn submit-btn"
+                [disabled]="fg.invalid"
+              >
+                Sign In
+              </button>
+            </div>
+          </div>
+        
+      </form>
     </div>
+  </div>
+  
 </div>
+<div class="mb-3 footer"><b>© Copyright 2022, Tanla, all rights reserved</b></div>

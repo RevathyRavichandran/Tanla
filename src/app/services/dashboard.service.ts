@@ -19,18 +19,14 @@ export class dashboardService {
   }
 
   getDashboardPercentage(): Observable<any> {
-    let url = `https://compute.twixor.digital/d/project/NPS Feedback/api/Dashboard count API`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/dashboard count API`;
     let processVariables = {
       processVariables: {
-        processId: '43bcca90720311ec843fcaa870889860',
-        ProcessVariables: {},
-        projectId: '61c9875a703ed2144f9706b4',
-        logSessionId: 'nlwpvo4btfoutazvhpx0cgy666h3f3zbnpvz',
-      },
+      }
     };
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'ApTpbPTQ+S4nTNYHHBzmesprv7se9zQWF8DYnyxoFVwfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -42,24 +38,35 @@ export class dashboardService {
     );
   }
 
-  getChartData(axisValue): Observable<any> {
-    let url = `https://compute.twixor.digital/d/project/NPS Feedback/api/Dashboard Chart API`;
-    let processVariables = {
-      processVariables: {
-        xAxis: axisValue
-      }
-    };
+  getChartData(processVar): Observable<any> {
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/surveyNameCount_dashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
-    return this.http.post<any>(url, processVariables, options).pipe(
+    return this.http.post<any>(url, processVar, options).pipe(
       map((data) => {
         return data.ProcessVariables;
       }),
-      catchError(() => throwError('Chart data not found!'))
+      catchError(() => throwError('Filtered data not found!'))
+    );
+  }
+
+  getQuestionData(processVar): Observable<any> {
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionViceFilter`;
+    let headers = new HttpHeaders({
+      'authentication-token':
+        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<any>(url, processVar, options).pipe(
+      map((data) => {
+        return data.ProcessVariables;
+      }),
+      catchError(() => throwError('Filtered data not found!'))
     );
   }
 }
