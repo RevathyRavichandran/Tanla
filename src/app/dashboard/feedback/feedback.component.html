@@ -73,8 +73,8 @@
           class="btn"
           (click)="clear()"
           style="
-            background: gainsboro;
-            color: #2d69eb;
+            background: #004cf1;
+            color: white;
             margin-right: 5px;
             width: 5rem;
           "
@@ -399,7 +399,7 @@
     <ngb-pagination
       [collectionSize]="totalPages"
       [(page)]="currentPage"
-      [maxSize]="5"
+      [maxSize]="2"
       [boundaryLinks]="true"
       [pageSize]="pageSize"
       (pageChange)="pageChanged(currentPage)"

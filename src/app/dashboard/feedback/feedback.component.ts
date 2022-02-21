@@ -420,7 +420,7 @@ export class FeedbackComponent implements OnInit {
     this.isLoad = true;
     this.feedbackService.getAllFeedback(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalItems'];
+      this.totalPages = result['totalItems'] === 0 ? 1 : result['totalItems'];
       this.currentPage = result['currentPage'];
       this.pageSize = result['perPage'];
       this.noRecords = result['lastMessageAuditList'] ? false : true;

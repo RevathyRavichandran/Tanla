@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "~@ng-select/ng-select/themes/default.theme.css";
 @import '~font-awesome/css/font-awesome.css';
 html,
 body {
@@ -37,21 +37,21 @@ body {
 
 .submit-btn {
     border: none;
-    background-color: #2fd9a7; 
+    background-color: #069c33; 
     color: white;
     margin-right: 0.35rem;
   }
 
   .apply-btn {
     border: none;
-    background-color: #2fd9a7;
+    background-color: #069c33;
     color: white;
     margin-right: 1rem;
     width: 5rem;
 }
 .add-btn {
     border: none;
-    background-color: #2fd9a7;
+    background-color: #069c33;
     color: white;
     width: 6rem;
     margin-right: 1rem;
@@ -59,14 +59,14 @@ body {
 
 .add-btn1 {
     border: none;
-    background-color: #2fd9a7;
+    background-color: #069c33;
     color: white;
     width: auto;
     margin-right: 1rem;
 }
 
 .close-btn {
-    background-color: grey; color: white; width: 6rem;
+    background-color: #004cf1; color: white; width: 6rem;
 }
 
 .footer {

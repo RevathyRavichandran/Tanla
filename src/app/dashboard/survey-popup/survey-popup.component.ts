@@ -101,8 +101,7 @@ export class SurveyPopupComponent implements OnInit {
         } else {
           this.toastr.success('Survey created successfully', 'Success');
           this.dialogRef.close(true);
-        }
-        
+        }        
       });
     }
   }

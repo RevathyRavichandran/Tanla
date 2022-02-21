@@ -44,6 +44,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminPopupComponent } from './admin-popup/admin-popup.component';
 import { AuditComponent } from './audit/audit.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { ToastrModule } from 'ngx-toastr';
     SurveyPopupComponent,
     AdminComponent,
     AdminPopupComponent,
-    AuditComponent,
+    AuditComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +71,7 @@ import { ToastrModule } from 'ngx-toastr';
     closeButton: true
  }),
     MatDialogModule,
+    NgMultiSelectDropDownModule.forRoot(),
     CommonModule,
     MatTooltipModule,
     NgCircleProgressModule.forRoot({

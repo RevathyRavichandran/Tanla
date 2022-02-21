@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
 import { UserService } from '../../../app/services/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminComponent implements OnInit {
   isLoad = false;
@@ -35,13 +37,14 @@ export class AdminComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   userList : any = [];
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,
-     public user: UserService, private router: Router) {}
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, public toastr: ToastrService,
+     public user: UserService, private router: Router, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     let payload = { ProcessVariables: { currentPage: 1 } };
     this.commonMethod(payload);
   }
+  
 
   commonMethod(payload) {
     this.isLoad = true;
@@ -63,6 +66,7 @@ export class AdminComponent implements OnInit {
       }
       this.dataSource = new MatTableDataSource(result['employeeDetails']);
       this.userList = result['employeeDetails'];
+      this.cd.detectChanges();
     }),
       (err) => {
         this.isLoad = false;
@@ -86,15 +90,23 @@ export class AdminComponent implements OnInit {
     const dialogRef = this.dialog.open(AdminPopupComponent, {
       width: '1000px',
     });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        let payload = { ProcessVariables: { currentPage: 1 } };
+        this.commonMethod(payload);
+      }
+    });
   }
 
   modifyUser(id) {
-    console.log(id)
     let user = this.userList.filter((val) => val.id === id)[0];
-    console.log(user)
     const dialogRef = this.dialog.open(AdminPopupComponent, {
       width: '1000px',
       data: user,
+    });
+    dialogRef.afterClosed().subscribe((res) => {      
+        let payload = { ProcessVariables: { currentPage: 1 } };
+        this.commonMethod(payload);      
     });
   }
 

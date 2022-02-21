@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-popup',
@@ -14,7 +15,9 @@ export class AdminPopupComponent implements OnInit {
   status: string;
   reason: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<AdminPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private userService: UserService) { }
+  constructor(public dialogRef: MatDialogRef<AdminPopupComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data: any, public toastr: ToastrService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.status =  this.data && this.data.isActive === '1' ? '1' : '2';
@@ -51,12 +54,14 @@ export class AdminPopupComponent implements OnInit {
       }
       }
       this.userService.updateUser(payload).subscribe(res=> {
+        this.toastr.success('User modified successfully', 'Success');
         this.dialogRef.close();
       })
 
     } else {
       this.userService.createUser({ ProcessVariables: this.fg.value }).subscribe(
       res => {
+        this.toastr.success('User created successfully', 'Success');
         this.dialogRef.close();
       }
     );
