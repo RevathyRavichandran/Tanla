@@ -5,19 +5,37 @@
 <form [formGroup]="fg" (ngSubmit)="saveSurvey()">
   <mat-dialog-content class="mat-typography">
     <div class="container">
-      <div class="form-group">
-        <h2 class="mb-2" for="name">Survey name:</h2>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="1"
-          placeholder="Enter your survey name here...."
-          formControlName="name"
-          name="name"
-        ></textarea>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <h2 class="mb-2" for="name">Service type:</h2>
+            <ng-select
+              [items]="serviceType"
+              [multiple]="false"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Select service"
+              [(ngModel)]="selectedService"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <h2 class="mb-2" for="name">Survey name:</h2>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">{{selectedService ? selectedService : 'service'}}</span>
+              </div>
+              <input class="form-control"
+              id="exampleFormControlTextarea1"
+              placeholder="Enter your survey name here...."
+              formControlName="name"
+              name="name" aria-describedby="basic-addon3">
+            </div>
+            
+          </div>
+        </div>
       </div>
-
-      <br />
       <div class="form-group">
         <h2 class="mb-2" for="name">Survey period:</h2>
         <mat-form-field appearance="fill">
@@ -99,17 +117,32 @@
       </span>
     </div>
   </mat-dialog-content>
-  <mat-dialog-actions class="mb-1 mt-1" align="end">
-    <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
-      Save
-    </button>
-    <button
-      type="button"
-      class="btn mt-1"
-      style="background-color: grey; color: white; width: 6rem"
-      (click)="cancelSurvey()"
-    >
-      Cancel
-    </button>
-  </mat-dialog-actions>
+  <div class="row">
+    <div class="col-6">
+      <button
+        type="button"
+        class="btn m-2"
+        (click)="downloadTemplate()"
+        style="background: #2d69eb; color: white"
+      >
+        <img src="assets/tanla_download_128.svg" alt="" />
+        Questionnaire Template
+      </button>
+    </div>
+    <div class="col-6">
+      <mat-dialog-actions class="mb-1 mt-1" align="end">
+        <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn mt-1"
+          style="background-color: grey; color: white; width: 6rem"
+          (click)="cancelSurvey()"
+        >
+          Cancel
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </div>
 </form>

@@ -46,3 +46,9 @@ select[readonly]{
 select[readonly] option{
   display:none;
 }
+
+::ng-deep.ng-select .ng-select-container {
+  border-radius: 9999px !important;
+    border: 2px solid grey;
+    font-size: 15px;
+}

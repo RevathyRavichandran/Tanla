@@ -18,19 +18,15 @@ export class dashboardService {
     return this.monthBtn.asObservable();
   }
 
-  getDashboardPercentage(): Observable<any> {
+  getDashboardPercentage(payload): Observable<any> {
     let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/dashboard count API`;
-    let processVariables = {
-      processVariables: {
-      }
-    };
     let headers = new HttpHeaders({
       'authentication-token':
         'ApTpbPTQ+S4nTNYHHBzmesprv7se9zQWF8DYnyxoFVwfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
-    return this.http.post<any>(url, processVariables, options).pipe(
+    return this.http.post<any>(url, payload, options).pipe(
       map((data) => {
         return data;
       }),
@@ -56,6 +52,36 @@ export class dashboardService {
 
   getQuestionData(processVar): Observable<any> {
     let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionViceFilter`;
+    let headers = new HttpHeaders({
+      'authentication-token':
+        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<any>(url, processVar, options).pipe(
+      map((data) => {
+        return data.ProcessVariables;
+      }),
+      catchError(() => throwError('Filtered data not found!'))
+    );
+  }
+  getQuestion(processVar): Observable<any> {
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionFilterDashboard`;
+    let headers = new HttpHeaders({
+      'authentication-token':
+        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<any>(url, processVar, options).pipe(
+      map((data) => {
+        return data.ProcessVariables;
+      }),
+      catchError(() => throwError('Filtered data not found!'))
+    );
+  }
+  questionCal(processVar): Observable<any> {
+    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionCalculation`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',

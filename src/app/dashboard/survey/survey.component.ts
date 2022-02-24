@@ -161,7 +161,6 @@ export class SurveyComponent implements OnInit {
       
       let content = res.ProcessVariables.attachment.content;
       content = atob(content);
-      console.log(content)
       const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
       saveAs(file, name);
       this.toastr.success('Survey downloaded successfully', 'Success');
@@ -175,7 +174,6 @@ export class SurveyComponent implements OnInit {
     this.survey.downloadQues(payload).subscribe((res) => {
       let content = res.ProcessVariables.attachment.content;
       content = atob(content);
-      console.log(content)
       const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
       saveAs(file, name);
       this.toastr.success('Question downloaded successfully', 'Success');

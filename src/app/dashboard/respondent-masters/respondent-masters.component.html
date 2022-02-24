@@ -7,7 +7,13 @@
     </div>
     <div class="col-4 mt-3">
       <form class="example-form">
-        <input
+        <ng-select [items]="surveyNameList" [disabled]="!survey"
+                   [multiple]="false"
+                   [ngModelOptions]="{standalone: true}"
+                   placeholder="Select survey"
+                   [(ngModel)]="selectedSurvey">
+        </ng-select>
+        <!-- <input
           class="form-control"
           id="survey"
           [formControl]="myControl"
@@ -26,11 +32,11 @@
           >
             <span>{{ search }}</span>
           </mat-option>
-        </mat-autocomplete>
+        </mat-autocomplete> -->
       </form>
     </div>
     <div class="col-2 mt-3">
-      <button type="submit" (click)="surveyApply(myControl.value)" class="btn btn-primary apply-btn">Apply</button>
+      <button type="submit" (click)="surveyApply(selectedSurvey)" class="btn btn-primary apply-btn">Apply</button>
     </div>
     <div class="col-3 mt-3">
       <span style="right: 0; position: absolute; margin-right: 1rem">

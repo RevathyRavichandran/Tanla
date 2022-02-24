@@ -11,6 +11,8 @@ import { AdminComponent } from './dashboard/admin/admin.component';
 import { AuditComponent } from './dashboard/audit/audit.component';
 import { PasswordSetComponent } from './password-set/password-set.component';
 import { SuccessPageComponent } from './success-page/success-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AuthGuard } from './services/authguard.service';
 
 const routes: Routes = [
   {
@@ -18,6 +20,7 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full',
   },
+  
   {
     path: 'login',
     component: LoginComponent,
@@ -27,46 +30,58 @@ const routes: Routes = [
     component: PasswordSetComponent
   },
   {
+    path: 'forgotPassword',
+    component: ForgotPasswordComponent
+  },
+  {
     path: 'passwordChanged',
     component: SuccessPageComponent
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   {
     path: 'feedbackReport',
     component: FeedbackComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'questionnaire',
     component: QuestionariesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'configuration',
     component: ConfigurationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'respondentMasters',
     component: RespondentMastersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'survey',
     component: SurveyComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'audit',
-    component: AuditComponent
+    component: AuditComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}

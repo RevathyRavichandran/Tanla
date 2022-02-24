@@ -4,7 +4,7 @@
   </h1>
   <mat-divider></mat-divider>
 </div>
-
+<div class="text-center pt-2"><b style="font-size: 1.3rem;">Survey Name - {{latestSurvey}}</b></div>
 <div class="row" style="padding: 1%">
   <div class="col-lg-3">
     <mat-card style="height: 10rem">
@@ -13,7 +13,7 @@
           <h1 style="color: #3cb371"><b>Promoter</b></h1>
           <br />
           <h1 style="color: #3cb371; font-size: 25px">
-            <b>{{ promotersPercentage }} %</b>
+            <b>{{ promotersPercentage === 'NaN' ? '0' : promotersPercentage }} %</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -39,7 +39,7 @@
           <h1 style="color: #ef820d"><b>Passive</b></h1>
           <br />
           <h1 style="color: #ef820d; font-size: 30px">
-            <b>{{ passivesPercentage }} %</b>
+            <b>{{ passivesPercentage === 'NaN' ? '0' : passivesPercentage }} %</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -65,7 +65,7 @@
           <h1 style="color: #dc143c"><b>Detractor</b></h1>
           <br />
           <h1 style="color: #dc143c; font-size: 30px">
-            <b>{{ detractorsPercentage }} %</b>
+            <b>{{ detractorsPercentage === 'NaN' ? '0' : detractorsPercentage }} %</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -121,23 +121,65 @@
             <label>Advanced Filter</label>
           </div>
           <div class="col-6 example-button-row">
-            <button [ngClass]="{'grey': (survey&&question) || !survey, 'blue': survey&&!question}"
+            <button
+              [ngClass]="{
+                grey: (survey && question) || !survey,
+                blue: survey && !question
+              }"
               style="background: #b1dcf7"
               id="week"
               mat-raised-button
               (click)="weekData('#b1dcf7')"
             >
-              <img class="pb-1" *ngIf="(survey&&question) || !survey" src="assets/tanla_survey_grey.svg" alt="" />
-              <img class="pb-1" *ngIf="survey&&!question" src="assets/tanla_filter_questionaries_onclick_128.svg" alt="" />
+              <img
+                class="pb-1"
+                *ngIf="(survey && question) || !survey"
+                src="assets/tanla_survey_grey.svg"
+                alt=""
+              />
+              <img
+                class="pb-1"
+                *ngIf="survey && !question"
+                src="assets/tanla_filter_questionaries_onclick_128.svg"
+                alt=""
+              />
               Survey
             </button>
-            <button [ngClass]="{'blue': question, 'grey': !question}" id="month" mat-raised-button (click)="monthData('#b1dcf7')">
-              <img src="assets/tanla_filter_survey_onclick_128.svg" *ngIf="question" alt="" />
-              <img src="assets/tanla_question_grey.svg" *ngIf="!question" alt="" /> Questionnaire
+            <button
+              [ngClass]="{ blue: question, grey: !question }"
+              id="month"
+              mat-raised-button
+              (click)="monthData('#b1dcf7')"
+            >
+              <img
+                src="assets/tanla_filter_survey_onclick_128.svg"
+                *ngIf="question"
+                alt=""
+              />
+              <img
+                src="assets/tanla_question_grey.svg"
+                *ngIf="!question"
+                alt=""
+              />
+              Questionnaire
             </button>
-            <button [ngClass]="{'blue': date, 'grey': !date}" id="year" mat-raised-button (click)="yearData('#b1dcf7')">
-              <img *ngIf="date" src="assets/tanla_filter_total_daterange_onclick_128.svg" alt="" />
-              <img *ngIf="!date" src="assets/tanla_filter_total_daterange_128.svg" alt="" /> Date Range
+            <button
+              [ngClass]="{ blue: date, grey: !date }"
+              id="year"
+              mat-raised-button
+              (click)="yearData('#b1dcf7')"
+            >
+              <img
+                *ngIf="date"
+                src="assets/tanla_filter_total_daterange_onclick_128.svg"
+                alt=""
+              />
+              <img
+                *ngIf="!date"
+                src="assets/tanla_filter_total_daterange_128.svg"
+                alt=""
+              />
+              Date Range
             </button>
           </div>
         </div>
@@ -147,7 +189,17 @@
           <div class="row">
             <div class="col-3" *ngIf="survey && !question"></div>
             <div class="col-6" *ngIf="survey">
-              <input
+              <ng-select
+                [items]="surveyNameList" (change)="changeFn($event)"
+                id="survey"
+                #inputField
+                [multiple]="false"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Select survey"
+                [(ngModel)]="selectedSurvey"
+              >
+              </ng-select>
+              <!-- <input
                 class="form-control"
                 id="survey"
                 #inputField
@@ -165,14 +217,25 @@
                 <mat-option *ngFor="let search of searchSurvey" [value]="search">
                   <span>{{ search }}</span>
                 </mat-option>
-              </mat-autocomplete>
+              </mat-autocomplete> -->
               <!-- <div *ngIf="isLoad" class="loader-top">
               <mat-spinner style="margin:0 auto;" class="loader" diameter="50"></mat-spinner>
               <span class="loader-text">Loading... Please wait</span>
             </div> -->
             </div>
             <div class="col-6" *ngIf="question">
-              <input
+              <ng-select
+                [items]="questionList"
+                id="question"
+                [disabled]="!selectedSurvey"
+                #inputField1
+                [multiple]="true"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Select questions"
+                [(ngModel)]="selectedQuestion"
+              >
+              </ng-select>
+              <!-- <input
                 class="form-control"
                 id="question"
                 #inputField1
@@ -189,10 +252,41 @@
                 <mat-option *ngFor="let search of searchQues" [value]="search">
                   <span>{{ search }}</span>
                 </mat-option>
-              </mat-autocomplete>
+              </mat-autocomplete> -->
             </div>
-            <div class="col-3" *ngIf="date"></div>
-            <div class="col-3" style="font-size: 0.8rem" *ngIf="date">
+            <div class="col-1" *ngIf="date"></div>
+            <div class="col-6" *ngIf="date">
+              <ng-select (change)="changeFn($event)"
+                [items]="surveyNameList"
+                id="survey"
+                #inputField
+                [multiple]="false"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="Select survey"
+                [(ngModel)]="selectedSurvey"
+              >
+              </ng-select>
+              <!-- <input
+                class="form-control"
+                id="survey"
+                #inputField
+                [formControl]="myControl"
+                style="
+                  font-family: FontAwesome, Arial;
+                  font-style: normal;
+                  border-radius: 20px !important;
+                "
+                placeholder="&#xF002; Search by Survey Name"
+                (keyup)="searchData(inputField.value)"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let search of searchSurvey" [value]="search">
+                  <span>{{ search }}</span>
+                </mat-option>
+              </mat-autocomplete> -->
+            </div>
+            <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
               <mat-form-field appearance="fill">
                 <mat-label>From date</mat-label>
                 <input matInput [matDatepicker]="picker" id="date1" />
@@ -205,7 +299,7 @@
               </mat-form-field>
             </div>
 
-            <div class="col-3" style="font-size: 0.8rem" *ngIf="date">
+            <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
               <mat-form-field appearance="fill">
                 <mat-label>To date</mat-label>
                 <input matInput [matDatepicker]="picker" id="date2" />
@@ -221,17 +315,14 @@
         <br *ngIf="!date" />
         <div class="row">
           <div class="col-1" style="width: 70px">
-            <img src="assets/tanla_total_respoondent_128.svg" alt=""
-            />
+            <img src="assets/tanla_total_respoondent_128.svg" alt="" />
           </div>
           <div class="col-5" [ngClass]="{ 'mb-4': date }">
             <label style="color: grey; font-size: 1rem" for="">
               Total Respondent</label
             >
             <br />
-            <label
-              style="color: grey; font-weight: bold; font-size: 1.4rem"
-            >
+            <label style="color: grey; font-weight: bold; font-size: 1.4rem">
               {{ totalRes }}</label
             >
           </div>
@@ -280,6 +371,18 @@
                 class="text-center"
               >
                 <h1 class="p-4">{{ filteredPromo }} %</h1>
+                <span
+                  style="
+                    display: block;
+                    position: absolute;
+                    bottom: 8px;
+                    right: 16px;
+                  "
+                >
+                  <img src="assets/tanla_respondent_promoters_128.svg" alt="" />{{
+                    filteredPromoCount
+                  }}
+                </span>
               </mat-card-content>
             </mat-card>
           </div>
@@ -301,6 +404,18 @@
                 class="text-center"
               >
                 <h1 class="p-4">{{ filteredPassive }} %</h1>
+                <span
+                  style="
+                    display: block;
+                    position: absolute;
+                    bottom: 8px;
+                    right: 16px;
+                  "
+                >
+                  <img src="assets/tanla_respondent_passive_128.svg" alt="" />{{
+                    filteredPassiveCount
+                  }}
+                </span>
               </mat-card-content>
             </mat-card>
           </div>
@@ -322,6 +437,18 @@
                 class="text-center"
               >
                 <h1 class="p-4">{{ filteredDetractor }} %</h1>
+                <span
+                  style="
+                    display: block;
+                    position: absolute;
+                    bottom: 8px;
+                    right: 16px;
+                  "
+                >
+                  <img src="assets/tanla_respondent_detractors_128.svg" alt="" />{{
+                    filteredDetractorCount
+                  }}
+                </span>
               </mat-card-content>
             </mat-card>
           </div>

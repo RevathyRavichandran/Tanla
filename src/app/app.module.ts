@@ -14,9 +14,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiInterceptor } from './api.interceptor';
 import { PasswordSetComponent } from './password-set/password-set.component';
 import { SuccessPageComponent } from './success-page/success-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AuthGuard } from './services/authguard.service';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, PasswordSetComponent, SuccessPageComponent],
+  declarations: [AppComponent, LoginComponent, PasswordSetComponent, SuccessPageComponent, ForgotPasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,7 +36,8 @@ import { SuccessPageComponent } from './success-page/success-page.component';
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
       multi: true
-    }
+    },
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })

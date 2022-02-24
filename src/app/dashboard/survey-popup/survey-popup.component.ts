@@ -15,6 +15,8 @@ export class SurveyPopupComponent implements OnInit {
   fileName = null;
   fileContent = '';
   fileSize = 0;
+  serviceType: any = ['test-1', 'test-2'];
+  selectedService: string[];
 
   get categoryArr() {
     return this.fg.get('category') as FormArray;
@@ -126,5 +128,8 @@ export class SurveyPopupComponent implements OnInit {
         this.fileContent = csv;
       };
     }
+  }
+  downloadTemplate() {
+    
   }
 }

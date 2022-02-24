@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit {
             duration: 2000,
             panelClass: ['success-snack-bar'],
           });
+          localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
+          localStorage.setItem('email', this.f.email.value);
         } else {
           this.matSnackbar.open('Invalid Email ID and Password', '', {
             horizontalPosition: 'right',
@@ -45,6 +47,8 @@ export class LoginComponent implements OnInit {
             duration: 2000,
             panelClass: ['error-snack-bar'],
           });
+          localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
+          localStorage.setItem('email', this.f.email.value);
         }
       })      
     }

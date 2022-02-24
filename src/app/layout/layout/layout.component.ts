@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { AuthService } from '../../../app/services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -11,8 +12,8 @@ export class LayoutComponent implements OnInit {
   constructor(private router: Router) {
     // on route change to '/login', set the variable showHead to false
       router.events.forEach((event) => {
-        if (event instanceof NavigationStart) {
-          if (event.url === '/login' || event.url === '/' ||
+        if (event instanceof NavigationEnd) {
+          if (event.url === '/login' || event.url === '/' || event.url === '/forgotPassword' ||
             event.url === '/resetPassword' || event.url === '/passwordChanged') {
             this.showHead = false;
           } else {

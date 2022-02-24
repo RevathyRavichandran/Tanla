@@ -41,7 +41,6 @@ export class PopupComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<PopupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log(this.data.surveyName)
     this.categories = this.data.categories;
     let answers = [];
     this.data.answers.forEach(element => {

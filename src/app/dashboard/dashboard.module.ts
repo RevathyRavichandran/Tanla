@@ -45,6 +45,8 @@ import { AdminPopupComponent } from './admin-popup/admin-popup.component';
 import { AuditComponent } from './audit/audit.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
   ],
   imports: [
     BrowserModule,
+    NgSelectModule,
  BrowserAnimationsModule,
  ToastrModule.forRoot({
     timeOut: 3000,
@@ -106,7 +109,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
     MatChipsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ],
   exports: [DashboardComponent, PlotComponent],
 })
 export class DashboardModule {}

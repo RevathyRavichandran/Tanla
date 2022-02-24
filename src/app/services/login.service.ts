@@ -6,18 +6,32 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  private dbUrl = 'https://compute.twixor.digital/d/project/';
+  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/project/';
 
   login(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/Validate user',
+      this.dbUrl + 'NPS Feedback/api/login_userCheck',
       log
     );
   }
 
   resetPwd(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/reset password',
+      this.dbUrl + 'NPS Feedback/api/resetPassword',
+      log
+    );
+  }
+
+  forgotPwd(log: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'NPS Feedback/api/forgotPassword',
+      log
+    );
+  }
+
+  logout(log: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'NPS Feedback/api/logoutAPI',
       log
     );
   }

@@ -24,6 +24,7 @@ export class RespondentMastersComponent implements OnInit {
   name = '';
   fileSize = 0;
   surveyNameList: any = [];
+  selectedSurvey: string[];
   displayedColumns: string[] = [
     'id',
     'name',
@@ -50,11 +51,9 @@ export class RespondentMastersComponent implements OnInit {
       let result = res['ProcessVariables'];
       result['surveyList'].forEach(element => {
         this.surveyNameList.push(element.surveyName);
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map(value => this._filter(value)),
-        );
+        
       });
+      this.surveyNameList=[...this.surveyNameList];
       if (this.noRecords) {
         this.snackBar.open('There are no records found!!!', '', {
           horizontalPosition: 'right',
@@ -139,7 +138,6 @@ export class RespondentMastersComponent implements OnInit {
   }
 
   fileUpload() {
-    console.log(localStorage.getItem('survey'))
     document.getElementById('file').click();
   }
 

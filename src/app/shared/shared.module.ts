@@ -29,7 +29,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatListModule,
     AvatarModule
   ],
-  providers: [],
+  providers: [
+    
+  ],
   exports: [HeaderComponent, SidebarComponent],
 })
 export class SharedModule {}

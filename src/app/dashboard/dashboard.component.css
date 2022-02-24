@@ -47,3 +47,9 @@ button {
   .grey {
     color: black;
   }
+
+  :ng-deep.ng-select .ng-select-container {
+    border-radius: 9999px !important;
+      border: 1px solid #ced4da;
+      font-size: 15px;
+  }

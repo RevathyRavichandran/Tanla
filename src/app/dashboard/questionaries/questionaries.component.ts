@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { SurveyService } from '../../../app/services/survey.service';
 import { map, startWith } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-questionaries',
@@ -22,6 +23,7 @@ export class QuestionariesComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   surveyNameList: any = [];
+  selectedSurvey: string[];
   noRecords = false;
   isLoad = false;
 
@@ -50,19 +52,22 @@ export class QuestionariesComponent implements OnInit {
     });
   }
   surveyApply(name) {
-    this.name =  name;
-    let payload = { ProcessVariables: { "selectedField": "1", "selectedValue": name } };
+    this.name = name;
+    let payload = {
+      ProcessVariables: { selectedField: '1', selectedValue: name },
+    };
     this.commonMethod(payload);
     this.isLoad = true;
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.surveyNameList.filter(option => option.toLowerCase().includes(filterValue));
+    return this.surveyNameList.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 
   comMethod(data) {
-    console.log('data <<<< ', data);
     let val = this.datas.filter((val) => val.category === data.category)[0];
     let answers = [];
     data.answers.forEach((element) => {
@@ -94,6 +99,7 @@ export class QuestionariesComponent implements OnInit {
                 category: data.category,
                 question: ques.question,
                 answers: ques.answers,
+                surveyName: this.name,
                 score: 10,
                 editMode: true,
               },
@@ -147,7 +153,7 @@ export class QuestionariesComponent implements OnInit {
               });
               this.appService.updateQuestion(payload).subscribe(
                 (res) => {
-                  let load = { ProcessVariables: {} }
+                  let load = { ProcessVariables: {} };
                   this.commonMethod(load);
                   this.isLoad = true;
                 },
@@ -163,32 +169,51 @@ export class QuestionariesComponent implements OnInit {
   }
 
   removeQuestion(category, id) {
-    this.datas.forEach((data) => {
-      if (data.category === category) {
-        let question = data.questions.filter((ques) => ques.id === id)[0];
-        let payload = {
-          ProcessVariables: {
-            questionsInput: [
-              {
-                id: id,
-                category_name: category,
-                mcq_question: question.question,
-                category_order: data.id,
-                delete: true,
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to delete this question?',
+      icon: 'warning',
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.datas.forEach((data) => {
+          if (data.category === category) {
+            let question = data.questions.filter((ques) => ques.id === id)[0];
+            let payload = {
+              ProcessVariables: {
+                questionsInput: [
+                  {
+                    id: id,
+                    category_name: category,
+                    mcq_question: question.question,
+                    category_order: data.id,
+                    delete: true,
+                  },
+                ],
               },
-            ],
-          },
-        };
-        this.appService.updateQuestion(payload).subscribe(
-          (res) => {
-            let load = { ProcessVariables: {} }
-            this.commonMethod(load);
-            this.isLoad = true;
-          },
-          (err) => {
-            console.log('err <<< ', err);
+            };
+            this.appService.updateQuestion(payload).subscribe(
+              (res) => {
+                let load = { ProcessVariables: {} };
+                this.commonMethod(load);
+                Swal.fire(
+                  'Deleted!',
+                  'Question deleted successfully.',
+                  'success'
+                );
+                this.isLoad = true;
+              },
+              (err) => {
+                console.log('err <<< ', err);
+              }
+            );
           }
-        );
+        });
+      } else {
       }
     });
   }
@@ -232,25 +257,26 @@ export class QuestionariesComponent implements OnInit {
         });
       }
       this.datas = arr;
-      console.log(this.datas)
     });
   }
 
-  constructor(private appService: AppService, public dialog: MatDialog, public survey: SurveyService, private snackBar: MatSnackBar,) {}
+  constructor(
+    private appService: AppService,
+    public dialog: MatDialog,
+    public survey: SurveyService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     let payloadSur = { ProcessVariables: {} };
     this.survey.listSurvey(payloadSur).subscribe((res) => {
       let result = res['ProcessVariables'];
-      result['surveyList'].forEach(element => {
+      result['surveyList'].forEach((element) => {
         this.surveyNameList.push(element.surveyName);
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map(value => this._filter(value)),
-        );
       });
-    })
-    let load = { ProcessVariables: {} }
+      this.surveyNameList = [...this.surveyNameList];
+    });
+    let load = { ProcessVariables: {} };
     this.commonMethod(load);
     this.isLoad = true;
   }

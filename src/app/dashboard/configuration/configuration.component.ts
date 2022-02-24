@@ -25,8 +25,8 @@ export class ConfigurationComponent implements OnInit {
     if (this.surveyDate) {
       let d = new Date(this.surveyDate);
     d.setHours(0, 0, 0, 0);
-    let a = moment(d,'MM/DD/YYYY');
-    let b = moment(this.data.expiry_limit,'MM/DD/YYYY');
+    let a = moment(d,'DD/MM/YYYY');
+    let b = moment(this.data.expiry_limit,'DD/MM/YYYY');
     let diffDays = b.diff(a, 'days');
     this.config.updateConfig({ ProcessVariables: {selected_company: this.data.selected_company, selected_survey: this.data.selected_survey, validateTo: this.data.expiry_limit, expiry_limit: diffDays.toString(), skip_limit: this.data.skip_limit.toString() }}).subscribe(
       res => {
@@ -48,13 +48,18 @@ export class ConfigurationComponent implements OnInit {
   }
 
   showCompany(event) {
-    console.log(event.target.value, 'vaue')
-    this.company = event.target.value == '' ? false : true;
-    let payload = { ProcessVariables: { selected_company: event.target.value, selected_survey: this.surveyname } }
+    let company = [];
+    this.company = event.length > 0 ? true : false;
+    event.forEach(element => {      
+      company.push(element)
+    });
+    let payload = { ProcessVariables: { selected_company: company, selected_survey: this.surveyname } }
     this.commonMethod(payload, 'company');
   }
 
   showSurvey(event) {
+    this.data.selected_company = null;
+    this.company = false;
     this.survey = event.target.value === '' ? false : true;
     this.surveyname = event.target.value;
     let payload = { ProcessVariables: { selected_survey: event.target.value } }
@@ -64,21 +69,20 @@ export class ConfigurationComponent implements OnInit {
   commonMethod(payload, company) {
     this.isLoad = true;
     this.config.listConfig(payload).subscribe((res) => {
-      console.log(res)
       this.isLoad = false;
       let result = res['ProcessVariables'];
       this.surveyList = result['surveyList']
       this.noRecords = result['surveyList'] ? false : true;
       this.isLoad = false;
       if (result['surveyList'] !== '') {
-        console.log('true')
         this.companyList = result['selected_company'];
         this.data.skip_limit = result['skip_limit'];
       }
       if (company === 'company') {
         this.surveyDate = result['validateFrom'][0];
         let d = new Date(result['validateFrom'][0]);
-        d.setDate(d.getDate() + +result['expiry_limit']);
+        moment(d.setDate(d.getDate() + +result['expiry_limit']), 'DD/MM/YYYY');
+        
         this.data.expiry_limit = d;
       }
       if (this.noRecords) {

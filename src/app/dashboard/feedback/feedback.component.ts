@@ -37,6 +37,9 @@ export class FeedbackComponent implements OnInit {
   advFilter = false;
   img = 'assets/tanla_advanced_filter.svg';
 
+  promotor: boolean=false;
+  detractor: boolean=false;
+  passive: boolean=false;
   dataSource = new MatTableDataSource([]);
   filteredSurveySearch: Observable<any[]>;
   filteredMobileSearch: Observable<any[]>;
@@ -47,7 +50,7 @@ export class FeedbackComponent implements OnInit {
   filteredDetractorsSearch: Observable<any[]>;
   filteredPassivesSearch: Observable<any[]>;
   filteredPromotorsSearch: Observable<any[]>;
-  filteredNameSearch: Observable<any[]>;
+  filteredScoreSearch: Observable<any[]>;
   searchSurveyContext = [];
   searchMobileContext = [];
   searchCompanyContext = [];
@@ -57,7 +60,7 @@ export class FeedbackComponent implements OnInit {
   searchDetractorsContext = [];
   searchPassivesContext = [];
   searchPromotorsContext = [];
-  searchNameContext = [];
+  searchScoreContext = [];
 
   constructor(
     private feedbackService: FeedbackService,
@@ -74,7 +77,7 @@ export class FeedbackComponent implements OnInit {
       detractors: new FormControl(null),
       passives: new FormControl(null),
       promotors: new FormControl(null),
-      name: new FormControl(null),
+      score: new FormControl(null),
       category: new FormControl(null)
     });
     this.searchSurveyContext = [];
@@ -85,7 +88,7 @@ export class FeedbackComponent implements OnInit {
     this.searchDetractorsContext = [];
     this.searchPassivesContext = [];
     this.searchPromotorsContext = [];
-    this.searchNameContext = [];
+    this.searchScoreContext = [];
     this.searchCategoryContext = [];
     this.filterCommonMethod();
   }
@@ -163,12 +166,12 @@ export class FeedbackComponent implements OnInit {
           : this.searchPromotorsContext.slice()
       )
     );
-    this.filteredNameSearch = this.fg.get('name').valueChanges.pipe(
+    this.filteredScoreSearch = this.fg.get('score').valueChanges.pipe(
       startWith(''),
       map((search) =>
         search
-          ? this.filterSearchContext(search, this.searchNameContext)
-          : this.searchNameContext.slice()
+          ? this.filterSearchContext(search, this.searchScoreContext)
+          : this.searchScoreContext.slice()
       )
     );
   }
@@ -350,7 +353,11 @@ export class FeedbackComponent implements OnInit {
     this.searchCompanyContext = [];
     this.searchQuestionContext = [];
     this.searchAnswerContext = [];
-    this.searchNameContext = [];
+    this.searchScoreContext = [
+      {label: 'Promotor', value: 'Promotor'},
+      {label: 'Passive', value: 'Passive'},
+      {label: 'Detractor', value: 'Detractor'}
+    ];
     this.searchCategoryContext = [];
     [0, 1, 2, 3, 4, 5, 6].forEach((val) => {
       this.searchDetractorsContext.push({ label: val, value: val });
@@ -360,7 +367,6 @@ export class FeedbackComponent implements OnInit {
       dataValue.forEach((element) => {
       [
         'employeeCompany',
-        'employeeName',
         'employeePhoneNumber',
         'feedbackAnswer',
         'feedbackQuestion',
@@ -374,21 +380,16 @@ export class FeedbackComponent implements OnInit {
               value: element[ele],
             });
           } else if (index === 1) {
-            this.searchNameContext.push({
-              label: element[ele],
-              value: element[ele],
-            });
-          } else if (index === 2) {
             this.searchMobileContext.push({
               label: element[ele],
               value: element[ele],
             });
-          } else if (index === 3) {
+          } else if (index === 2) {
             this.searchAnswerContext.push({
               label: element[ele],
               value: element[ele],
             });
-          } else if (index === 4) {
+          } else if (index === 3) {
             this.searchQuestionContext.push({
               label: element[ele],
               value: element[ele],
@@ -479,6 +480,12 @@ export class FeedbackComponent implements OnInit {
           panelClass: ['error-snack-bar'],
         });
       };
+  }
+
+  getScore(event) {
+    this.promotor = event === 'Promotor' ? true: false;
+    this.detractor = event === 'Detractor' ? true: false;
+    this.passive = event === 'Passive' ? true: false;
   }
 
   ngOnInit(): void {

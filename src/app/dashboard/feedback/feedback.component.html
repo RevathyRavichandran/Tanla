@@ -177,7 +177,7 @@
             </mat-option>
           </mat-autocomplete>
         </div>
-        <div class="col-3 form-group">
+        <!-- <div class="col-3 form-group">
           <label for="company"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">
               Company Name:
@@ -202,8 +202,29 @@
               <span>{{ search.label }}</span>
             </mat-option>
           </mat-autocomplete>
-        </div>
+        </div> -->
         <div class="col-3 form-group">
+          <label for="score"
+            ><h2 style="font-size: 1rem; margin: 0 0 8px">Score:</h2></label
+          >
+          <input
+            style="border-radius: 20px !important"
+            class="form-control"
+            id="score"
+            placeholder="Score"
+            formControlName="score"
+            [matAutocomplete]="auto7"
+          />
+          <mat-autocomplete #auto7="matAutocomplete" (optionSelected)='getScore($event.option.value)'>
+            <mat-option
+              *ngFor="let search of filteredScoreSearch | async"
+              [value]="search.value"
+            >
+              <span>{{ search.label }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-3 form-group" *ngIf="promotor">
           <label for="promotors"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">Promotor:</h2></label
           >
@@ -211,7 +232,7 @@
             style="border-radius: 20px !important"
             class="form-control"
             id="promotors"
-            placeholder="Promotors"
+            placeholder="Promotor"
             formControlName="promotors"
             [matAutocomplete]="auto7"
           />
@@ -225,7 +246,7 @@
           </mat-autocomplete>
         </div>
         <br />
-        <div class="col-3 form-group">
+        <div class="col-3 form-group" *ngIf="passive">
           <label for="passives"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">Passive:</h2></label
           >
@@ -233,7 +254,7 @@
             style="border-radius: 20px !important"
             class="form-control"
             id="passives"
-            placeholder="Passives"
+            placeholder="Passive"
             formControlName="passives"
             [matAutocomplete]="auto6"
           />
@@ -247,7 +268,7 @@
           </mat-autocomplete>
         </div>
         <br />
-        <div class="col-3 form-group">
+        <div class="col-3 form-group" *ngIf="detractor">
           <label for="detractors"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">
               Detractor:
@@ -257,7 +278,7 @@
             style="border-radius: 20px !important"
             class="form-control"
             id="detractors"
-            placeholder="Detractors"
+            placeholder="Detractor"
             formControlName="detractors"
             [matAutocomplete]="auto10"
           />
@@ -273,7 +294,7 @@
         <br />
         
         
-        <div class="col-3 form-group">
+        <!-- <div class="col-3 form-group">
           <label for="name"
             ><h2 style="font-size: 1rem; margin: 0 0 8px">Name:</h2></label
           >
@@ -296,7 +317,7 @@
               <span>{{ search.label }}</span>
             </mat-option>
           </mat-autocomplete>
-        </div>
+        </div> -->
         <br />
     </div>
     </div>

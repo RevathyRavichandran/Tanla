@@ -14,7 +14,6 @@ export class SidebarComponent implements OnInit {
       if (event instanceof NavigationStart) {
         
         if (event.url === '/audit') {
-          console.log('hello')
           this.showHead = true;
         } else {
           this.showHead = false;

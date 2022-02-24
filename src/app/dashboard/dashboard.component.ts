@@ -30,50 +30,57 @@ export class DashboardComponent implements OnInit {
   filteredPassive = 'NA';
   totalCount = '';
   filteredOverall = 'NA';
+  filteredPromoCount = '';
+  filteredDetractorCount = '';
+  filteredPassiveCount = '';
   isLoad: boolean = false;
   surveyNameList: any = [];
+  questionList: any = [];
+  selectedSurvey: string[];
+  selectedQuestion: string[];
   searchSurvey: any = ['No Records'];
   searchQues: any = ['No Records'];
   totalRes = '';
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  latestSurvey = '';
 
   ngOnInit() {
-    this.dashboaService.getDashboardPercentage().subscribe((res) => {
-      if (res && res.ProcessVariables) {
-        this.totalRes = res.ProcessVariables.npsFeedbackCount;
-        this.overallScore = res.ProcessVariables.overallCount;
-        this.promotersPercentage = parseFloat(
-          res.ProcessVariables.promoPercentage
-        ).toFixed(2);
-        this.passivesPercentage = parseFloat(
-          res.ProcessVariables.passivePercentage
-        ).toFixed(2);
-        this.detractorsPercentage = parseFloat(
-          res.ProcessVariables.detractorsPercentage
-        ).toFixed(2);
-      }
-    });
-    let payloadSur = { ProcessVariables: {} };
-    this.surveySer.listSurvey(payloadSur).subscribe((res) => {
-      let result = res['ProcessVariables'];
-      result['surveyList'].forEach((element) => {
-        this.surveyNameList.push(element.surveyName);
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map((value) => this._filter(value))
-        );
+    let live = { ProcessVariables: {} };
+    this.surveySer.listSurvey(live).subscribe((res) => {
+      res.ProcessVariables.surveyList.forEach((element) => {
+        if (element && element.activeStatus == 1) {
+          this.latestSurvey = element.surveyName;
+          let payload = {
+            ProcessVariables: { surveyName: element.surveyName },
+          };
+          this.dashboaService
+            .getDashboardPercentage(payload)
+            .subscribe((res) => {
+              if (res && res.ProcessVariables) {
+                this.totalRes = res.ProcessVariables.npsFeedbackCount;
+                this.overallScore = res.ProcessVariables.overallCount;
+                this.promotersPercentage = parseFloat(
+                  res.ProcessVariables.promoPercentage
+                ).toFixed(2);
+                this.passivesPercentage = parseFloat(
+                  res.ProcessVariables.passivePercentage
+                ).toFixed(2);
+                this.detractorsPercentage = parseFloat(
+                  res.ProcessVariables.detractorsPercentage
+                ).toFixed(2);
+              }
+            });
+        }
       });
     });
+
+    let payloadSur = { ProcessVariables: {} };
+    this.dashboaService.getQuestion(payloadSur).subscribe((res) => {
+      this.surveyNameList = [...res.surveyList];
+    });
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.surveyNameList.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
-  }
   weekData(color) {
     this.survey = true;
     this.question = false;
@@ -86,6 +93,7 @@ export class DashboardComponent implements OnInit {
     this.survey = true;
     this.question = true;
     this.date = false;
+    this.selectedSurvey = null;
     document.getElementById('week').style.background = 'none';
     document.getElementById('month').style.background = color;
     document.getElementById('year').style.background = 'none';
@@ -101,16 +109,14 @@ export class DashboardComponent implements OnInit {
   filter() {
     this.isLoad = true;
     if (this.survey && !this.question) {
-      let surveyFilter = (<HTMLInputElement>document.getElementById('survey'))
-        .value;
-      if (surveyFilter !== null && surveyFilter !== '') {
+      if (this.selectedSurvey !== null) {
         let payload = {
           ProcessVariables: {
             selectedField: '1',
-            selectedValue: surveyFilter,
+            selectedValue: this.selectedSurvey,
           },
         };
-        this.commonMethod(payload);
+        this.commonMethod(payload, '');
       } else {
         this.isLoad = false;
         this.toastr.error('Please fill survey name', 'Required');
@@ -124,7 +130,8 @@ export class DashboardComponent implements OnInit {
         dateFromFilter !== null &&
         dateFromFilter !== '' &&
         dateToFilter !== null &&
-        dateToFilter !== ''
+        dateToFilter !== '' &&
+        this.selectedSurvey
       ) {
         let payload = {
           ProcessVariables: {
@@ -133,27 +140,20 @@ export class DashboardComponent implements OnInit {
             toDate: dateToFilter,
           },
         };
-        this.commonMethod(payload);
+        this.commonMethod(payload, '');
       } else {
         this.isLoad = false;
-        this.toastr.error('Please fill all date fields', 'Required');
+        this.toastr.error(
+          'Please fill all date fields and survey name',
+          'Required'
+        );
       }
     } else if (this.question) {
-      let suveyFilter = (<HTMLInputElement>document.getElementById('survey'))
-        .value;
-      let questionFilter = (<HTMLInputElement>(
-        document.getElementById('question')
-      )).value;
-      if (
-        suveyFilter !== null &&
-        suveyFilter !== '' &&
-        questionFilter !== null &&
-        questionFilter !== ''
-      ) {
+      if (this.selectedSurvey !== null && this.selectedQuestion !== null) {
         let payload = {
           ProcessVariables: {
-            selectedValue: suveyFilter,
-            selectedValue2: questionFilter,
+            selected_survey: this.selectedSurvey,
+            selected_question: this.selectedQuestion,
           },
         };
         this.questionMethod(payload);
@@ -164,7 +164,10 @@ export class DashboardComponent implements OnInit {
     }
   }
   questionMethod(payload) {
-    this.dashboaService.getQuestionData(payload).subscribe((res) => {
+    this.dashboaService.questionCal(payload).subscribe((res) => {
+      this.filteredPromoCount = res.promoCount;
+      this.filteredDetractorCount = res.detractCount;
+      this.filteredPassiveCount = res.passiveCount;
       this.filteredPromo = res.promoPercentage;
       this.filteredDetractor = res.detractorsPercentage;
       this.filteredPassive = res.passivePercentage;
@@ -172,6 +175,20 @@ export class DashboardComponent implements OnInit {
       this.filteredOverall = res.overallPercentage;
       this.toastr.success('Filtered applied successfully', 'Success');
     });
+  }
+  changeFn(selection) {
+    if (selection && this.question) {
+      this.selectedQuestion = null;
+      let process = {
+        ProcessVariables: {
+          selected_survey: selection,
+          selected_question: null,
+        },
+      };
+      this.dashboaService.getQuestion(process).subscribe((res) => {
+        this.questionList = [...res.questionList];
+      });
+    }
   }
   searchData(value) {
     this.searchSurvey = [];
@@ -193,7 +210,6 @@ export class DashboardComponent implements OnInit {
         } else {
           this.searchSurvey = ['No Records'];
         }
-        console.log(this.searchSurvey);
       });
     } else {
       this.searchSurvey = ['No Records'];
@@ -219,7 +235,6 @@ export class DashboardComponent implements OnInit {
         } else {
           this.searchQues = ['No Records'];
         }
-        console.log(this.searchQues);
       });
     } else {
       this.searchQues = ['No Records'];
@@ -227,7 +242,7 @@ export class DashboardComponent implements OnInit {
   }
   clear() {
     if (this.survey && !this.question) {
-      (<HTMLInputElement>document.getElementById('survey')).value = '';
+      this.selectedSurvey = null;
       let payload = {
         ProcessVariables: {
           selectedField: '1',
@@ -235,7 +250,7 @@ export class DashboardComponent implements OnInit {
           toDate: '',
         },
       };
-      this.commonMethod(payload);
+      this.commonMethod(payload, 'clear');
     } else if (this.date) {
       (<HTMLInputElement>document.getElementById('date1')).value = '';
       (<HTMLInputElement>document.getElementById('date2')).value = '';
@@ -246,28 +261,34 @@ export class DashboardComponent implements OnInit {
           toDate: '',
         },
       };
-      this.commonMethod(payload);
+      this.commonMethod(payload, 'clear');
     } else if (this.question) {
-      (<HTMLInputElement>document.getElementById('survey')).value = '';
-      (<HTMLInputElement>document.getElementById('question')).value = '';
+      this.selectedSurvey = null;
+      this.selectedQuestion = null;
       let payload = {
         ProcessVariables: {
-          selectedValue: '',
-          selectedValue2: '',
-        }
-      }
+          selected_survey: '',
+          selected_question: '',
+        },
+      };
       this.questionMethod(payload);
     }
   }
-  commonMethod(val) {
+  commonMethod(val, clear) {
     this.dashboaService.getChartData(val).subscribe((res) => {
-      console.log(res);
       this.filteredPromo = res.promoPercentage;
       this.filteredDetractor = res.detractorsPercentage;
       this.filteredPassive = res.passivePercentage;
+      this.filteredPromoCount = res.promoCount;
+      this.filteredDetractorCount = res.detractCount;
+      this.filteredPassiveCount = res.passiveCount;
       this.totalCount = res.totalCount;
       this.filteredOverall = res.overallPercentage;
-      this.toastr.success('Filtered applied successfully', 'Success');
+      if (clear == 'clear') {
+        this.toastr.success('Filtered cleared successfully', 'Success');
+      } else {
+        this.toastr.success('Filtered applied successfully', 'Success');
+      }
       this.isLoad = false;
     });
   }
