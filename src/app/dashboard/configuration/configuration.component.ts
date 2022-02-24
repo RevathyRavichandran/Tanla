@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../app/services/configuration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configuration',
@@ -19,7 +20,7 @@ export class ConfigurationComponent implements OnInit {
   company: boolean = false;
   data = { selected_survey: "", selected_company: "", expiry_limit: null, skip_limit: null };
 
-  constructor(public config: ConfigService, private snackBar: MatSnackBar) {}
+  constructor(public config: ConfigService, private snackBar: MatSnackBar, public toastr: ToastrService) {}
 
   submit() {
     if (this.surveyDate) {
@@ -30,12 +31,14 @@ export class ConfigurationComponent implements OnInit {
     let diffDays = b.diff(a, 'days');
     this.config.updateConfig({ ProcessVariables: {selected_company: this.data.selected_company, selected_survey: this.data.selected_survey, validateTo: this.data.expiry_limit, expiry_limit: diffDays.toString(), skip_limit: this.data.skip_limit.toString() }}).subscribe(
       res => {
+        this.toastr.success('Configured successfully', 'Success');
         this.data = { selected_survey: "", selected_company: "", expiry_limit: null, skip_limit: null };
       }
     );
     } else {
       this.config.updateConfig({ ProcessVariables: {...this.data, skip_limit: this.data.skip_limit.toString() }}).subscribe(
         res => {
+          this.toastr.success('Configured successfully', 'Success');
           this.data = { selected_survey: "", selected_company: "", expiry_limit: null, skip_limit: null };
         }
       );
@@ -68,6 +71,7 @@ export class ConfigurationComponent implements OnInit {
 
   commonMethod(payload, company) {
     this.isLoad = true;
+    let index = 0;
     this.config.listConfig(payload).subscribe((res) => {
       this.isLoad = false;
       let result = res['ProcessVariables'];
@@ -78,10 +82,19 @@ export class ConfigurationComponent implements OnInit {
         this.companyList = result['selected_company'];
         this.data.skip_limit = result['skip_limit'];
       }
+      if (payload.ProcessVariables.selected_company) {
+        this.companyList.forEach(company1 => {
+        payload.ProcessVariables.selected_company.forEach(company2 => {
+          if (company1 === company2) {
+            index = this.companyList.indexOf(company1)
+          }
+        });
+      });
+      }      
       if (company === 'company') {
-        this.surveyDate = result['validateFrom'][0];
-        let d = new Date(result['validateFrom'][0]);
-        moment(d.setDate(d.getDate() + +result['expiry_limit']), 'DD/MM/YYYY');
+        this.surveyDate = result['validateFrom'][index];
+        let d = new Date(result['validateFrom'][index]);
+        moment(d.setDate(d.getDate() + +result['expiry_limit'][index]), 'DD/MM/YYYY');
         
         this.data.expiry_limit = d;
       }

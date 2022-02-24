@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup,  Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   fg: FormGroup;
 
-  constructor(public router: Router, public log: LoginService, private matSnackbar: MatSnackBar) {}
+  constructor(public router: Router, public log: LoginService, public toastr: ToastrService,
+    private matSnackbar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.fg = new FormGroup({
@@ -32,21 +34,12 @@ export class LoginComponent implements OnInit {
       this.log.login(payload).subscribe(loginData => {
         if (loginData.ProcessVariables.count === '1') {
           this.router.navigateByUrl('/dashboard');
-          this.matSnackbar.open('Logged in successfully', '', {
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            duration: 2000,
-            panelClass: ['success-snack-bar'],
-          });
+
+          this.toastr.success('Logged in successfully', 'Success');
           localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
           localStorage.setItem('email', this.f.email.value);
         } else {
-          this.matSnackbar.open('Invalid Email ID and Password', '', {
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            duration: 2000,
-            panelClass: ['error-snack-bar'],
-          });
+          this.toastr.error('Invalid Email ID and Password', 'Error');
           localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
           localStorage.setItem('email', this.f.email.value);
         }

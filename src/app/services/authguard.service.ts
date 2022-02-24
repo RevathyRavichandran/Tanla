@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
@@ -8,10 +7,11 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private router: Router, public toastr: ToastrService,) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       this.router.navigateByUrl('/login');
-      this.snackBar.open('Please Login to Continue');
+      this.toastr.info('Please login to continue');
     }
   }
 }
