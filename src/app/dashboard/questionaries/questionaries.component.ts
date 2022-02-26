@@ -39,9 +39,11 @@ export class QuestionariesComponent implements OnInit {
         answers: [
           {
             answer: '',
+            score: 0
           },
           {
             answer: '',
+            score: 0
           },
         ],
       },
@@ -71,20 +73,23 @@ export class QuestionariesComponent implements OnInit {
     let val = this.datas.filter((val) => val.category === data.category)[0];
     let answers = [];
     data.answers.forEach((element) => {
-      answers.push({ id: uuid.v4(), answer: element.answer });
+      answers.push({ value: element.answer, score: element.score });
     });
-    let questions = val.questions;
-    questions.push({
-      id: uuid.v4(),
-      question: data.question,
-      answers: answers,
-    });
-    let payload = {
-      id: val.id,
+    let payload = { ProcessVariables: {
       category: val.category,
-      questions: questions,
-    };
-    // this.datas = this.appService.updateQuestion(payload, payload.id);
+      categoryQuestion: data.question,
+      MCQQuestionList: answers
+    } };
+    this.appService.createQuestion(payload).subscribe(
+      (res) => {
+        let load = { ProcessVariables: {} };
+        this.commonMethod(load);
+        this.isLoad = true;
+      },
+      (err) => {
+        console.log('err <<< ', err);
+      }
+    );
   }
 
   editQuestion(category, id) {
@@ -100,7 +105,6 @@ export class QuestionariesComponent implements OnInit {
                 question: ques.question,
                 answers: ques.answers,
                 surveyName: this.name,
-                score: 10,
                 editMode: true,
               },
             });
@@ -127,6 +131,7 @@ export class QuestionariesComponent implements OnInit {
                     category_id: id,
                     category_name: category,
                     option: element.answer,
+                    score: element.score
                   });
                 });
               ques.answers.forEach((element) => {
@@ -139,6 +144,7 @@ export class QuestionariesComponent implements OnInit {
                     category_id: id,
                     category_name: category,
                     option: ans.answer,
+                    score: ans.score,
                     delete: false,
                   });
                 } else {
@@ -147,6 +153,7 @@ export class QuestionariesComponent implements OnInit {
                     category_id: id,
                     category_name: category,
                     option: element.answer,
+                    score: element.score,
                     delete: true,
                   });
                 }
@@ -236,7 +243,7 @@ export class QuestionariesComponent implements OnInit {
           let answer = [];
           if (inner_ans) {
             inner_ans.forEach((inn_ans) => {
-              answer.push({ id: inn_ans['id'], answer: inn_ans['option'] });
+              answer.push({ id: inn_ans['id'], answer: inn_ans['option'], score: inn_ans['score'] });
             });
           }
           hash['questions'].push({

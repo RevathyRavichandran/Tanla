@@ -28,7 +28,8 @@ export class PopupComponent implements OnInit {
       new FormGroup(
         {
           id: new FormControl(null),
-          answer: new FormControl("", Validators.required)
+          answer: new FormControl("", Validators.required),
+          score: new FormControl("", Validators.required)
         }
       )
     )
@@ -48,7 +49,8 @@ export class PopupComponent implements OnInit {
         new FormGroup(
           {
             id: new FormControl(element.id),
-            answer: new FormControl(element.answer, Validators.required)
+            answer: new FormControl(element.answer, Validators.required),
+            score: new FormControl(element.score, Validators.required)
           }
         )
       )

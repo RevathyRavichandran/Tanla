@@ -24,7 +24,7 @@ export class AppService {
   }
 
   public createQuestion(question: any) {
-    return this.http.post(this.dbUrl + "qusAnsUpdateAPI", question);
+    return this.http.post(this.dbUrl + "createQuestionary", question);
   }
 
   // public updateQuestion(question: any, id: any) {
