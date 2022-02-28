@@ -7,7 +7,7 @@
             <ng-select [items]="surveyNameList" [disabled]="!survey"
                    [multiple]="false"
                    [ngModelOptions]="{standalone: true}"
-                   placeholder="Select companies"
+                   placeholder="Select survey"
                    [(ngModel)]="selectedSurvey">
         </ng-select>
             <!-- <input
@@ -64,7 +64,7 @@
     <div *ngIf="!noRecords" class="col-lg-12">
             <table cellSpacing="20">
                 <tr>
-                    <th class="header sno">SNo.</th>
+                    <th class="header sno">S/N</th>
                     <th class="header">Category</th>
                     <th class="header">
                         <div class="row col-12">

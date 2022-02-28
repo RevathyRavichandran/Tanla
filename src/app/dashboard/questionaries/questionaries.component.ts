@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from 'src/app/services/app.service';
-import * as uuid from 'uuid';
 import { PopupComponent } from '../popup/popup.component';
 import _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { SurveyService } from '../../../app/services/survey.service';
-import { map, startWith } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-questionaries',
@@ -162,6 +161,7 @@ export class QuestionariesComponent implements OnInit {
                 (res) => {
                   let load = { ProcessVariables: {} };
                   this.commonMethod(load);
+                  this.toastr.success('Question and answers modified successfully', 'Success');
                   this.isLoad = true;
                 },
                 (err) => {
@@ -271,7 +271,8 @@ export class QuestionariesComponent implements OnInit {
     private appService: AppService,
     public dialog: MatDialog,
     public survey: SurveyService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public toastr: ToastrService
   ) {}
 
   ngOnInit(): void {

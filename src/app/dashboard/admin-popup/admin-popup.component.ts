@@ -22,18 +22,34 @@ export class AdminPopupComponent implements OnInit {
   ngOnInit(): void {
     this.status =  this.data && this.data.isActive === '1' ? '1' : '2';
     this.reason = this.status === '2' ? true : false;
-    this.fg = new FormGroup(
+    if (!this.data) {
+      this.fg = new FormGroup(
       {
         "userName": new FormControl(this.data?.name || null, Validators.required),
-        "employeeNo": new FormControl(this.data?.employeeNumber || null),
+        "employeeNo": new FormControl(this.data?.employeeNumber || null, Validators.required),
         "mobileNumber": new FormControl(this.data?.phoneNo || null, Validators.required),
-        "status": new FormControl(this.data?.isActive || null, Validators.required),
+        "status": new FormControl(this.data?.isActive || null),
         "reason": new FormControl(this.data?.reason || null),
-        "emailId": new FormControl(this.data?.emailId || null),
+        "emailId": new FormControl(this.data?.emailId || null, Validators.required),
         "department": new FormControl(this.data?.department || null, Validators.required),
         "designation": new FormControl(this.data?.designation || null, Validators.required)
       }
     )
+    } else {
+      this.fg = new FormGroup(
+        {
+          "userName": new FormControl(this.data?.name || null, Validators.required),
+          "employeeNo": new FormControl(this.data?.employeeNumber || null),
+          "mobileNumber": new FormControl(this.data?.phoneNo || null, Validators.required),
+          "status": new FormControl(this.data?.isActive || null, Validators.required),
+          "reason": new FormControl(this.data?.reason || null, Validators.required),
+          "emailId": new FormControl(this.data?.emailId || null),
+          "department": new FormControl(this.data?.department || null, Validators.required),
+          "designation": new FormControl(this.data?.designation || null, Validators.required)
+        }
+      )
+    }
+    
   }
 
   showReason(event) {
