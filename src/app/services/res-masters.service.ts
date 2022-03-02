@@ -6,25 +6,25 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResMastersService {
-  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/project/';
+  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/app/';
 
   getAllRecord(feedback: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/RespondantList',
+      this.dbUrl + 'npsfeedback/api/RespondantList',
       feedback
     );
   }
 
   downloadFile(file: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/downloadEmptyCSV',
+      this.dbUrl + 'npsfeedback/api/downloadEmptyCSV',
       file
     );
   }
 
   uploadFile(content: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/CSV upload API',
+      this.dbUrl + 'npsfeedback/api/CSV upload API',
       content
     );
   }

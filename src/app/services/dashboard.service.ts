@@ -19,7 +19,7 @@ export class dashboardService {
   }
 
   getDashboardPercentage(payload): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/dashboard count API`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/dashboard count API`;
     let headers = new HttpHeaders({
       'authentication-token':
         'ApTpbPTQ+S4nTNYHHBzmesprv7se9zQWF8DYnyxoFVwfXZJCEMLuKFgxM9RtZPcl',
@@ -35,7 +35,7 @@ export class dashboardService {
   }
 
   getChartData(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/surveyNameCount_dashboard`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/surveyNameCount_dashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
@@ -51,7 +51,7 @@ export class dashboardService {
   }
 
   getQuestionData(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionViceFilter`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionViceFilter`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
@@ -66,7 +66,7 @@ export class dashboardService {
     );
   }
   getQuestion(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionFilterDashboard`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionFilterDashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
@@ -81,7 +81,7 @@ export class dashboardService {
     );
   }
   questionCal(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/project/NPS Feedback/api/questionCalculation`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionCalculation`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',

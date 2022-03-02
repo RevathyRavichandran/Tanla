@@ -53,3 +53,6 @@ button {
       border: 1px solid #ced4da;
       font-size: 15px;
   }
+  ::ng-deep.mat-form-field-wrapper {
+    padding-bottom: 0em;
+}

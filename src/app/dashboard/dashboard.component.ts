@@ -44,6 +44,10 @@ export class DashboardComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   latestSurvey = '';
+  toppings = new FormControl();
+  surveyList = new FormControl();
+  categoryList = new FormControl();
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   ngOnInit() {
     let live = { ProcessVariables: {} };
@@ -177,7 +181,8 @@ export class DashboardComponent implements OnInit {
     });
   }
   changeFn(selection) {
-    if (selection && this.question) {
+    console.log(selection)
+    if (selection) {
       this.selectedQuestion = null;
       let process = {
         ProcessVariables: {

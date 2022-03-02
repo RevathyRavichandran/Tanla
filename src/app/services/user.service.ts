@@ -6,25 +6,25 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/project/';
+  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/app/';
 
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/createUserInAdmin',
+      this.dbUrl + 'npsfeedback/api/createUserInAdmin',
       user
     );
   }
 
   listUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/list user details',
+      this.dbUrl + 'npsfeedback/api/list user details',
       user
     );
   }
 
   updateUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'NPS Feedback/api/updateUserDetailsAPI',
+      this.dbUrl + 'npsfeedback/api/updateUserDetailsAPI',
       user
     );
   }

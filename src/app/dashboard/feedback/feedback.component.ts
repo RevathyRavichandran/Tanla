@@ -8,7 +8,10 @@ import { FeedbackService } from '../../../app/services/feedback.service';
 import moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { saveAs } from 'file-saver';
-
+export interface StateGroup {
+  letter: string;
+  names: string[];
+}
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
@@ -37,6 +40,9 @@ export class FeedbackComponent implements OnInit {
   advFilter = false;
   img = 'assets/tanla_advanced_filter.svg';
 
+  promo = new FormControl();
+  pass = new FormControl();
+  det = new FormControl();
   promotor: boolean=false;
   detractor: boolean=false;
   passive: boolean=false;
@@ -61,6 +67,48 @@ export class FeedbackComponent implements OnInit {
   searchPassivesContext = [];
   searchPromotorsContext = [];
   searchScoreContext = [];
+
+  toppings = new FormControl();
+  isExpandCategory: boolean[] = [];
+
+  states = new FormControl();
+
+  expandDocumentTypes(group: any) {
+    console.log('expanding dropdown', group);
+    this.isExpandCategory[group.letter] = !this.isExpandCategory[group.letter];
+    // expand only selected parent dropdown category with that childs
+  }
+
+  toggleSelection(event: any, group: any) {
+    //console.log(group);
+    //console.log(event.checked);
+    let states = this.states.value;
+    states = states ? states : [];
+    if (event.checked) {
+      states.push(...group.names);
+    } else {
+      group.names.forEach((x: string) => states.splice(states.indexOf(x), 1));
+    }
+    this.states.setValue(states);
+    //console.log(states);
+    console.log(this.states.value);
+    // here select all childs for this particular group
+  }
+
+  stateList: StateGroup[] = [
+    {
+      letter: 'Promoters',
+      names: ['9', '10'],
+    },
+    {
+      letter: 'Passive',
+      names: ['7', '8'],
+    },
+    {
+      letter: 'Detractor',
+      names: ['0', '1', '2', '3', '4', '5', '6'],
+    },
+  ];
 
   constructor(
     private feedbackService: FeedbackService,

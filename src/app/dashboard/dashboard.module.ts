@@ -67,6 +67,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     BrowserModule,
     NgSelectModule,
  BrowserAnimationsModule,
+ 
  ToastrModule.forRoot({
     timeOut: 3000,
     positionClass: 'toast-top-right',

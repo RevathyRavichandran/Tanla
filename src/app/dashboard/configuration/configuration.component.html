@@ -67,6 +67,7 @@
                   class="form-control"
                   [ngClass]="{ 'funkystyling': company }"
                   placeholder="Expiry Limit"
+                  [min]="minDate"
                   [matDatepicker]="picker"
                   (click)="picker.open()"
                   name="expiry_limit"
@@ -83,7 +84,7 @@
                   <button type="submit" class="btn btn-primary btn-lg submit-btn">
                     Submit
                   </button>
-                  <button style="background-color: #004cf1; font-size: 1.2rem; padding: 0.3rem; color: white;" class="btn btn-primary btn-lg submit-btn" type="button" (click)="form.reset()">
+                  <button style="background-color: #004cf1; font-size: 1.2rem; padding: 0.3rem; color: white;" class="btn btn-primary btn-lg submit-btn" type="button" (click)="close()">
                     Cancel
                   </button>
                 </div>

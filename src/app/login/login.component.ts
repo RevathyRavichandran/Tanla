@@ -4,6 +4,7 @@ import { FormControl, FormGroup,  Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
   fg: FormGroup;
 
-  constructor(public router: Router, public log: LoginService, public toastr: ToastrService,
+  constructor(public router: Router, public log: LoginService, public toastr: ToastrService, 
     private matSnackbar: MatSnackBar) {}
 
   ngOnInit(): void {
@@ -32,7 +33,25 @@ export class LoginComponent implements OnInit {
         "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.password.value}
         }
       this.log.login(payload).subscribe(loginData => {
-        if (loginData.ProcessVariables.count === '1') {
+        if (loginData.ProcessVariables.failCount > 3) {
+          Swal.fire({
+            title: 'Warning',
+            text: 'You have exceeded the maximum number of login attempts. Please reset your password.',
+            icon: 'warning',
+            showCancelButton: true,
+            showCloseButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Reset',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigateByUrl('/forgotPassword')
+            } else {
+              
+            }
+          })
+        } else {
+          if (loginData.ProcessVariables.count === '1') {
           this.router.navigateByUrl('/dashboard');
 
           this.toastr.success('Logged in successfully', 'Success');
@@ -43,6 +62,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
           localStorage.setItem('email', this.f.email.value);
         }
+        }
+        
       })      
     }
   }

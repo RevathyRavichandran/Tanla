@@ -1,13 +1,13 @@
 .form-control {
   border-radius: 9999px;
-  border: 2px solid grey;
+  border: 1px solid #8080804f;
   font-size: 15px;
 }
 
 button {
   padding: 10px;
   border-radius: 9999px;
-  border: 2px solid grey;
+  border: 1px solid #8080804f;
   font-size: 15px;
 }
 
@@ -49,6 +49,6 @@ select[readonly] option{
 
 ::ng-deep.ng-select .ng-select-container {
   border-radius: 9999px !important;
-    border: 2px solid grey;
+    border: 1px solid #8080804f;
     font-size: 15px;
 }

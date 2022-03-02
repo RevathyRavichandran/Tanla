@@ -117,10 +117,10 @@
     <mat-card>
       <mat-card-title>
         <div class="row pb-2">
-          <div class="col-6 pt-2">
+          <div style="text-decoration: underline;" class="col-12 pt-2">
             <label>Advanced Filter</label>
           </div>
-          <div class="col-6 example-button-row">
+          <!-- <div class="col-6 example-button-row">
             <button
               [ngClass]="{
                 grey: (survey && question) || !survey,
@@ -181,13 +181,50 @@
               />
               Date Range
             </button>
-          </div>
+          </div> -->
         </div>
       </mat-card-title>
       <mat-card-content>
         <form class="example-form">
           <div class="row">
-            <div class="col-3" *ngIf="survey && !question"></div>
+            <div class="col-3">
+              <mat-form-field style="width: 90%; height: 2.9rem;" appearance="outline">
+                <mat-label>Date Range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Start date">
+                  <input matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+             
+              <mat-form-field style="width: 90%; border-top-width: 0px;" appearance="outline">
+                <mat-label>Survey</mat-label>
+                <mat-select style="border-top-width: 0px;" placeholder="Select survey"
+                  [formControl]="surveyList" (selectionChange)="changeFn($event.value)" disableOptionCentering>
+                  <mat-option *ngFor="let survey of surveyNameList" [value]="survey">{{survey}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field style="width: 90%;" appearance="outline">
+                <mat-label>Categories</mat-label>
+                <mat-select placeholder="Select category" [formControl]="categoryList" disableOptionCentering multiple>
+                  <mat-option *ngFor="let survey of surveyNameList" [value]="survey">{{survey}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field style="width: 90%;" appearance="outline">
+                <mat-label>Questions</mat-label>
+                <mat-select placeholder="Select questions" [disabled]="!surveyList" [formControl]="toppings" multiple disableOptionCentering>
+                  <mat-option *ngFor="let question of questionList" [value]="question">{{question}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-3" *ngIf="survey && !question"></div>
             <div class="col-6" *ngIf="survey">
               <ng-select
                 [items]="surveyNameList" (change)="changeFn($event)"
@@ -198,7 +235,7 @@
                 placeholder="Select survey"
                 [(ngModel)]="selectedSurvey"
               >
-              </ng-select>
+              </ng-select> -->
               <!-- <input
                 class="form-control"
                 id="survey"
@@ -222,9 +259,14 @@
               <mat-spinner style="margin:0 auto;" class="loader" diameter="50"></mat-spinner>
               <span class="loader-text">Loading... Please wait</span>
             </div> -->
-            </div>
-            <div class="col-6" *ngIf="question">
-              <ng-select
+            
+            <!-- <div class="col-6" *ngIf="question"> -->
+              
+              
+              
+              
+              
+              <!-- <ng-select
                 [items]="questionList"
                 id="question"
                 [disabled]="!selectedSurvey"
@@ -234,7 +276,7 @@
                 placeholder="Select questions"
                 [(ngModel)]="selectedQuestion"
               >
-              </ng-select>
+              </ng-select> -->
               <!-- <input
                 class="form-control"
                 id="question"
@@ -253,9 +295,8 @@
                   <span>{{ search }}</span>
                 </mat-option>
               </mat-autocomplete> -->
-            </div>
-            <div class="col-1" *ngIf="date"></div>
-            <div class="col-6" *ngIf="date">
+            <!-- </div> -->
+            <!-- <div class="col-6" *ngIf="date">
               <ng-select (change)="changeFn($event)"
                 [items]="surveyNameList"
                 id="survey"
@@ -265,7 +306,7 @@
                 placeholder="Select survey"
                 [(ngModel)]="selectedSurvey"
               >
-              </ng-select>
+              </ng-select> -->
               <!-- <input
                 class="form-control"
                 id="survey"
@@ -285,7 +326,7 @@
                   <span>{{ search }}</span>
                 </mat-option>
               </mat-autocomplete> -->
-            </div>
+            <!-- </div>
             <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
               <mat-form-field appearance="fill">
                 <mat-label>From date</mat-label>
@@ -297,9 +338,9 @@
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
-            </div>
+            </div> -->
 
-            <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
+            <!-- <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
               <mat-form-field appearance="fill">
                 <mat-label>To date</mat-label>
                 <input matInput [matDatepicker]="picker" id="date2" />
@@ -309,7 +350,7 @@
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
-            </div>
+            </div> -->
           </div>
         </form>
         <br *ngIf="!date" />
@@ -367,7 +408,7 @@
               </mat-card-header>
               <mat-divider></mat-divider>
               <mat-card-content
-                style="border-radius: 0 0 10px 10px; background-color: #a8e9a8"
+                style="border-radius: 0 0 10px 10px; background-color: #a8e9a842"
                 class="text-center"
               >
                 <h1 class="p-4">{{ filteredPromo }} %</h1>
@@ -400,7 +441,7 @@
               </mat-card-header>
               <mat-divider></mat-divider>
               <mat-card-content
-                style="border-radius: 0 0 10px 10px; background-color: #ffe5b4"
+                style="border-radius: 0 0 10px 10px; background-color: #ffe5b487"
                 class="text-center"
               >
                 <h1 class="p-4">{{ filteredPassive }} %</h1>
@@ -433,7 +474,7 @@
               </mat-card-header>
               <mat-divider></mat-divider>
               <mat-card-content
-                style="border-radius: 0 0 10px 10px; background-color: #cea09f"
+                style="border-radius: 0 0 10px 10px; background-color: #cea09f85"
                 class="text-center"
               >
                 <h1 class="p-4">{{ filteredDetractor }} %</h1>
@@ -468,7 +509,7 @@
               <mat-card-content
                 style="
                   border-radius: 0 0 10px 10px;
-                  background-color: rgb(173 169 231 / 50%);
+                  background-color: rgb(173 169 231 / 31%);
                 "
                 class="text-center"
               >

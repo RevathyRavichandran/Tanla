@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class FeedbackService {
 
-  private dbUrl = "https://appiyo.karix.solutions/appiyo/d/project/";
+  private dbUrl = "https://appiyo.karix.solutions/appiyo/d/app/";
 
   public getAllFeedback(feedback: any): Observable<any> {
-    return this.http.post<any>(this.dbUrl + 'NPS Feedback/api/Feedback screen API', feedback);
+    return this.http.post<any>(this.dbUrl + 'npsfeedback/api/Feedback screen API', feedback);
   }
 
   constructor(private http: HttpClient) { }
