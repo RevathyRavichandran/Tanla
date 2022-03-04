@@ -38,7 +38,7 @@
     <div class="col-2 mt-3">
       <button type="submit" (click)="surveyApply(selectedSurvey)" class="btn btn-primary apply-btn">Apply</button>
     </div>
-    <div class="col-3 mt-3">
+    <div class="col-3 mt-3" *ngIf="role">
       <span style="right: 0; position: absolute; margin-right: 1rem">
         <button
           type="button"
@@ -145,7 +145,7 @@
     (pageChange)="pageChanged(currentPage)"
     class="d-flex col-lg-6"
   ></ngb-pagination>
-  <span class="input-group col-lg-3" style="padding-bottom: 2rem">
+  <span *ngIf="role" class="input-group col-lg-3" style="padding-bottom: 2rem">
     <input
       id="fileName"
       type="search"
@@ -173,7 +173,7 @@
     </button>
   </span>
 
-  <button
+  <button *ngIf="role"
     type="button"
     style="height: 4rem"
     class="btn col-lg-2 upload-btn"

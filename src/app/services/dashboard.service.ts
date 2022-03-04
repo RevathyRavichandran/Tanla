@@ -80,6 +80,36 @@ export class dashboardService {
       catchError(() => throwError('Filtered data not found!'))
     );
   }
+  dashCal(processVar): Observable<any> {
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/calculationDashboadAPi`;
+    let headers = new HttpHeaders({
+      'authentication-token':
+        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<any>(url, processVar, options).pipe(
+      map((data) => {
+        return data.ProcessVariables;
+      }),
+      catchError(() => throwError('Filtered data not found!'))
+    );
+  }
+  listdashboard(processVar): Observable<any> {
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/dashboard_list_calculation`;
+    let headers = new HttpHeaders({
+      'authentication-token':
+        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+    });
+    let options = { headers: headers };
+
+    return this.http.post<any>(url, processVar, options).pipe(
+      map((data) => {
+        return data.ProcessVariables;
+      }),
+      catchError(() => throwError('Filtered data not found!'))
+    );
+  }
   questionCal(processVar): Observable<any> {
     let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionCalculation`;
     let headers = new HttpHeaders({

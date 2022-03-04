@@ -8,6 +8,7 @@ import { FeedbackService } from '../../../app/services/feedback.service';
 import moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { saveAs } from 'file-saver';
+import { type } from 'os';
 export interface StateGroup {
   letter: string;
   names: string[];
@@ -23,15 +24,16 @@ export class FeedbackComponent implements OnInit {
   fg: FormGroup;
   displayedColumns: string[] = [
     'id',
-    'surveyName',
-    'catagoryName',
-    'feedbackQuestion',
-    'feedbackAnswer',
+    'surveyType',
+    'survey_name',
+    'feedback_question_type',
+    'feedback_question',
+    'feedback_answer',
     'score',
-    'employeeName',
-    'employeePhoneNumber',
-    'employeeCompany',
-    'createdDate',
+    'employee_name',
+    'employee_phone_number',
+    'employee_company',
+    'created_at',
   ];
   totalPages = 100;
   currentPage = 1;
@@ -40,6 +42,7 @@ export class FeedbackComponent implements OnInit {
   advFilter = false;
   img = 'assets/tanla_advanced_filter.svg';
 
+  searchSurvey=[];
   promo = new FormControl();
   pass = new FormControl();
   det = new FormControl();
@@ -67,21 +70,27 @@ export class FeedbackComponent implements OnInit {
   searchPassivesContext = [];
   searchPromotorsContext = [];
   searchScoreContext = [];
+  filterSur = [];
+  filterSer = [];
+  filterCom = [];
+  filterQue = [];
+  filterAns = [];
+  filterSurType = [];
 
   toppings = new FormControl();
   isExpandCategory: boolean[] = [];
 
   states = new FormControl();
+  categoryList = new FormControl();
 
+  surveyList: any = [];
+  selected_survey: string[];
   expandDocumentTypes(group: any) {
-    console.log('expanding dropdown', group);
     this.isExpandCategory[group.letter] = !this.isExpandCategory[group.letter];
     // expand only selected parent dropdown category with that childs
   }
 
   toggleSelection(event: any, group: any) {
-    //console.log(group);
-    //console.log(event.checked);
     let states = this.states.value;
     states = states ? states : [];
     if (event.checked) {
@@ -90,15 +99,12 @@ export class FeedbackComponent implements OnInit {
       group.names.forEach((x: string) => states.splice(states.indexOf(x), 1));
     }
     this.states.setValue(states);
-    //console.log(states);
-    console.log(this.states.value);
-    // here select all childs for this particular group
   }
 
   stateList: StateGroup[] = [
     {
       letter: 'Promoters',
-      names: ['9', '10'],
+      names: ['9', '10']
     },
     {
       letter: 'Passive',
@@ -116,6 +122,7 @@ export class FeedbackComponent implements OnInit {
   ) {
     this.fg = new FormGroup({
       survey: new FormControl(null),
+      surveyType: new FormControl(null),
       startDate: new FormControl(null),
       endDate: new FormControl(null),
       mobile: new FormControl(null),
@@ -236,8 +243,170 @@ export class FeedbackComponent implements OnInit {
     this.commonMethod(payload);
   }
 
+  searchData(value) {
+    this.searchSurvey = [];
+    let payload = {
+      ProcessVariables: {
+        selectedField: '1',
+        searchValue: value,
+      },
+    };
+    if (value !== '' && value !== null) {
+      this.feedbackService.autofill(payload).subscribe((res) => {
+        if (
+          res.ProcessVariables.autoFillValue &&
+          res.ProcessVariables.autoFillValue.length > 0
+        ) {
+          res.ProcessVariables.autoFillValue.forEach((element) => {
+            this.searchSurvey.push(element.label);
+          });
+        } else {
+          this.searchSurvey = ['No Records'];
+        }
+      });
+    } else {
+      this.searchSurvey = ['No Records'];
+    }
+  }
+
+  showSurvey(event) {
+    this.filterSur = [];
+    let payload = {
+      "ProcessVariables":{"surveyName":event.target.value,"feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":""}
+      }
+    this.feedbackService.autofill(payload).subscribe(res => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach(element => {
+          this.filterSur.push(element.label)
+        });
+      }
+    })    
+  }
+
+  showSurveyType(event) {
+    this.filterSurType = [];
+    let payload = {
+      "ProcessVariables":{"surveyName":"", "surveyType": event.target.value, "feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":""}
+      }
+    this.feedbackService.autofill(payload).subscribe(res => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach(element => {
+          this.filterSurType.push(element.label)
+        });
+      }
+    })    
+  }
+
+  showCategory(event) {
+    this.filterSer = [];
+    let payload = {
+      "ProcessVariables":{"surveyName":"","feedbackQuestion":"","feedbackQuestionType":event.target.value,"feedbackAnswer":"","score":"","employee_company":""}
+      }
+    this.feedbackService.autofill(payload).subscribe(res => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach(element => {
+          this.filterSer.push(element.label)
+        });
+      }
+    })    
+  }
+  showCompany(event) {
+    this.filterCom = [];
+    let payload = {
+      "ProcessVariables":{"surveyName":"","feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":event.target.value}
+      }
+      this.feedbackService.autofill(payload).subscribe(res => {
+        if (res.ProcessVariables.output_data) {
+          res.ProcessVariables.output_data.forEach(element => {
+            this.filterCom.push(element.label)
+          });
+        }
+      })      
+  }
+  showQuestion(event) {
+    this.filterQue = [];
+    let payload = {
+      "ProcessVariables":{"surveyName":"","feedbackQuestion":event.target.value,"feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":""}
+      }
+      this.feedbackService.autofill(payload).subscribe(res => {
+        if (res.ProcessVariables.output_data) {
+          res.ProcessVariables.output_data.forEach(element => {
+            this.filterQue.push(element.label)
+          });
+        }
+      })         
+  }
+  showAnswer(event) {
+    this.filterAns = [];
+    let payload = {
+      "ProcessVariables":{"surveyName":"","feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":event.target.value,"score":"","employee_company":""}
+      }
+      this.feedbackService.autofill(payload).subscribe(res => {
+        if (res.ProcessVariables.output_data) {
+          res.ProcessVariables.output_data.forEach(element => {
+            this.filterAns.push(element.label)
+          });
+        }
+      })   
+  }
+
   apply() {
-    // let filteredVal = this.fg.value;
+    let filteredVal = this.fg.value;
+    let answer = filteredVal.answer ? filteredVal.answer : '';
+    let category = filteredVal.category ? filteredVal.category : '';
+    let company = filteredVal.company ? filteredVal.company : '';
+    let start = filteredVal.startDate ? filteredVal.startDate : '';
+    let end = filteredVal.endDate ? filteredVal.endDate : '';
+    let question = filteredVal.question ? filteredVal.question : '';
+    let survey = filteredVal.survey ? filteredVal.survey : '';
+    let score = this.categoryList.value;
+    let surType = filteredVal.surveyType ? filteredVal.surveyType : '';
+    let payload = {
+      ProcessVariables: {
+        "from_date":start,
+        "to_date":end,
+        "surveyType": surType,
+        "surveyName":survey,
+        "feedbackQuestionType":category,
+        "feedbackAnswer":answer,
+        "feedbackQuestion":question,
+        "score_list":score,
+        "employee_company":company
+      },
+    }
+    this.feedbackService.filterFeedback(payload).subscribe(res => {
+      let result = res['ProcessVariables'];
+      this.totalPages = result['totalItems'] === 0 ? 1 : result['totalItems'];
+      this.currentPage = result['currentPage'];
+      this.pageSize = result['perPage'];
+      this.noRecords = result['outputData'] ? false : true;
+      if (!this.noRecords) {
+        
+      }
+      
+      if (this.noRecords) {
+        this.matSnackbar.open('No records found!!!', '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+      }
+      
+      this.dataSource = new MatTableDataSource(result['outputData']);
+    }),
+      (err) => {
+        this.noRecords = false;
+        console.log(err);
+        this.isLoad = false;
+        this.matSnackbar.open(err, '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+      };
+      
     // let payload = {};
     // if (
     //   filteredVal.searchCtrl &&
@@ -310,13 +479,13 @@ export class FeedbackComponent implements OnInit {
     let payload = {
       ProcessVariables: { selectedField: '1', perPage: 1000000 },
     };
-    this.feedbackService.getAllFeedback(payload).subscribe(
+    this.feedbackService.filterFeedback(payload).subscribe(
       (res) => {
-        if (res['ProcessVariables']['lastMessageAuditList']) {
+        if (res['ProcessVariables']['outputData']) {
           let content =
-            'Question,Answer,Employee Name,Employee Phone Number,Company,Created Date,,\n';
-          res['ProcessVariables']['lastMessageAuditList'].forEach((val) => {
-            content += `${val['feedbackQuestion']},${val['feedbackAnswer']},${val['employeeName']},${val['employeePhoneNumber']},${val['employeeCompany']},${val['createdDate']},,\n`;
+            'id,Survey type,Survey name,Service,Question,Answer,Score,Employee Name,Employee Phone Number,Company,Created Date,,\n';
+          res['ProcessVariables']['outputData'].forEach((val) => {
+            content += `${val['id']},${val['surveyType']},${val['survey_name']},${val['feedback_question_type']},${val['feedback_question']},${val['feedback_answer']},${val['score']},${val['employee_name']},${val['employee_phone_number']},${val['employee_company']},${val['created_at']},,\n`;
           });
           const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
           saveAs(file, 'Feedback');
@@ -467,43 +636,44 @@ export class FeedbackComponent implements OnInit {
 
   commonMethod(payload) {
     this.isLoad = true;
-    this.feedbackService.getAllFeedback(payload).subscribe((res) => {
+    this.feedbackService.filterFeedback(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
       this.totalPages = result['totalItems'] === 0 ? 1 : result['totalItems'];
       this.currentPage = result['currentPage'];
       this.pageSize = result['perPage'];
-      this.noRecords = result['lastMessageAuditList'] ? false : true;
+      this.noRecords = result['outputData'] ? false : true;
       if (!this.noRecords) {
-        result['lastMessageAuditList'].forEach((date) => {
-        date.creDate = '';
-        date.phone = '';
-        let serv_utc = moment
-          .utc(date.createdDate, 'YYYY-MM-DD HH:mm:ss')
-          .toDate();
-        date.creDate = moment(serv_utc, 'YYYY-MM-DD HH:mm:ss').format(
-          'YYYY-MM-DD HH:mm:ss'
-        );
-        if (date.employeePhoneNumber.startsWith('+')) {
-          date.phone =
-            date.employeePhoneNumber.substring(0, 3) +
-            ' ' +
-            date.employeePhoneNumber.substring(3, 8) +
-            ' ' +
-            date.employeePhoneNumber.substring(
-              8,
-              date.employeePhoneNumber.length
-            );
-        } else {
-          date.phone =
-            '+91 ' +
-            date.employeePhoneNumber.substring(0, 5) +
-            ' ' +
-            date.employeePhoneNumber.substring(
-              5,
-              date.employeePhoneNumber.length
-            );
-        }
-      });
+        // result['outputData'].forEach((date) => {
+        // date.creDate = '';
+        // date.phone = '';
+        // let serv_utc = moment
+        //   .utc(date.created_at, 'YYYY-MM-DD HH:mm:ss')
+        //   .toDate();
+        // date.creDate = moment(serv_utc, 'YYYY-MM-DD HH:mm:ss').format(
+        //   'YYYY-MM-DD HH:mm:ss'
+        // );
+
+        // if (date.employeePhoneNumber.startsWith('+')) {
+        //   date.phone =
+        //     date.employeePhoneNumber.substring(0, 3) +
+        //     ' ' +
+        //     date.employeePhoneNumber.substring(3, 8) +
+        //     ' ' +
+        //     date.employeePhoneNumber.substring(
+        //       8,
+        //       date.employeePhoneNumber.length
+        //     );
+        // } else {
+        //   date.phone =
+        //     '+91 ' +
+        //     date.employeePhoneNumber.substring(0, 5) +
+        //     ' ' +
+        //     date.employeePhoneNumber.substring(
+        //       5,
+        //       date.employeePhoneNumber.length
+        //     );
+        // }
+      // });
       }
       this.isLoad = false;
       if (this.noRecords) {
@@ -515,7 +685,7 @@ export class FeedbackComponent implements OnInit {
         });
       }
       this.onLoadDropdown(this.data);
-      this.dataSource = new MatTableDataSource(result['lastMessageAuditList']);
+      this.dataSource = new MatTableDataSource(result['outputData']);
     }),
       (err) => {
         this.noRecords = false;
@@ -537,10 +707,10 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let payload = { ProcessVariables: { selectedField: '1' } };
+    let payload = { ProcessVariables: {  } };
     let body = { ProcessVariables: { selectedField: '1', perPage: 100000 } };
-    this.feedbackService.getAllFeedback(body).subscribe((res) => {
-      this.data = res['ProcessVariables']['lastMessageAuditList'];
+    this.feedbackService.filterFeedback(body).subscribe((res) => {
+      this.data = res['ProcessVariables']['outputData'];
       this.commonMethod(payload);
     });
   }

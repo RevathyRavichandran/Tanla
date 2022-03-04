@@ -4,6 +4,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SurveyService } from '../../../app/services/survey.service';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'moment';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-survey-popup',
@@ -15,7 +16,7 @@ export class SurveyPopupComponent implements OnInit {
   fileName = null;
   fileContent = '';
   fileSize = 0;
-  serviceType: any = ['test-1', 'test-2'];
+  serviceType: any = [];
   selectedService: string[];
 
   get categoryArr() {
@@ -41,6 +42,12 @@ export class SurveyPopupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let payload = {
+      "ProcessVariables": {}
+      }      
+    this.surveyService.selectSurveytype(payload).subscribe(res=> {
+      this.serviceType = res.ProcessVariables.serviceType;
+    })
     let category = [];
     let ansInit = [{ category: '' }];
     ansInit.forEach((element) => {
@@ -72,7 +79,7 @@ export class SurveyPopupComponent implements OnInit {
     };
     if (this.fileContent !== '' && this.fileContent !== null) {
       this.surveyService.uploadFile(body).subscribe((res) => {
-        let surveyName = this.fg.value.name;
+        let surveyName = this.selectedService + '-' + this.fg.value.name;
         let catArr = [];
         this.fg.value.category.forEach((element) => {
           catArr.push(element.category);
@@ -88,7 +95,7 @@ export class SurveyPopupComponent implements OnInit {
     } else {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
       let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
-      let surveyName = this.fg.value.name;
+      let surveyName = this.selectedService + '-' + this.fg.value.name;
       let catArr = [];
       this.fg.value.category.forEach((element) => {
         catArr.push(element.category);
@@ -129,7 +136,16 @@ export class SurveyPopupComponent implements OnInit {
       };
     }
   }
-  downloadTemplate() {
-    
+  downloadQuestion(name) {
+    let payload = {
+      ProcessVariables: { surveyName: name },
+    };
+    this.surveyService.downloadQues(payload).subscribe((res) => {
+      let content = res.ProcessVariables.attachment.content;
+      content = atob(content);
+      const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
+      saveAs(file, name);
+      this.toastr.success('Question downloaded successfully', 'Success');
+    });
   }
 }

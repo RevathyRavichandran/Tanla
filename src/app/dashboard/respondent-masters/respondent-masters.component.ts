@@ -36,6 +36,7 @@ export class RespondentMastersComponent implements OnInit {
     'col-1',
     'col-2'
   ];
+  role: boolean = true;
 
   dataSource = new MatTableDataSource([]);
 
@@ -46,6 +47,7 @@ export class RespondentMastersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payloadSur = { ProcessVariables: {} };
     this.survey.listSurvey(payloadSur).subscribe((res) => {
       let result = res['ProcessVariables'];

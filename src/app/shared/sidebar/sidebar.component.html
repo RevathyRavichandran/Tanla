@@ -12,10 +12,16 @@
             <br>Feedback <br>Report</a>
     </div>
     <mat-divider></mat-divider>
-    <div style="text-align: center;">
+    <div style="text-align: center;" *ngIf="role">
         <a mat-list-item #rla5="routerLinkActive" routerLinkActive="nav-active" routerLink="/survey"><img class="center" *ngIf="!rla5.isActive" src="./assets/tanla_survey_grey_128.svg" alt="">
             <img class="center" *ngIf="rla5.isActive" src="./assets/tanla_survey_red_128.svg" alt="">
             <br>Survey <br>Creation</a>
+    </div>
+    <mat-divider></mat-divider>
+    <div style="text-align: center;" *ngIf="!role">
+        <a mat-list-item #rla5="routerLinkActive" routerLinkActive="nav-active" routerLink="/approveSurvey"><img class="center" *ngIf="!rla5.isActive" src="./assets/tanla_survey_grey_128.svg" alt="">
+            <img class="center" *ngIf="rla5.isActive" src="./assets/tanla_survey_red_128.svg" alt="">
+            <br>Approve <br>Survey</a>
     </div>
     <mat-divider></mat-divider>
     <div style="text-align: center;">
@@ -30,7 +36,7 @@
             <br>Respondent <br> Master</a>
     </div>
     <mat-divider></mat-divider>    
-    <div style="text-align: center;">
+    <div style="text-align: center;" *ngIf="role">
         <a mat-list-item #rla3="routerLinkActive" routerLinkActive="nav-active" routerLink="/configuration"><img class="center" *ngIf="!rla3.isActive" src="./assets/tanla_configuration_grey_128.svg" alt="">
             <img class="center" *ngIf="rla3.isActive" src="./assets/tanla_configuration_128.svg" alt="">
             <br>Configuration</a>

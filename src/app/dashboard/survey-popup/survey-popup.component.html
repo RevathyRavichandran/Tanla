@@ -7,20 +7,24 @@
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <div class="form-group">
-            <h2 class="mb-2" for="name">Service type:</h2>
+          <div *ngIf="!data" class="form-group">
+            <h2 class="mb-2" for="name">Survey type:</h2>
             <ng-select
               [items]="serviceType"
               [multiple]="false"
               [ngModelOptions]="{ standalone: true }"
-              placeholder="Select service"
+              placeholder="Select survey type"
               [(ngModel)]="selectedService"
             >
             </ng-select>
           </div>
         </div>
+        <div *ngIf="data" class="form-group">
+          <h2 class="mb-1" for="name">Survey type:</h2>
+          <h3 class="mb-1" for="name">{{data.surveyType}}</h3>
+        </div>
         <div class="col-6">
-          <div class="form-group">
+          <div *ngIf="!data" class="form-group">
             <h2 class="mb-2" for="name">Survey name:</h2>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -34,11 +38,17 @@
             </div>
             
           </div>
+          
+        </div>
+        <div *ngIf="data" class="form-group">
+          <h2 class="mb-2" for="name">Survey name:</h2>
+          <h3 class="mb-1" for="name">{{data.surveyName}}</h3>
+          
         </div>
       </div>
-      <div class="form-group">
+      <div *ngIf="!data" class="form-group">
         <h2 class="mb-2" for="name">Survey period:</h2>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Enter a date range</mat-label>
           <mat-date-range-input [rangePicker]="picker">
             <input
@@ -55,7 +65,11 @@
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
       </div>
-      <div formArrayName="category">
+      <div *ngIf="data" class="form-group">
+        <h2 class="mb-2" for="name">Survey period:</h2>
+        <h3 class="mb-2" for="name">{{data.fromDate}} - {{data.toDate}}</h3>
+      </div>
+      <div *ngIf="!data" formArrayName="category">
         <label style="font-size: 1.2rem; font-weight: 500">Category:</label>
         &nbsp; &nbsp;
         <button type="button" class="btn add-btn mb-2" (click)="addcategory()">
@@ -89,7 +103,11 @@
           </div>
         </div>
       </div>
-      <span class="input-group col-lg-3" style="padding-bottom: 1rem">
+      <div *ngIf="data" class="form-group">
+        <h2 class="mb-2" for="name">Category:</h2>
+        <h3 class="mb-2" for="name">{{data.catagoryName}}</h3>
+      </div>
+      <span *ngIf="!data" class="input-group col-lg-3" style="padding-bottom: 1rem">
         <input
           id="fileName"
           class="form-control"
@@ -117,7 +135,7 @@
       </span>
     </div>
   </mat-dialog-content>
-  <div class="row">
+  <div *ngIf="!data" class="row">
     <div class="col-6">
       <button
         type="button"
@@ -129,7 +147,7 @@
         Questionnaire Template
       </button>
     </div>
-    <div class="col-6">
+    <div  class="col-6">
       <mat-dialog-actions class="mb-1 mt-1" align="end">
         <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
           Save
@@ -144,5 +162,16 @@
         </button>
       </mat-dialog-actions>
     </div>
+  </div>
+  <div style="align-items: end;">
+    <button
+      type="button"
+      class="btn m-2"
+      (click)="downloadQuestion(data.surveyName)"
+      style="background: #2d69eb; color: white"
+    >
+      <img src="assets/tanla_download_128.svg" alt="" />
+      Questionnaire Download
+    </button>
   </div>
 </form>

@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/app/';
+  
 
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/createUserInAdmin',
+      this.dbUrl + 'npsfeedback/api/employee_registration',
       user
     );
   }

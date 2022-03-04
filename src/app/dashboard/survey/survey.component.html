@@ -36,6 +36,12 @@
                         <th class="sno" [attr.rowspan]="2" mat-header-cell *matHeaderCellDef>S/N</th>
                         <td mat-cell *matCellDef="let element">{{ element.id }}</td>
                     </ng-container>
+                    <ng-container matColumnDef="surveyType">
+                        <th mat-header-cell [attr.rowspan]="2" class="text-center" *matHeaderCellDef>Survey Type</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.surveyType }}
+                        </td>
+                    </ng-container>
                     <ng-container matColumnDef="surveyName">
                         <th mat-header-cell [attr.rowspan]="2" class="text-center" *matHeaderCellDef>Survey Name</th>
                         <td mat-cell *matCellDef="let element">
@@ -64,11 +70,21 @@
                            {{ element.toDate }}
                         </td>
                     </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th [attr.rowspan]="2" mat-header-cell class="text-center" *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="element.surveyStatus == '1'">Pending</span>
+                            <span *ngIf="element.surveyStatus == '2'">Approved</span>
+                            <span *ngIf="element.surveyStatus == '3'">Rejected</span>
+                        </td>
+                    </ng-container>
                     <ng-container class="liveCol" matColumnDef="live">
                         <th [attr.rowspan]="2" mat-header-cell *matHeaderCellDef style="text-align: center;">Live</th>
                         <td mat-cell *matCellDef="let element" style="text-align: center;">
-                            <input type="radio" (change)="liveCheck($event, element.surveyName, element.surveyName)" 
+                            <input *ngIf="element.surveyStatus == '1'" type="radio" (change)="liveCheck($event, element.surveyName, element.surveyName)" 
                                 name="radio" [checked]="element.activeStatus === '1'" />
+                                <input *ngIf="element.surveyStatus !== '1'" type="radio" (change)="liveCheck($event, element.surveyName, element.surveyName)" 
+                                name="radio" disabled [checked]="element.activeStatus === '1'" />
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="download">
@@ -96,9 +112,9 @@
                         </td>
                     </ng-container>
                     
-                      <tr mat-header-row *matHeaderRowDef="['id', 'surveyName', 'catagoryName', 'header-row-second-group', 'live', 'download', 'downloadQues']"></tr>
+                      <tr mat-header-row *matHeaderRowDef="['id', 'surveyType', 'surveyName', 'catagoryName', 'header-row-second-group', 'status', 'live', 'download', 'downloadQues']"></tr>
                       <tr mat-header-row *matHeaderRowDef="['surveyFromDate', 'surveyToDate']"></tr>
-                    <tr mat-row *matRowDef="let row; columns: ['id', 'surveyName', 'catagoryName', 'surveyFromDate', 'surveyToDate', 'live', 'download', 'downloadQues']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['id', 'surveyType', 'surveyName', 'catagoryName', 'surveyFromDate', 'surveyToDate', 'status', 'live', 'download', 'downloadQues']"></tr>
                 </table>
             </div>
         </div>

@@ -13,6 +13,7 @@ import { PasswordSetComponent } from './password-set/password-set.component';
 import { SuccessPageComponent } from './success-page/success-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthGuard } from './services/authguard.service';
+import { ApproveSurveyComponent } from './dashboard/approve-survey/approve-survey.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,10 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full',
   },
-  
+  {
+    path: 'approveSurvey',
+    component: ApproveSurveyComponent,
+  },
   {
     path: 'login',
     component: LoginComponent,

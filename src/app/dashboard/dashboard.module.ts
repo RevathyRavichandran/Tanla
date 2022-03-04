@@ -47,6 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { ApproveSurveyComponent } from './approve-survey/approve-survey.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     SurveyPopupComponent,
     AdminComponent,
     AdminPopupComponent,
-    AuditComponent
+    AuditComponent,
+    ApproveSurveyComponent
   ],
   imports: [
     BrowserModule,

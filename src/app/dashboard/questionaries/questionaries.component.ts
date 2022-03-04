@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./questionaries.component.css'],
 })
 export class QuestionariesComponent implements OnInit {
+  role: boolean = true;
   datas = [];
   categories = [];
   name = '';
@@ -276,6 +277,7 @@ export class QuestionariesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payloadSur = { ProcessVariables: {} };
     this.survey.listSurvey(payloadSur).subscribe((res) => {
       let result = res['ProcessVariables'];

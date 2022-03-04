@@ -72,7 +72,7 @@ td.mat-footer-cell:first-of-type {
     display: block;
   }
 
-  ::ng-deep.mat-pseudo-checkbox {
+  /* ::ng-deep.mat-pseudo-checkbox {
     width: 16px;
     height: 16px;
     border: 2px solid;
@@ -86,7 +86,7 @@ td.mat-footer-cell:first-of-type {
     transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),
       background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
     margin-top: -40px;
-  }
+  } */
 /* :host::ng-deep.mat-form-field-appearance-outline .mat-form-field-infix {
     padding: 8px 0 8px 0;
 }

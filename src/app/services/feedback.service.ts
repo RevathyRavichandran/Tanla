@@ -12,6 +12,12 @@ export class FeedbackService {
   public getAllFeedback(feedback: any): Observable<any> {
     return this.http.post<any>(this.dbUrl + 'npsfeedback/api/Feedback screen API', feedback);
   }
+  public filterFeedback(feedback: any): Observable<any> {
+    return this.http.post<any>(this.dbUrl + 'npsfeedback/api/new_feedback_report', feedback);
+  }
+  public autofill(feedback: any): Observable<any> {
+    return this.http.post<any>(this.dbUrl + 'npsfeedback/api/new_autofill', feedback);
+  }
 
   constructor(private http: HttpClient) { }
 }

@@ -29,17 +29,23 @@
                     Select Company:
                   </h2></label
                 >
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Companies</mat-label>
+                  <mat-select placeholder="Select companies" (selectionChange)="showCompany($event.value)" [disabled]="!surveyList" multiple disableOptionCentering>
+                    <mat-option *ngFor="let company of companyList" [value]="company">{{company}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
                 <!-- <select [disabled]="!survey" class="form-control form-select mb-3" (change)="showCompany($event)" id="company" name="selected_company" [(ngModel)]="data.selected_company">
                   <option selected value="">Select Company Name</option>
                   <option *ngFor="let item of companyList; index as i" value="{{item}}">{{item}}</option>
                 </select> -->
-                <ng-select class="test" [items]="companyList" [disabled]="!survey"
+                <!-- <ng-select class="test" [items]="companyList" [disabled]="!survey"
                    (change)="showCompany($event)"
                    [multiple]="true"
                    [ngModelOptions]="{standalone: true}"
                    placeholder="Select companies"
                    [(ngModel)]="data.selected_company">
-        </ng-select>
+        </ng-select> -->
               </div>
               <div class="form-group col-6">
                 <label for="skip"

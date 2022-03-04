@@ -30,9 +30,11 @@ export class AdminComponent implements OnInit {
     'dept',
     'phone',
     'designation',
+    'employee_role',
     'ActiveDeActive',
     'action'
   ];
+  role: boolean = true;
 
   dataSource = new MatTableDataSource([]);
   userList : any = [];
@@ -41,6 +43,20 @@ export class AdminComponent implements OnInit {
      public user: UserService, private router: Router, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.role = localStorage.getItem('status') === 'creator' ? true : false;
+    if (!this.role) {
+      this.displayedColumns= [
+        'userid',
+        'username',
+        'emailId',
+        'employeeNo',
+        'dept',
+        'phone',
+        'designation',
+        'employee_role',
+        'ActiveDeActive'
+      ];
+    }
     let payload = { ProcessVariables: { currentPage: 1 } };
     this.commonMethod(payload);
   }

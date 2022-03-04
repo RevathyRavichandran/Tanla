@@ -76,6 +76,18 @@
         <input type="text" class="form-control" id="reason" placeholder="Reason"
           formControlName="reason" />
       </div>
+      <br>
+      <div class="form-group col-6">
+        <label for="role">
+          <h2 style="font-size: 1rem; margin: 0 0 8px">Role:</h2>
+        </label>
+        <ng-select [items]="roleList"
+                   [multiple]="false"
+                   [ngModelOptions]="{standalone: true}"
+                   placeholder="Select role"
+                   [(ngModel)]="selectedRole">
+        </ng-select>
+      </div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="mb-1 mt-1" align="end">

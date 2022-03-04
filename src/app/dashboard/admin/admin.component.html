@@ -2,7 +2,7 @@
   <h1 style="padding-left: 1%; padding-top: 1%; font-weight: bold;">
     Admin/User
     <span style="right: 0; position: absolute; margin-right: 1rem">
-      <button
+      <button *ngIf="role"
         type="button"
         class="btn adminCreate"
         (click)="createUser()"
@@ -78,6 +78,12 @@
                           {{ element.designation }}
                       </td>
                   </ng-container>
+                  <ng-container matColumnDef="employee_role">
+                    <th mat-header-cell *matHeaderCellDef>Role</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.employee_role }}
+                    </td>
+                </ng-container>
                   <ng-container matColumnDef="ActiveDeActive">
                       <th mat-header-cell *matHeaderCellDef>Active/Inactive</th>
                       <td mat-cell *matCellDef="let element">
@@ -87,7 +93,7 @@
                               fa-info-circle" aria-hidden="true"></i></span>
                       </td>
                   </ng-container>
-                  <ng-container matColumnDef="action">
+                  <ng-container matColumnDef="action" [class.hidden]="!role">
                       <th mat-header-cell *matHeaderCellDef>Action</th>
                       <td mat-cell *matCellDef="let element">
                         <button style="background: blue; color: white" mat-raised-button

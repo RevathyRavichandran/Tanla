@@ -35,7 +35,7 @@
     <div class="col-3 mt-3">
         <button type="submit" (click)="surveyApply(selectedSurvey)" class="btn btn-primary apply-btn">Apply</button>
     </div>
-    <div class="col-lg-2 mt-3">
+    <div class="col-lg-2 mt-3" *ngIf="role">
         <button (click)="createQuestion()" class="btn btn-primary">Create Question &nbsp;
       <i class="fa fa-plus-square fa-1x"></i>
     </button>
@@ -74,10 +74,13 @@
                             <div class="col-3 set-border-right text-center">
                                 <div class="styleHead">Answer</div>
                             </div>
-                            <div class="col-1 set-border-right text-center">
+                            <div *ngIf="role" class="col-1 set-border-right text-center">
                                 <div class="styleHead">Score</div>
                             </div>
-                            <div class="col-2 text-center">
+                            <div *ngIf="!role" class="col-1 text-center">
+                                <div class="styleHead">Score</div>
+                            </div>
+                            <div class="col-2 text-center" *ngIf="role">
                                 <div class="styleHead">Action</div>
                             </div>
                         </div>
@@ -103,7 +106,7 @@
                                     <br>
                                 </div>
                             </div>
-                            <div class="col-1 set-border-right" style="padding-left: 2.5rem;">
+                            <div *ngIf="role" class="col-1 set-border-right" style="padding-left: 2.5rem;">
                                 <div *ngFor="let answer of question.answers; index as j">
                                     <div class="row">
                                         {{ answer.score }}
@@ -111,7 +114,15 @@
                                     <br>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div *ngIf="!role" class="col-1" style="padding-left: 2.5rem;">
+                                <div *ngFor="let answer of question.answers; index as j">
+                                    <div class="row">
+                                        {{ answer.score }}
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-2" *ngIf="role">
                                 <button mat-button (click)="editQuestion(data.category, question.id)">
                                     <i class="fa fa-edit" style="font-size: 1.5rem; color: rgb(75, 151, 238);"></i> Edit
                 </button>

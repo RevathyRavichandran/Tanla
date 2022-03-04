@@ -64,5 +64,19 @@ export class SurveyService {
     );
   }
 
+  selectSurveytype(survey: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/survey_type_new',
+      survey
+    );
+  }
+
+  approveSurvey(survey: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/approval_API',
+      survey
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

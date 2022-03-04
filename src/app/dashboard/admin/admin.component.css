@@ -40,6 +40,9 @@ td {
   margin-right: 1rem;
   width: 5rem;
 }
+.hidden {
+  display: none;
+}
 
 .mat-header-cell {
   font-size: 1rem;

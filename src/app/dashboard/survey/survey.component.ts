@@ -35,52 +35,17 @@ export class SurveyComponent implements OnInit {
   fileSize = 0;
   displayedColumns: string[] = [
     'id',
+    'surveyType',
     'surveyName',
     'catagoryName',
     'surveyFromDate',
     'surveyToDate',
+    'status',
     'live',
     'download',
     'downloadQues',
   ];
   isLive: boolean = false;
-  userList: any[] = [
-    {
-      sno: 1,
-      survey: 'Survey1',
-      category: 'SMS, email',
-      date: '19 Aug 2021',
-      isLive: true,
-    },
-    {
-      sno: 2,
-      survey: 'Survey2',
-      category: 'SMS, email',
-      date: '19 Aug 2021',
-      isLive: false,
-    },
-    {
-      sno: 3,
-      survey: 'Survey3',
-      category: 'SMS, email',
-      date: '19 Aug 2021',
-      isLive: false,
-    },
-    {
-      sno: 4,
-      survey: 'Survey4',
-      category: 'SMS, email',
-      date: '19 Aug 2021',
-      isLive: false,
-    },
-    {
-      sno: 5,
-      survey: 'Survey5',
-      category: 'SMS, email',
-      date: '19 Aug 2021',
-      isLive: false,
-    },
-  ];
 
   dataSource = new MatTableDataSource([]);
 
@@ -91,7 +56,7 @@ export class SurveyComponent implements OnInit {
     private snackBar: MatSnackBar,
     public toastr: ToastrService
   ) {
-    localStorage.setItem('survey', this.userList[0]['survey']);
+    
   }
 
   ngOnInit(): void {
@@ -197,7 +162,6 @@ export class SurveyComponent implements OnInit {
           ProcessVariables: { id: id },
         };
         this.survey.liveSurvey(payload).subscribe((res) => {
-          console.log(res);
           Swal.fire(
             'Moved!',
             'Your survey has been moved to live successfully.',

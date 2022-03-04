@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
           this.toastr.success('Logged in successfully', 'Success');
           localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
           localStorage.setItem('email', this.f.email.value);
+          localStorage.setItem('status', loginData.ProcessVariables.employeeRole);
         } else {
           this.toastr.error('Invalid Email ID and Password', 'Error');
           localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);

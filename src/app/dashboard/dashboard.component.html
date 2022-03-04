@@ -4,7 +4,7 @@
   </h1>
   <mat-divider></mat-divider>
 </div>
-<div class="text-center pt-2"><b style="font-size: 1.3rem;">Survey Name - {{latestSurvey}}</b></div>
+<div class="pt-2"><b style="padding-left: 1rem; font-size: 1.3rem;">Survey Title - {{latestSurvey}}</b></div>
 <div class="row" style="padding: 1%">
   <div class="col-lg-3">
     <mat-card style="height: 10rem">
@@ -13,7 +13,7 @@
           <h1 style="color: #3cb371"><b>Promoter</b></h1>
           <br />
           <h1 style="color: #3cb371; font-size: 25px">
-            <b>{{ promotersPercentage === 'NaN' ? '0' : promotersPercentage }} %</b>
+            <b><img src="assets/tanla_respondent_promoters_128.svg" alt="" /> {{ proCount }}</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -39,7 +39,7 @@
           <h1 style="color: #ef820d"><b>Passive</b></h1>
           <br />
           <h1 style="color: #ef820d; font-size: 30px">
-            <b>{{ passivesPercentage === 'NaN' ? '0' : passivesPercentage }} %</b>
+            <b><img src="assets/tanla_respondent_passive_128.svg" alt="" />{{ pasCount }}</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -65,7 +65,7 @@
           <h1 style="color: #dc143c"><b>Detractor</b></h1>
           <br />
           <h1 style="color: #dc143c; font-size: 30px">
-            <b>{{ detractorsPercentage === 'NaN' ? '0' : detractorsPercentage }} %</b>
+            <b><img src="assets/tanla_respondent_detractors_128.svg" alt="" />{{ detCount }}</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -91,7 +91,7 @@
           <h1 style="color: rgb(96 134 241)"><b>Overall Score</b></h1>
           <br />
           <h1 style="color: rgb(96 134 241); font-size: 30px">
-            <b>{{ overallScore }} %</b>
+            <b>{{ totCount }}</b>
           </h1>
         </mat-card-title>
         <circle-progress
@@ -191,8 +191,8 @@
               <mat-form-field style="width: 90%; height: 2.9rem;" appearance="outline">
                 <mat-label>Date Range</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate placeholder="Start date">
-                  <input matEndDate placeholder="End date">
+                  <input matStartDate placeholder="Start date" (dateChange)="endNewDate($event)">
+                  <input matEndDate placeholder="End date" (dateChange)="addNewDate($event)" >
                 </mat-date-range-input>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
@@ -203,16 +203,16 @@
               <mat-form-field style="width: 90%; border-top-width: 0px;" appearance="outline">
                 <mat-label>Survey</mat-label>
                 <mat-select style="border-top-width: 0px;" placeholder="Select survey"
-                  [formControl]="surveyList" (selectionChange)="changeFn($event.value)" disableOptionCentering>
+                  [formControl]="surveyList" (selectionChange)="changeFn($event.value)" multiple disableOptionCentering>
                   <mat-option *ngFor="let survey of surveyNameList" [value]="survey">{{survey}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="col-3">
               <mat-form-field style="width: 90%;" appearance="outline">
-                <mat-label>Categories</mat-label>
-                <mat-select placeholder="Select category" [formControl]="categoryList" disableOptionCentering multiple>
-                  <mat-option *ngFor="let survey of surveyNameList" [value]="survey">{{survey}}</mat-option>
+                <mat-label>Services</mat-label>
+                <mat-select placeholder="Select service" (selectionChange)="changeFn1($event.value)" [formControl]="categoryList" disableOptionCentering multiple>
+                  <mat-option *ngFor="let survey of serviceList" [value]="survey">{{survey}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -224,133 +224,6 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <!-- <div class="col-3" *ngIf="survey && !question"></div>
-            <div class="col-6" *ngIf="survey">
-              <ng-select
-                [items]="surveyNameList" (change)="changeFn($event)"
-                id="survey"
-                #inputField
-                [multiple]="false"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Select survey"
-                [(ngModel)]="selectedSurvey"
-              >
-              </ng-select> -->
-              <!-- <input
-                class="form-control"
-                id="survey"
-                #inputField
-                [formControl]="myControl"
-                style="
-                  font-family: FontAwesome, Arial;
-                  font-style: normal;
-                  border-radius: 20px !important;
-                "
-                placeholder="&#xF002; Search by Survey Name"
-                (keyup)="searchData(inputField.value)"
-                [matAutocomplete]="auto"
-              />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let search of searchSurvey" [value]="search">
-                  <span>{{ search }}</span>
-                </mat-option>
-              </mat-autocomplete> -->
-              <!-- <div *ngIf="isLoad" class="loader-top">
-              <mat-spinner style="margin:0 auto;" class="loader" diameter="50"></mat-spinner>
-              <span class="loader-text">Loading... Please wait</span>
-            </div> -->
-            
-            <!-- <div class="col-6" *ngIf="question"> -->
-              
-              
-              
-              
-              
-              <!-- <ng-select
-                [items]="questionList"
-                id="question"
-                [disabled]="!selectedSurvey"
-                #inputField1
-                [multiple]="true"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Select questions"
-                [(ngModel)]="selectedQuestion"
-              >
-              </ng-select> -->
-              <!-- <input
-                class="form-control"
-                id="question"
-                #inputField1
-                style="
-                  font-family: FontAwesome, Arial;
-                  font-style: normal;
-                  border-radius: 20px !important;
-                "
-                placeholder="&#xF002; Search by Question Name"
-                (keyup)="searchQuestion(inputField1.value)"
-                [matAutocomplete]="auto1"
-              />
-              <mat-autocomplete #auto1="matAutocomplete">
-                <mat-option *ngFor="let search of searchQues" [value]="search">
-                  <span>{{ search }}</span>
-                </mat-option>
-              </mat-autocomplete> -->
-            <!-- </div> -->
-            <!-- <div class="col-6" *ngIf="date">
-              <ng-select (change)="changeFn($event)"
-                [items]="surveyNameList"
-                id="survey"
-                #inputField
-                [multiple]="false"
-                [ngModelOptions]="{ standalone: true }"
-                placeholder="Select survey"
-                [(ngModel)]="selectedSurvey"
-              >
-              </ng-select> -->
-              <!-- <input
-                class="form-control"
-                id="survey"
-                #inputField
-                [formControl]="myControl"
-                style="
-                  font-family: FontAwesome, Arial;
-                  font-style: normal;
-                  border-radius: 20px !important;
-                "
-                placeholder="&#xF002; Search by Survey Name"
-                (keyup)="searchData(inputField.value)"
-                [matAutocomplete]="auto"
-              />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let search of searchSurvey" [value]="search">
-                  <span>{{ search }}</span>
-                </mat-option>
-              </mat-autocomplete> -->
-            <!-- </div>
-            <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
-              <mat-form-field appearance="fill">
-                <mat-label>From date</mat-label>
-                <input matInput [matDatepicker]="picker" id="date1" />
-                <mat-datepicker-toggle
-                  style="width: 1em"
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-            </div> -->
-
-            <!-- <div class="col-2" style="font-size: 0.8rem" *ngIf="date">
-              <mat-form-field appearance="fill">
-                <mat-label>To date</mat-label>
-                <input matInput [matDatepicker]="picker" id="date2" />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-            </div> -->
           </div>
         </form>
         <br *ngIf="!date" />

@@ -14,6 +14,8 @@ export class AdminPopupComponent implements OnInit {
   fg: FormGroup;
   status: string;
   reason: boolean = false;
+  roleList: any = ['creator', 'approver'];
+  selectedRole: string[];
 
   constructor(public dialogRef: MatDialogRef<AdminPopupComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any, public toastr: ToastrService,
@@ -66,7 +68,8 @@ export class AdminPopupComponent implements OnInit {
         "designation":this.f.designation.value,
         "activeStatus":this.reason ? '0':'1',
         "reason":this.f.reason.value ? this.f.reason.value : '',
-        "emailId":this.f.emailId.value
+        "emailId":this.f.emailId.value,
+        "employee_role":this.selectedRole
       }
       }
       this.userService.updateUser(payload).subscribe(res=> {
@@ -75,7 +78,19 @@ export class AdminPopupComponent implements OnInit {
       })
 
     } else {
-      this.userService.createUser({ ProcessVariables: this.fg.value }).subscribe(
+      let payload = {
+        ProcessVariables: {
+        "name":this.f.userName.value,
+        "department":this.f.department.value,
+        "phone_number":this.f.mobileNumber.value,
+        "designation":this.f.designation.value,
+        "activeStatus":this.reason ? '0':'1',
+        "reason":this.f.reason.value ? this.f.reason.value : '',
+        "email_id":this.f.emailId.value,
+        "employee_role":this.selectedRole
+      }
+      }
+      this.userService.createUser(payload).subscribe(
       res => {
         this.toastr.success('User created successfully', 'Success');
         this.dialogRef.close();
