@@ -8,7 +8,6 @@ import { FeedbackService } from '../../../app/services/feedback.service';
 import moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { saveAs } from 'file-saver';
-import { type } from 'os';
 export interface StateGroup {
   letter: string;
   names: string[];

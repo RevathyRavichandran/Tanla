@@ -30,5 +30,12 @@ export class UserService {
     );
   }
 
+  audit(user: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/updateUserDetailsAPI',
+      user
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

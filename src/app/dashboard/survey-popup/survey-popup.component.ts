@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./survey-popup.component.css'],
 })
 export class SurveyPopupComponent implements OnInit {
+  role: boolean = true;
   fg: FormGroup;
   fileName = null;
   fileContent = '';
@@ -42,6 +43,7 @@ export class SurveyPopupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payload = {
       "ProcessVariables": {}
       }      
