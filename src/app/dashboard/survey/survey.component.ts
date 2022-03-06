@@ -56,7 +56,7 @@ export class SurveyComponent implements OnInit {
     private snackBar: MatSnackBar,
     public toastr: ToastrService
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -123,7 +123,7 @@ export class SurveyComponent implements OnInit {
       ProcessVariables: { surveyName: name },
     };
     this.survey.downloadSurvey(payload).subscribe((res) => {
-      
+
       let content = res.ProcessVariables.attachment.content;
       content = atob(content);
       const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
@@ -175,6 +175,9 @@ export class SurveyComponent implements OnInit {
         //   }
         // })
       } else {
+        console.log('test cancel')
+        let payload = { ProcessVariables: { currentPage: 1 } };
+        this.commonMethod(payload);
         // this.userList.forEach((val, index) => {
         //   if (val.isLive) {
         //     this.radio['_results'][index].nativeElement.childNodes[0].childNodes[0].checked = true;

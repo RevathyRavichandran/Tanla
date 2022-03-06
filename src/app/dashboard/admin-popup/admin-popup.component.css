@@ -12,3 +12,6 @@ button {
   border-radius: 9999px;
   font-size: 15px;
 }
+.first::first-letter {
+  text-transform: uppercase;
+}

@@ -8,6 +8,7 @@ import { FeedbackService } from '../../../app/services/feedback.service';
 import moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { saveAs } from 'file-saver';
+import { ToastrService } from 'ngx-toastr';
 export interface StateGroup {
   letter: string;
   names: string[];
@@ -40,6 +41,8 @@ export class FeedbackComponent implements OnInit {
   data = [];
   advFilter = false;
   img = 'assets/tanla_advanced_filter.svg';
+  downloadFeedback = '';
+  downloadFeedbackName = '';
 
   searchSurvey=[];
   promo = new FormControl();
@@ -117,7 +120,8 @@ export class FeedbackComponent implements OnInit {
 
   constructor(
     private feedbackService: FeedbackService,
-    private matSnackbar: MatSnackBar
+    private matSnackbar: MatSnackBar,
+    public toastr: ToastrService
   ) {
     this.fg = new FormGroup({
       survey: new FormControl(null),
@@ -279,7 +283,7 @@ export class FeedbackComponent implements OnInit {
           this.filterSur.push(element.label)
         });
       }
-    })    
+    })
   }
 
   showSurveyType(event) {
@@ -293,7 +297,7 @@ export class FeedbackComponent implements OnInit {
           this.filterSurType.push(element.label)
         });
       }
-    })    
+    })
   }
 
   showCategory(event) {
@@ -307,7 +311,7 @@ export class FeedbackComponent implements OnInit {
           this.filterSer.push(element.label)
         });
       }
-    })    
+    })
   }
   showCompany(event) {
     this.filterCom = [];
@@ -320,7 +324,7 @@ export class FeedbackComponent implements OnInit {
             this.filterCom.push(element.label)
           });
         }
-      })      
+      })
   }
   showQuestion(event) {
     this.filterQue = [];
@@ -333,7 +337,7 @@ export class FeedbackComponent implements OnInit {
             this.filterQue.push(element.label)
           });
         }
-      })         
+      })
   }
   showAnswer(event) {
     this.filterAns = [];
@@ -346,7 +350,7 @@ export class FeedbackComponent implements OnInit {
             this.filterAns.push(element.label)
           });
         }
-      })   
+      })
   }
 
   apply() {
@@ -375,14 +379,14 @@ export class FeedbackComponent implements OnInit {
     }
     this.feedbackService.filterFeedback(payload).subscribe(res => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalItems'] === 0 ? 1 : result['totalItems'];
-      this.currentPage = result['currentPage'];
+      this.totalPages = result['totalItems'] === 0 || !result['totalItems'] ? 1 : result['totalItems'];
+      this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
       if (!this.noRecords) {
-        
+
       }
-      
+
       if (this.noRecords) {
         this.matSnackbar.open('No records found!!!', '', {
           horizontalPosition: 'right',
@@ -391,7 +395,8 @@ export class FeedbackComponent implements OnInit {
           panelClass: ['error-snack-bar'],
         });
       }
-      
+      this.downloadFeedback = result.attachment.content;
+      this.downloadFeedbackName = result.attachment.name;
       this.dataSource = new MatTableDataSource(result['outputData']);
     }),
       (err) => {
@@ -405,7 +410,7 @@ export class FeedbackComponent implements OnInit {
           panelClass: ['error-snack-bar'],
         });
       };
-      
+
     // let payload = {};
     // if (
     //   filteredVal.searchCtrl &&
@@ -474,46 +479,56 @@ export class FeedbackComponent implements OnInit {
   }
 
   downloadTemplate() {
-    this.isLoad = true;
-    let payload = {
-      ProcessVariables: { selectedField: '1', perPage: 1000000 },
-    };
-    this.feedbackService.filterFeedback(payload).subscribe(
-      (res) => {
-        if (res['ProcessVariables']['outputData']) {
-          let content =
-            'id,Survey type,Survey name,Service,Question,Answer,Score,Employee Name,Employee Phone Number,Company,Created Date,,\n';
-          res['ProcessVariables']['outputData'].forEach((val) => {
-            content += `${val['id']},${val['surveyType']},${val['survey_name']},${val['feedback_question_type']},${val['feedback_question']},${val['feedback_answer']},${val['score']},${val['employee_name']},${val['employee_phone_number']},${val['employee_company']},${val['created_at']},,\n`;
-          });
-          const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
-          saveAs(file, 'Feedback');
-          this.isLoad = false;
-        } else {
-          this.isLoad = false;
-          this.matSnackbar.open(
-            'There is a problem downloading the data!!!',
-            '',
-            {
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-              duration: 2000,
-              panelClass: ['error-snack-bar'],
-            }
-          );
-        }
-      },
-      (err) => {
-        this.isLoad = false;
-        console.log(err);
-        this.matSnackbar.open(err, '', {
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          duration: 2000,
-          panelClass: ['error-snack-bar'],
-        });
-      }
-    );
+    if (this.downloadFeedback) {
+      let content = this.downloadFeedback;
+      content = atob(content);
+      const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
+      saveAs(file, this.downloadFeedbackName);
+      this.toastr.success('Feedback downloaded successfully', 'Success');
+    } else {
+      this.toastr.error('Filtered feedback is empty!', 'Error');
+    }
+    // this.isLoad = true;
+    // let payload = {
+    //   ProcessVariables: { selectedField: '1', perPage: 1000000 },
+    // };
+
+    // this.feedbackService.filterFeedback(payload).subscribe(
+    //   (res) => {
+    //     if (res['ProcessVariables']['outputData']) {
+    //       let content =
+    //         'id,Survey type,Survey name,Service,Question,Answer,Score,Employee Name,Employee Phone Number,Company,Created Date,,\n';
+    //       res['ProcessVariables']['outputData'].forEach((val) => {
+    //         content += `${val['id']},${val['surveyType']},${val['survey_name']},${val['feedback_question_type']},${val['feedback_question']},${val['feedback_answer']},${val['score']},${val['employee_name']},${val['employee_phone_number']},${val['employee_company']},${val['created_at']},,\n`;
+    //       });
+    //       const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
+    //       saveAs(file, 'Feedback');
+    //       this.isLoad = false;
+    //     } else {
+    //       this.isLoad = false;
+    //       this.matSnackbar.open(
+    //         'There is a problem downloading the data!!!',
+    //         '',
+    //         {
+    //           horizontalPosition: 'right',
+    //           verticalPosition: 'top',
+    //           duration: 2000,
+    //           panelClass: ['error-snack-bar'],
+    //         }
+    //       );
+    //     }
+    //   },
+    //   (err) => {
+    //     this.isLoad = false;
+    //     console.log(err);
+    //     this.matSnackbar.open(err, '', {
+    //       horizontalPosition: 'right',
+    //       verticalPosition: 'top',
+    //       duration: 2000,
+    //       panelClass: ['error-snack-bar'],
+    //     });
+    //   }
+    // );
   }
 
   onSurveyChanged(event) {}
@@ -637,8 +652,8 @@ export class FeedbackComponent implements OnInit {
     this.isLoad = true;
     this.feedbackService.filterFeedback(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalItems'] === 0 ? 1 : result['totalItems'];
-      this.currentPage = result['currentPage'];
+      this.totalPages = result['totalItems'] === 0 || !result['totalItems'] ? 1 : result['totalItems'];
+      this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
       if (!this.noRecords) {
@@ -685,6 +700,8 @@ export class FeedbackComponent implements OnInit {
       }
       this.onLoadDropdown(this.data);
       this.dataSource = new MatTableDataSource(result['outputData']);
+      this.downloadFeedback = result.attachment.content;
+      this.downloadFeedbackName = result.attachment.name;
     }),
       (err) => {
         this.noRecords = false;

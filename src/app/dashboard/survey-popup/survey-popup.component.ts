@@ -46,7 +46,7 @@ export class SurveyPopupComponent implements OnInit {
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payload = {
       "ProcessVariables": {}
-      }      
+      }
     this.surveyService.selectSurveytype(payload).subscribe(res=> {
       this.serviceType = res.ProcessVariables.serviceType;
     })
@@ -81,14 +81,17 @@ export class SurveyPopupComponent implements OnInit {
     };
     if (this.fileContent !== '' && this.fileContent !== null) {
       this.surveyService.uploadFile(body).subscribe((res) => {
+        let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
+        let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
         let surveyName = this.selectedService + '-' + this.fg.value.name;
+        let surType = this.serviceType.indexOf(this.selectedService) + 1;
         let catArr = [];
         this.fg.value.category.forEach((element) => {
           catArr.push(element.category);
         });
         let category = catArr.toString();
         var payload = {
-          ProcessVariables: { catagoryName: category, surveyName: surveyName },
+          ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
         };
         this.surveyService.createSurvey(payload).subscribe((res) => {
           this.dialogRef.close(true);
@@ -98,13 +101,14 @@ export class SurveyPopupComponent implements OnInit {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
       let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
       let surveyName = this.selectedService + '-' + this.fg.value.name;
+      let surType = this.serviceType.indexOf(this.selectedService) + 1;
       let catArr = [];
       this.fg.value.category.forEach((element) => {
         catArr.push(element.category);
       });
       let category = catArr.toString();
       var payload = {
-        ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate },
+        ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
       };
       this.surveyService.createSurvey(payload).subscribe((res) => {
         if (!res.ProcessVariables.isTrue) {
@@ -112,7 +116,7 @@ export class SurveyPopupComponent implements OnInit {
         } else {
           this.toastr.success('Survey created successfully', 'Success');
           this.dialogRef.close(true);
-        }        
+        }
       });
     }
   }
