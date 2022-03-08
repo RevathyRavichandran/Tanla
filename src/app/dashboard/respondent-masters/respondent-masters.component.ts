@@ -132,7 +132,7 @@ export class RespondentMastersComponent implements OnInit {
 
   downloadTemplate() {
     let content =
-      'Employee Name,Designation,Email ID,Phone Number,Company,Department,column1,column2,\n';
+      'Employee Name,Designation,Email ID,Phone Number,Company,Department,Add coloumn 1,Add column2,\n';
     content +=
       'Sample name,Developer,sample@gmail.com,89844xxxxx,Inswit,IT,,,';
     const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });

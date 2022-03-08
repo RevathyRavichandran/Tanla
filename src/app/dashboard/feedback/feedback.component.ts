@@ -242,8 +242,38 @@ export class FeedbackComponent implements OnInit {
   }
 
   pageChanged(event) {
-    let payload = { ProcessVariables: { selectedField: '1' } };
-    this.commonMethod(payload);
+    let payload = { ProcessVariables: { current_page: parseInt(event) } };
+    this.feedbackService.feedbackPagination(payload).subscribe((res) => {
+      console.log(res)
+      let result = res['ProcessVariables'];
+      this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
+      this.currentPage = result['current_page'] ? result['current_page'] : 1;
+      this.pageSize = result['perPage'];
+      this.noRecords = result['outputData'] ? false : true;
+      if (this.noRecords) {
+        this.matSnackbar.open('No records found!!!', '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+      }
+      this.onLoadDropdown(this.data);
+      this.dataSource = new MatTableDataSource(result['outputData']);
+      this.downloadFeedback = result.attachment.content;
+      this.downloadFeedbackName = result.attachment.name;
+    }),
+      (err) => {
+        this.noRecords = false;
+        console.log(err);
+        this.isLoad = false;
+        this.matSnackbar.open(err, '', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: ['error-snack-bar'],
+        });
+      };
   }
 
   searchData(value) {
@@ -379,7 +409,7 @@ export class FeedbackComponent implements OnInit {
     }
     this.feedbackService.filterFeedback(payload).subscribe(res => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalItems'] === 0 || !result['totalItems'] ? 1 : result['totalItems'];
+      this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
       this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
@@ -652,8 +682,8 @@ export class FeedbackComponent implements OnInit {
     this.isLoad = true;
     this.feedbackService.filterFeedback(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalItems'] === 0 || !result['totalItems'] ? 1 : result['totalItems'];
-      this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
+      this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
+      this.currentPage = result['current_page'] ? result['current_page'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
       if (!this.noRecords) {

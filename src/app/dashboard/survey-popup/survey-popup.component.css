@@ -26,3 +26,8 @@ button {
     border-radius: 9999px;
     font-size: 15px;
 }
+input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    content: URL('assets/icons8-close.svg');
+    cursor: pointer;
+   }

@@ -113,7 +113,7 @@
           </mat-date-range-picker>
         </mat-form-field>
       </div>
-      <div class="col-2" style="text-align: end">
+      <div class="col-2" style="text-align: center">
         <button type="submit" style="font-weight: 500;" class="btn btn-primary apply-btn">Apply</button>
         <button
           type="button"
@@ -161,6 +161,7 @@
           <input type="search"
             style="padding: 0.7rem"
             class="form-control"
+            ng-model-options="{debounce: 750}"
             (keyup)="showCompany($event)"
             id="company"
             placeholder="Company Name"
@@ -263,58 +264,6 @@
             </mat-option>
           </mat-autocomplete>
         </div>
-
-        <!-- <div class="form-group col-3">
-          <label for="mobile"
-            ><h2 style="font-size: 1rem; margin: 0 0 8px">Industry:</h2></label
-          >
-          <input
-            style="border-radius: 20px !important"
-            class="form-control"
-            id="mobile"
-            placeholder="Industry"
-            [matAutocomplete]="auto1"
-            formControlName="mobile"
-          />
-          <mat-autocomplete
-            #auto1="matAutocomplete"
-            (optionSelected)="onMobileChanged($event)"
-          >
-            <mat-option
-              *ngFor="let search of filteredMobileSearch | async"
-              [value]="search.value"
-            >
-              <span>{{ search.label }}</span>
-            </mat-option>
-          </mat-autocomplete>
-        </div> -->
-        <!-- <div class="col-3 form-group">
-          <label for="company"
-            ><h2 style="font-size: 1rem; margin: 0 0 8px">
-              Company Name:
-            </h2></label
-          >
-          <input
-            style="border-radius: 20px !important"
-            class="form-control"
-            id="company"
-            placeholder="Company Name"
-            formControlName="company"
-            [matAutocomplete]="auto2"
-          />
-          <mat-autocomplete
-            #auto2="matAutocomplete"
-            (optionSelected)="onCompanyChanged($event)"
-          >
-            <mat-option
-              *ngFor="let search of filteredCompanySearch | async"
-              [value]="search.value"
-            >
-              <span>{{ search.label }}</span>
-            </mat-option>
-          </mat-autocomplete>
-        </div> -->
-
         <br />
 
         <div class="col-3 form-group">

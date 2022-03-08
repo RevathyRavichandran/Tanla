@@ -17,7 +17,7 @@ export class SurveyService {
 
   uploadFile(content: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/qusAnsUploadApi',
+      this.dbUrl + 'npsfeedback/api/questionUploadAPI',
       content
     );
   }

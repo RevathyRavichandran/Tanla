@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./configuration.component.css'],
 })
 export class ConfigurationComponent implements OnInit {
+  role: boolean = true;
   minDate: any;
   isLoad = false;
   noRecords = false;
@@ -164,11 +165,6 @@ export class ConfigurationComponent implements OnInit {
       };
   }
   close() {
-    this.data.selected_survey = null;
-    this.survey = false;
-    this.data.selected_company = null;
-    this.company = false;
-    this.data.expiry_limit = null;
-    this.data.skip_limit = null;
+    window.location.reload();
   }
 }

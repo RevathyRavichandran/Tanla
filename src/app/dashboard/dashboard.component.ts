@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit {
   toppings = new FormControl();
   surveyList = new FormControl();
   categoryList = new FormControl();
+  totalFilRes = '';
 
   ngOnInit() {
     let live = { ProcessVariables: {} };
@@ -156,6 +157,7 @@ export class DashboardComponent implements OnInit {
       this.filteredDetractorCount = res.detractCount;
       this.filteredPassiveCount = res.passiveCount;
       this.filteredOverall = res.overallPercentage;
+      this.totalFilRes = res.totalCount;
       this.toastr.success('Filtered applied successfully', 'Success');
     })
     // if (this.survey && !this.question) {

@@ -16,6 +16,7 @@ export class SurveyPopupComponent implements OnInit {
   fg: FormGroup;
   fileName = null;
   fileContent = '';
+  minDate: any;
   fileSize = 0;
   serviceType: any = [];
   selectedService: string[];
@@ -43,6 +44,7 @@ export class SurveyPopupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.minDate = new Date();
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payload = {
       "ProcessVariables": {}
@@ -67,15 +69,23 @@ export class SurveyPopupComponent implements OnInit {
     });
   }
 
+  get f() { return this.fg.controls; }
+
   saveSurvey() {
+    let surveyName = this.selectedService + '-' + this.fg.value.name;
+    let surType = this.serviceType.indexOf(this.selectedService) + 1;
+    let type = this.selectedService;
     let body = {
       ProcessVariables: {
+        typeName: type,
+        surveyName: surveyName,
+        surveyType: surType,
         attachment: {
           content: btoa(this.fileContent),
           name: this.fileName,
           operation: 'upload',
           mime: 'application/vnd.ms-excel',
-          size: this.fileSize,
+          size: this.fileSize
         },
       },
     };
@@ -93,9 +103,12 @@ export class SurveyPopupComponent implements OnInit {
         var payload = {
           ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
         };
-        this.surveyService.createSurvey(payload).subscribe((res) => {
+
+          this.surveyService.createSurvey(payload).subscribe((res) => {
           this.dialogRef.close(true);
         });
+
+        
       });
     } else {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');

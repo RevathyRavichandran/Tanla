@@ -19,5 +19,9 @@ export class FeedbackService {
     return this.http.post<any>(this.dbUrl + 'npsfeedback/api/new_autofill', feedback);
   }
 
+  public feedbackPagination(feedback: any): Observable<any> {
+    return this.http.post<any>(this.dbUrl + 'npsfeedback/api/Feedback_Report_Pagination', feedback);
+  }
+
   constructor(private http: HttpClient) { }
 }

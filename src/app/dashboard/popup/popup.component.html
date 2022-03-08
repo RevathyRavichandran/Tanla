@@ -56,7 +56,7 @@
               <div class="col-4">
                 <label style="font-size: 1.2rem; font-weight: 500">Score:</label>
               </div>
-              <div class="col-2" style="text-align: end;">
+              <div class="col-2" style="text-align: end;" *ngIf="fg.get('answers')['controls'].length < 5">
                  <button type="button" class="btn add-btn mb-2" (click)="addAnswer()">
                 Add <i class="fa fa-plus fa-1x"></i>
               </button>

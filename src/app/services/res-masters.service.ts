@@ -24,7 +24,7 @@ export class ResMastersService {
 
   uploadFile(content: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/CSV upload API',
+      this.dbUrl + 'npsfeedback/api/respondantUploadAPI',
       content
     );
   }
