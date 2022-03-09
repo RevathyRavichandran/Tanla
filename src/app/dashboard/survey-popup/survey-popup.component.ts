@@ -90,26 +90,23 @@ export class SurveyPopupComponent implements OnInit {
       },
     };
     if (this.fileContent !== '' && this.fileContent !== null) {
-      this.surveyService.uploadFile(body).subscribe((res) => {
-        let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
+      let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
         let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
         let surveyName = this.selectedService + '-' + this.fg.value.name;
         let surType = this.serviceType.indexOf(this.selectedService) + 1;
-        let catArr = [];
-        this.fg.value.category.forEach((element) => {
-          catArr.push(element.category);
-        });
-        let category = catArr.toString();
         var payload = {
-          ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
+          ProcessVariables: { surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
         };
-
-          this.surveyService.createSurvey(payload).subscribe((res) => {
+        this.surveyService.createSurvey(payload).subscribe((res) => {
+          this.surveyService.uploadFile(body).subscribe((res) => {
+            if (res) {
+              this.toastr.success('Questinnaire uploaded successfully', 'Success');
+            } else {
+              this.toastr.error('There was some problem with questionnaire upload', 'Error');
+            }
+          });
           this.dialogRef.close(true);
-        });
-
-        
-      });
+        });      
     } else {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
       let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
@@ -120,10 +117,10 @@ export class SurveyPopupComponent implements OnInit {
         catArr.push(element.category);
       });
       let category = catArr.toString();
-      var payload = {
+      var payload2 = {
         ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
       };
-      this.surveyService.createSurvey(payload).subscribe((res) => {
+      this.surveyService.createSurvey(payload2).subscribe((res) => {
         if (!res.ProcessVariables.isTrue) {
           this.toastr.error('Survey name should be unique', 'Error');
         } else {
@@ -140,6 +137,13 @@ export class SurveyPopupComponent implements OnInit {
 
   fileUpload() {
     document.getElementById('file').click();
+  }
+
+  downloadTemplate() {
+    let content =
+      'Category Name,Questions,option,option,option,option,option,score,score,score,score,score,\n';
+    const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
+    saveAs(file, 'Question template'); 
   }
 
   public changeListener(files: FileList) {

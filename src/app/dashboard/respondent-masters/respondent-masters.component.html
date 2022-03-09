@@ -120,11 +120,15 @@
           </ng-container>
           <ng-container matColumnDef="col-1">
             <th mat-header-cell *matHeaderCellDef>Industry</th>
-            <td mat-cell *matCellDef="let element"></td>
+            <td mat-cell *matCellDef="let element">
+              {{element?.column1}}
+            </td>
           </ng-container>
           <ng-container matColumnDef="col-2">
             <th mat-header-cell *matHeaderCellDef>Additional col-1</th>
-            <td mat-cell *matCellDef="let element"></td>
+            <td mat-cell *matCellDef="let element">
+              {{element.column2}}
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -50,6 +50,13 @@ export class SurveyService {
     );
   }
 
+  downloadQuesTemp(ques: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/questionTempFile',
+      ques
+    );
+  }
+
   fetchSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
       this.dbUrl + 'npsfeedback/api/searchBysurveyName',

@@ -94,8 +94,7 @@ export class ApproveSurveyComponent implements OnInit {
           let payload1 = { ProcessVariables: { currentPage: 1 } };
           this.commonMethod(payload1);
         } else {
-          let payload = { ProcessVariables: { currentPage: 1 } };
-          this.commonMethod(payload);
+          window.location.reload();
         }
       });
     } else if ((document.getElementById('reject') as HTMLInputElement).checked) {
@@ -124,7 +123,7 @@ export class ApproveSurveyComponent implements OnInit {
           
           if (text) {
             let payload = {
-              ProcessVariables: { surveyName: survey, userStatus: "3"},
+              ProcessVariables: { surveyName: survey, userStatus: "3", rejectReason: text},
             };
             this.survey.approveSurvey(payload).subscribe((res) => {
               Swal.fire(
@@ -134,8 +133,7 @@ export class ApproveSurveyComponent implements OnInit {
             });
           }
         } else {
-          let payload = { ProcessVariables: { currentPage: 1 } };
-          this.commonMethod(payload);
+          window.location.reload();
         }
       });
     }
@@ -146,7 +144,7 @@ export class ApproveSurveyComponent implements OnInit {
     this.survey.listSurvey(payload).subscribe((res) => {
       this.isLoad = false;
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalPages'] * 10;
+      this.totalPages = result['totalPages'];
       this.currentPage = result['currentPage'];
       this.pageSize = result['perPage'];
       this.noRecords = result['surveyList'] ? false : true;

@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
   totalFilRes = '';
 
   ngOnInit() {
-    let live = { ProcessVariables: {} };
+    let live = { ProcessVariables: { perPage: 100000 } };
     this.surveySer.listSurvey(live).subscribe((res) => {
       res.ProcessVariables.surveyList.forEach((element) => {
         if (element && element.activeStatus == 1) {

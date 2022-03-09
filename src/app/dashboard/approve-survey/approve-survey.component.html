@@ -80,7 +80,7 @@
                         <th [attr.rowspan]="2" class="text-center" mat-header-cell *matHeaderCellDef>Approve/Reject</th>
                         <td mat-cell class="text-center" *matCellDef="let element">
                             <span *ngIf="element.surveyStatus == '2'">Approved</span>
-                            <span *ngIf="element.surveyStatus == '3'">Rejected &nbsp;<i matTooltip="sample reason" matTooltipPosition="right" class="fa
+                            <span *ngIf="element.surveyStatus == '3'">Rejected &nbsp;<i [matTooltip]="element.reason" matTooltipPosition="right" class="fa
                                 fa-info-circle" aria-hidden="true"></i></span>
                             <span *ngIf="element.surveyStatus == '1'" >
                               <input type="radio" id="approve" value="approve" (change)="changeGender($event, element.surveyName)"> Approve  
@@ -113,3 +113,12 @@
         </div>
     </div>
 </div>
+<ngb-pagination
+      [collectionSize]="totalPages"
+      [(page)]="currentPage"
+      [maxSize]="2"
+      [boundaryLinks]="true"
+      [pageSize]="pageSize"
+      (pageChange)="pageChanged(currentPage)"
+      class="d-flex justify-content-center"
+    ></ngb-pagination>

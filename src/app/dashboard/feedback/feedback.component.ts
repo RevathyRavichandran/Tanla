@@ -407,7 +407,7 @@ export class FeedbackComponent implements OnInit {
         "employee_company":company
       },
     }
-    this.feedbackService.filterFeedback(payload).subscribe(res => {
+    this.feedbackService.feedbackPagination(payload).subscribe(res => {
       let result = res['ProcessVariables'];
       this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
       this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
@@ -509,15 +509,22 @@ export class FeedbackComponent implements OnInit {
   }
 
   downloadTemplate() {
-    if (this.downloadFeedback) {
-      let content = this.downloadFeedback;
-      content = atob(content);
-      const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
-      saveAs(file, this.downloadFeedbackName);
-      this.toastr.success('Feedback downloaded successfully', 'Success');
-    } else {
-      this.toastr.error('Filtered feedback is empty!', 'Error');
-    }
+    let payload = { ProcessVariables: { } };
+    this.feedbackService.filterFeedback(payload).subscribe((res) => {
+      let result = res['ProcessVariables'];
+      this.downloadFeedback = result.attachment.content;
+      this.downloadFeedbackName = result.attachment.name;
+      if (this.downloadFeedback) {
+        let content = this.downloadFeedback;
+        content = atob(content);
+        const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
+        saveAs(file, this.downloadFeedbackName);
+        this.toastr.success('Feedback downloaded successfully', 'Success');
+      } else {
+        this.toastr.error('Filtered feedback is empty!', 'Error');
+      }
+    })
+    
     // this.isLoad = true;
     // let payload = {
     //   ProcessVariables: { selectedField: '1', perPage: 1000000 },
@@ -680,7 +687,7 @@ export class FeedbackComponent implements OnInit {
 
   commonMethod(payload) {
     this.isLoad = true;
-    this.feedbackService.filterFeedback(payload).subscribe((res) => {
+    this.feedbackService.feedbackPagination(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
       this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
       this.currentPage = result['current_page'] ? result['current_page'] : 1;
@@ -755,7 +762,7 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {
     let payload = { ProcessVariables: {  } };
     let body = { ProcessVariables: { selectedField: '1', perPage: 100000 } };
-    this.feedbackService.filterFeedback(body).subscribe((res) => {
+    this.feedbackService.feedbackPagination(body).subscribe((res) => {
       this.data = res['ProcessVariables']['outputData'];
       this.commonMethod(payload);
     });

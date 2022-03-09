@@ -69,7 +69,7 @@ export class SurveyComponent implements OnInit {
     this.survey.listSurvey(payload).subscribe((res) => {
       this.isLoad = false;
       let result = res['ProcessVariables'];
-      this.totalPages = result['totalPages'] * 10;
+      this.totalPages = result['totalPages'];
       this.currentPage = result['currentPage'];
       this.pageSize = result['perPage'];
       this.noRecords = result['surveyList'] ? false : true;

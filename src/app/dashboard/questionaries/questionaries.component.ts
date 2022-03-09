@@ -36,7 +36,7 @@ export class QuestionariesComponent implements OnInit {
         category: this.categories[0],
         question: '',
         editMode: false,
-        surveyName: this.name,
+        surveyName: this.name ? this.name : this.selectedSurvey,
         answers: [
           {
             answer: '',
@@ -83,7 +83,7 @@ export class QuestionariesComponent implements OnInit {
     } };
     this.appService.createQuestion(payload).subscribe(
       (res) => {
-        let load = { ProcessVariables: {} };
+        let load = { ProcessVariables: { surveyName: this.name ? this.name : this.selectedSurvey } };
         this.commonMethod(load);
         this.isLoad = true;
       },
@@ -105,7 +105,7 @@ export class QuestionariesComponent implements OnInit {
                 category: data.category,
                 question: ques.question,
                 answers: ques.answers,
-                surveyName: this.name,
+                surveyName: this.name ? this.name : this.selectedSurvey,
                 editMode: true,
               },
             });
@@ -161,7 +161,7 @@ export class QuestionariesComponent implements OnInit {
               });
               this.appService.updateQuestion(payload).subscribe(
                 (res) => {
-                  let load = { ProcessVariables: {} };
+                  let load = { ProcessVariables: { surveyName: this.name ? this.name : this.selectedSurvey } };
                   this.commonMethod(load);
                   this.toastr.success('Question and answers modified successfully', 'Success');
                   this.isLoad = true;
@@ -207,7 +207,7 @@ export class QuestionariesComponent implements OnInit {
             };
             this.appService.updateQuestion(payload).subscribe(
               (res) => {
-                let load = { ProcessVariables: {} };
+                let load = { ProcessVariables: { surveyName: this.name ? this.name : this.selectedSurvey } };
                 this.commonMethod(load);
                 Swal.fire(
                   'Deleted!',
@@ -284,11 +284,16 @@ export class QuestionariesComponent implements OnInit {
       let result = res['ProcessVariables'];
       result['surveyList'].forEach((element) => {
         this.surveyNameList.push(element.surveyName);
+        if (element && element.activeStatus == 1) {
+          this.selectedSurvey = element.surveyName;
+          let payload = {
+            ProcessVariables: { surveyName: element.surveyName },
+          };
+          this.commonMethod(payload);
+          this.isLoad = true;
+        }
       });
       this.surveyNameList = [...this.surveyNameList];
     });
-    let load = { ProcessVariables: {} };
-    this.commonMethod(load);
-    this.isLoad = true;
   }
 }
