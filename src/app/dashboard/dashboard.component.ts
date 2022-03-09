@@ -126,17 +126,24 @@ export class DashboardComponent implements OnInit {
   }
   addNewDate(event) {
     this.endDate = event.value;
-  }
-  endNewDate(event) {
-    this.startDate = event.value;
-    if (this.startDate) {
-      let payloadSur = { ProcessVariables: { "selectedSurveyName": "", "selected_question": "", "selectedQuestionType": ""} };
+    if (this.endDate) {
+      let payloadSur = { ProcessVariables: { "from_date": this.startDate, "to_date": this.endDate, "selectedSurveyName": "", "selected_question": "", "selectedQuestionType": ""} };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
-        this.surveyNameList = [...res.surveyList];
-        this.serviceList = [...res.catagoryList];
-        this.questionList = [...res.questionList]
+        console.log(res)
+        if (res.surveyList) {
+          this.surveyNameList = [...res.surveyList];
+          this.serviceList = [...res.catagoryList];
+          this.questionList = [...res.questionList];
+        } else {
+          this.surveyNameList = [];
+          this.serviceList = [];
+          this.questionList = [];
+        }        
       });
     }
+  }
+  endNewDate(event) {
+    this.startDate = event.value;   
   }
   filter() {
     this.isLoad = true;

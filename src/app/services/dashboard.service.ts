@@ -96,7 +96,7 @@ export class dashboardService {
     );
   }
   listdashboard(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/dashboard_list_calculation`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/Advanced_Filter`;
     let headers = new HttpHeaders({
       'authentication-token':
         'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
