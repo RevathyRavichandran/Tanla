@@ -260,8 +260,6 @@ export class FeedbackComponent implements OnInit {
       }
       this.onLoadDropdown(this.data);
       this.dataSource = new MatTableDataSource(result['outputData']);
-      this.downloadFeedback = result.attachment.content;
-      this.downloadFeedbackName = result.attachment.name;
     }),
       (err) => {
         this.noRecords = false;
@@ -413,6 +411,7 @@ export class FeedbackComponent implements OnInit {
       this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
+      console.log(result['outputData'] )
       if (!this.noRecords) {
 
       }
@@ -425,8 +424,6 @@ export class FeedbackComponent implements OnInit {
           panelClass: ['error-snack-bar'],
         });
       }
-      this.downloadFeedback = result.attachment.content;
-      this.downloadFeedbackName = result.attachment.name;
       this.dataSource = new MatTableDataSource(result['outputData']);
     }),
       (err) => {
@@ -737,8 +734,6 @@ export class FeedbackComponent implements OnInit {
       }
       this.onLoadDropdown(this.data);
       this.dataSource = new MatTableDataSource(result['outputData']);
-      this.downloadFeedback = result.attachment.content;
-      this.downloadFeedbackName = result.attachment.name;
     }),
       (err) => {
         this.noRecords = false;

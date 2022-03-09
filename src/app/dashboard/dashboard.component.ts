@@ -164,7 +164,7 @@ export class DashboardComponent implements OnInit {
       this.filteredDetractorCount = res.detractCount;
       this.filteredPassiveCount = res.passiveCount;
       this.filteredOverall = res.overallPercentage;
-      this.totalFilRes = res.totalCount;
+      this.totalFilRes = res.total;
       this.toastr.success('Filtered applied successfully', 'Success');
     })
     // if (this.survey && !this.question) {
