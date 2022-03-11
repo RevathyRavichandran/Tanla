@@ -6,6 +6,7 @@ import { map, startWith } from 'rxjs/operators';
 import { dashboardService } from '../services/dashboard.service';
 import { SurveyService } from '../services/survey.service';
 import { ToastrService } from 'ngx-toastr';
+import Chart from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -56,6 +57,10 @@ export class DashboardComponent implements OnInit {
   surveyList = new FormControl();
   categoryList = new FormControl();
   totalFilRes = '';
+  avg = '';
+  data: boolean = false;
+  chart1: any;
+  chart: any;
 
   ngOnInit() {
     let live = { ProcessVariables: { perPage: 100000 } };
@@ -91,12 +96,50 @@ export class DashboardComponent implements OnInit {
       });
     });
 
-    let payloadSur = { ProcessVariables: { "selectedSurveyName": "", "selected_question": "", "selectedQuestionType": ""} };
+    let payloadSur = {
+      ProcessVariables: {
+        selectedSurveyName: '',
+        selected_question: '',
+        selectedQuestionType: '',
+      },
+    };
     this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
       this.surveyNameList = [...res.surveyList];
       this.serviceList = [...res.catagoryList];
-      this.questionList = [...res.questionList]
+      this.questionList = [...res.questionList];
     });
+    if (!this.data) {
+      this.chart = new Chart('canvas', {
+        type: 'doughnut',
+        data: {
+          labels: ['Promotor(0%)', 'Passive(0%)', 'Detractor(0%)'],
+          datasets: [
+            {
+              data: [100, 0, 0],
+              backgroundColor: [
+                'rgba(173, 169, 231, 0.5)',
+                'rgba(173, 169, 231, 0.5)',
+                'rgba(173, 169, 231, 0.5)',
+              ],
+            },
+          ],
+        },
+        options: {
+          legend: {
+            position: 'right',
+            labels: {
+              fontSize: 16,
+            },
+          },
+
+          // responsive: false,
+          // cutoutPercentage: 75,
+          tooltips: {
+            enabled: false,
+          },
+        },
+      });
+    }
   }
 
   weekData(color) {
@@ -127,9 +170,16 @@ export class DashboardComponent implements OnInit {
   addNewDate(event) {
     this.endDate = event.value;
     if (this.endDate) {
-      let payloadSur = { ProcessVariables: { "from_date": this.startDate, "to_date": this.endDate, "selectedSurveyName": "", "selected_question": "", "selectedQuestionType": ""} };
+      let payloadSur = {
+        ProcessVariables: {
+          from_date: this.startDate,
+          to_date: this.endDate,
+          selectedSurveyName: '',
+          selected_question: '',
+          selectedQuestionType: '',
+        },
+      };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
-        console.log(res)
         if (res.surveyList) {
           this.surveyNameList = [...res.surveyList];
           this.serviceList = [...res.catagoryList];
@@ -138,89 +188,128 @@ export class DashboardComponent implements OnInit {
           this.surveyNameList = [];
           this.serviceList = [];
           this.questionList = [];
-        }        
+        }
       });
     }
   }
   endNewDate(event) {
-    this.startDate = event.value;   
+    this.startDate = event.value;
   }
   filter() {
-    this.isLoad = true;
-    let payload = {
-            ProcessVariables: {
-              selectedQuestionType: this.categoryList.value,
-              selectedSurveyName: this.surveyList.value,
-              selected_question: this.toppings.value,
-              from_date: this.startDate? this.startDate : '',
-              to_date: this.endDate ? this.endDate : ''
-          },
+    if (
+      !this.categoryList.value &&
+      !this.surveyList.value &&
+      !this.toppings.value &&
+      !this.startDate &&
+      !this.endDate
+    ) {
+      this.toastr.error(
+        'Please select any one filter to see the results',
+        'Error'
+      );
+    } else {
+      this.data = true;
+      this.isLoad = true;
+      let payload = {
+        ProcessVariables: {
+          selectedQuestionType: this.categoryList.value,
+          selectedSurveyName: this.surveyList.value,
+          selected_question: this.toppings.value,
+          from_date: this.startDate ? this.startDate : '',
+          to_date: this.endDate ? this.endDate : '',
+        },
       };
-    this.dashboaService.dashCal(payload).subscribe(res=> {
-      this.filteredPromo = res.promoPercentage;
-      this.filteredDetractor = res.detractorsPercentage;
-      this.filteredPassive = res.passivePercentage;
-      this.filteredPromoCount = res.promoCount;
-      this.filteredDetractorCount = res.detractCount;
-      this.filteredPassiveCount = res.passiveCount;
-      this.filteredOverall = res.overallPercentage;
-      this.totalFilRes = res.total;
-      this.toastr.success('Filtered applied successfully', 'Success');
-    })
-    // if (this.survey && !this.question) {
-    //   if (this.selectedSurvey !== null) {
-    //     let payload = {
-    //       ProcessVariables: {
-    //         selectedField: '1',
-    //         selectedValue: this.selectedSurvey,
-    //       },
-    //     };
-    //     this.commonMethod(payload, '');
-    //   } else {
-    //     this.isLoad = false;
-    //     this.toastr.error('Please fill survey name', 'Required');
-    //   }
-    // } else if (this.date) {
-    //   let dateFromFilter = (<HTMLInputElement>document.getElementById('date1'))
-    //     .value;
-    //   let dateToFilter = (<HTMLInputElement>document.getElementById('date2'))
-    //     .value;
-    //   if (
-    //     dateFromFilter !== null &&
-    //     dateFromFilter !== '' &&
-    //     dateToFilter !== null &&
-    //     dateToFilter !== '' &&
-    //     this.selectedSurvey
-    //   ) {
-    //     let payload = {
-    //       ProcessVariables: {
-    //         selectedField: '2',
-    //         fromDate: dateFromFilter,
-    //         toDate: dateToFilter,
-    //       },
-    //     };
-    //     this.commonMethod(payload, '');
-    //   } else {
-    //     this.isLoad = false;
-    //     this.toastr.error(
-    //       'Please fill all date fields and survey name',
-    //       'Required'
-    //     );
-    //   }
-    // } else if (this.question) {
-    //   if (this.selectedSurvey !== null && this.selectedQuestion !== null) {
-    //     let payload = {
-    //       ProcessVariables: {
-    //         selected_survey: this.selectedSurvey,
-    //         selected_question: this.selectedQuestion,
-    //       },
-    //     };
-    //     this.questionMethod(payload);
-    //   } else {
-    //     this.isLoad = false;
-    //     this.toastr.error('Please fill survey name and question', 'Required');
-    //   }
-    // }
+      this.dashboaService.dashCal(payload).subscribe((res) => {
+        if (res) {
+          this.filteredPromo = res.promoPercentage;
+          this.filteredDetractor = res.detractorsPercentage;
+          this.filteredPassive = res.passivePercentage;
+          this.filteredPromoCount = res.promoCount;
+          this.filteredDetractorCount = res.detractCount;
+          this.filteredPassiveCount = res.passiveCount;
+          this.filteredOverall = res.overallPercentage;
+          this.totalFilRes = res.total;
+          this.avg = res.avg_rating;
+          if (
+            this.filteredPromo === '0' &&
+            this.filteredPassive === '0' &&
+            this.filteredDetractor === '0'
+          ) {
+            this.chart1 = false;
+            this.chart = new Chart('canvas', {
+              type: 'doughnut',
+              data: {
+                labels: ['Promotor(0%)', 'Passive(0%)', 'Detractor(0%)'],
+                datasets: [
+                  {
+                    data: [100, 0, 0],
+                    backgroundColor: [
+                      'rgba(173, 169, 231, 0.5)',
+                      'rgba(173, 169, 231, 0.5)',
+                      'rgba(173, 169, 231, 0.5)',
+                    ],
+                  },
+                ],
+              },
+              options: {
+                legend: {
+                  position: 'right',
+                  labels: {
+                    fontSize: 16,
+                  },
+                },
+      
+                // responsive: false,
+                // cutoutPercentage: 75,
+                tooltips: {
+                  enabled: false,
+                },
+              },
+            });
+          } else {
+            this.chart = false;
+            
+            this.chart1 = new Chart('canvas1', {
+              type: 'doughnut',
+              data: {
+                labels: [
+                  'Promotor(' + this.filteredPromoCount + ')',
+                  'Passive(' + this.filteredPassiveCount + ')',
+                  'Detractor(' + this.filteredPassiveCount + ')',
+                ],
+                datasets: [
+                  {
+                    data: [
+                      parseInt(this.filteredPromo),
+                      parseInt(this.filteredPassive),
+                      parseInt(this.filteredDetractor),
+                    ],
+                    backgroundColor: ['#3cb371', '#ef820d', '#dc143c'],
+                  },
+                ],
+              },
+              options: {
+                legend: {
+                  position: 'right',
+                  labels: {
+                    fontSize: 16,
+                  },
+                },
+                // responsive: false,
+                // cutoutPercentage: 75,
+                tooltips: {
+                  enabled: true,
+                },
+              },
+            });
+          }
+        }
+        setTimeout(() => {
+          this.isLoad = false;
+        }, 300);
+        this.toastr.success('Filtered applied successfully', 'Success');
+      });
+    }
   }
   questionMethod(payload) {
     this.dashboaService.questionCal(payload).subscribe((res) => {
@@ -237,28 +326,46 @@ export class DashboardComponent implements OnInit {
   }
   changeFn(selection) {
     if (selection) {
-      let payloadSur = { ProcessVariables: { "selectedSurveyName": selection, "selected_question": "", "selectedQuestionType": ""} };
+      let payloadSur = {
+        ProcessVariables: {
+          selectedSurveyName: selection,
+          selected_question: '',
+          selectedQuestionType: '',
+        },
+      };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
         this.surveyNameList = [...res.surveyList];
         this.serviceList = [...res.catagoryList];
-        this.questionList = [...res.questionList]
+        this.questionList = [...res.questionList];
       });
     }
   }
   changeFn1(selection) {
     if (selection && this.surveyList.value) {
-      let payloadSur = { ProcessVariables: { "selectedSurveyName": this.surveyList.value, "selected_question": "", "selectedQuestionType": selection} };
+      let payloadSur = {
+        ProcessVariables: {
+          selectedSurveyName: this.surveyList.value,
+          selected_question: '',
+          selectedQuestionType: selection,
+        },
+      };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
         this.surveyNameList = [...res.surveyList];
         this.serviceList = [...res.catagoryList];
-        this.questionList = [...res.questionList]
+        this.questionList = [...res.questionList];
       });
     } else {
-      let payloadSur = { ProcessVariables: { "selectedSurveyName": this.surveyList.value, "selected_question": "", "selectedQuestionType": selection} };
+      let payloadSur = {
+        ProcessVariables: {
+          selectedSurveyName: this.surveyList.value,
+          selected_question: '',
+          selectedQuestionType: selection,
+        },
+      };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
         this.surveyNameList = [...res.surveyList];
         this.serviceList = [...res.catagoryList];
-        this.questionList = [...res.questionList]
+        this.questionList = [...res.questionList];
       });
     }
   }

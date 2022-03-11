@@ -6,6 +6,7 @@ import { UserService } from '../../../app/services/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-audit',
@@ -15,12 +16,16 @@ import { ToastrService } from 'ngx-toastr';
 export class AuditComponent implements OnInit {
   isLoad = false;
   totalPages = 100;
+  fg: FormGroup;
   currentPage = 1;
   pageSize = 10;
   noRecords = false;
   fileName = null;
   fileContent = '';
   fileSize = 0;
+  startDate: any;
+  endDate: any;
+  filterUser = [];
   displayedColumns= [
     'id',
     'api_type',
@@ -36,19 +41,27 @@ export class AuditComponent implements OnInit {
   userList : any = [];
 
   constructor(private snackBar: MatSnackBar, public toastr: ToastrService,
-     public user: UserService, private router: Router, private cd: ChangeDetectorRef) {}
+     public user: UserService, private router: Router, private cd: ChangeDetectorRef) {
+      this.fg = new FormGroup({
+        userName: new FormControl(null),
+        startDate: new FormControl(null),
+        endDate: new FormControl(null),       
+      });
+     }
 
   ngOnInit() {
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payload = { ProcessVariables: { currentPage: 1 } };
-    this.commonMethod(payload);
+    this.commonMethod(payload, 'init');
   }
   
 
-  commonMethod(payload) {
+  commonMethod(payload, call) {
     this.isLoad = true;
     this.user.audit(payload).subscribe((res) => {
-      console.log(res)
+      if (call==='filter') {
+        this.toastr.success('Filtered applied successfully', 'Success');
+      }
       this.isLoad = false;
       let result = res['ProcessVariables'];
       this.totalPages = result['total_pages'] * 5;
@@ -83,7 +96,44 @@ export class AuditComponent implements OnInit {
 
   pageChanged(event) {
     let payload = { ProcessVariables: { currentPage: event } };
-    this.commonMethod(payload);
+    this.commonMethod(payload, 'page');
+  }
+  showUser(event) {
+    this.filterUser = [];
+    let payload = {
+      ProcessVariables: {
+        user_name: event.target.value
+      },
+    };
+    this.user.audit_autofill(payload).subscribe((res) => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterUser.push(element.label);
+        });
+      }
+    });
+  }
+
+  addNewDate(event) {
+    this.endDate = event.value;
+  }
+  endNewDate(event) {
+    this.startDate = event.value;   
+  }
+
+  apply() {
+    let filteredVal = this.fg.value;
+    let start = filteredVal.startDate ? filteredVal.startDate : '';
+    let end = filteredVal.endDate ? filteredVal.endDate : '';
+    let user = filteredVal.userName ? filteredVal.userName : '';
+    let payload = { ProcessVariables: { currentPage: 1, from_date: start, to_date: end, user_name: user } };
+    this.commonMethod(payload, 'filter');
+  }
+
+  clear() {
+    this.fg.reset();
+    let payload = { ProcessVariables: { currentPage: 1 } };
+    this.commonMethod(payload, 'clear');
   }
 
   goToAdmin() {

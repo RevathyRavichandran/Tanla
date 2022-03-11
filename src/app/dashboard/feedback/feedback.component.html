@@ -53,7 +53,7 @@
           </mat-autocomplete>
         </div>
       </div>
-      <div class="col-2">
+      <div class="col-3">
         <div class="input-group">
           <input type="search"
           style="font-family: FontAwesome, Arial; font-style: normal; border-radius: 20px !important"
@@ -113,7 +113,14 @@
           </mat-date-range-picker>
         </mat-form-field>
       </div>
-      <div class="col-2" style="text-align: center">
+    </div>
+    <div class="row">
+      <div class="col-6" style="text-align: end; color: #de1f26">
+      Advance filter
+      <img [src]="img" alt="" (click)="toggle()" style="cursor: pointer" />
+    </div>
+      <div class="col-6" style="text-align: end;">
+        <span>
         <button type="submit" style="font-weight: 500;" class="btn btn-primary apply-btn">Apply</button>
         <button
           type="button"
@@ -128,11 +135,7 @@
         >
           Clear
         </button>
-      </div>
-    </div>
-    <div class="center pb-2" style="text-align: center; color: #de1f26">
-      Advance filter
-      <img [src]="img" alt="" (click)="toggle()" style="cursor: pointer" />
+      </span>
       <span matTooltip="Download" matTooltipPosition="above">
         <button mat-button>
           <mat-icon
@@ -142,7 +145,10 @@
           >
         </button>
       </span>
+      
     </div>
+    </div>
+    
     <div *ngIf="advFilter">
       <div class="row">
         <label class="col-4" style="font-size: 20px; padding-left: 18px"
@@ -211,6 +217,7 @@
           <mat-form-field style="width: 90%;" appearance="outline">
             <mat-label>Rating</mat-label>
             <mat-select placeholder="Rating" [formControl]="categoryList" disableOptionCentering multiple>
+              <mat-option [value]="11" (click)="selectAll(ev)" #ev>SelectAll</mat-option>
               <mat-option *ngFor="let survey of filteredPromotorsSearch | async" [value]="survey.value">{{survey.label}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -223,6 +230,7 @@
           <mat-form-field style="width: 90%;" appearance="outline">
             <mat-label>Rating</mat-label>
             <mat-select placeholder="Rating" [formControl]="categoryList" disableOptionCentering multiple>
+              <mat-option [value]="11" (click)="selectAll(ev)" #ev>SelectAll</mat-option>
               <mat-option *ngFor="let search of filteredPassivesSearch | async" [value]="search.value">{{search.label}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -234,6 +242,7 @@
           <mat-form-field style="width: 90%;" appearance="outline">
             <mat-label>Rating</mat-label>
             <mat-select placeholder="Rating" [formControl]="categoryList" disableOptionCentering multiple>
+              <mat-option [value]="11" (click)="selectAll(ev)" #ev>SelectAll</mat-option>
               <mat-option *ngFor="let search of filteredDetractorsSearch | async" [value]="search.value">{{search.label}}</mat-option>
             </mat-select>
           </mat-form-field>

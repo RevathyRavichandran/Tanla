@@ -1,12 +1,91 @@
-<div class="row pt-3" style="background-color: white;">
+<div style="background-color: white;">
+    <form class="example-form" [formGroup]="fg" (ngSubmit)="apply()">
+        <div class="row" style="align-items: center">
     <div class="col-2">
         <h1 style="padding-left: 3%; padding-top: 1%; font-weight: bold;">Admin/Audit</h1>
     </div>
-    <div class="col-4">
-        
+    <div class="col-3">
+        <div class="input-group">
+            <input type="search"
+              class="form-control"
+              id="userName"
+              (keyup)="showUser($event)"
+              aria-label="Search"
+              
+              formControlName="userName"
+              style="font-family: FontAwesome, Arial; font-style: normal; border-radius: 20px !important"
+              placeholder="&#xF002; Search by User Name"
+              [matAutocomplete]="auto9"
+              />
+              <mat-autocomplete #auto9="matAutocomplete">
+                <mat-option
+                  *ngFor="let search of filterUser"
+                  [value]="search"
+                >
+                  <span>{{ search }}</span>
+                </mat-option>
+              </mat-autocomplete>
+          </div> 
     </div>
-    <div class="col-5">
-        <span style="right: 0; position: absolute; margin-right: 1rem">
+    <div class="col-5 pt-3">
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="rangePicker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              name="startDate"
+              formControlName="startDate"
+            />
+            <input
+              matEndDate
+              placeholder="End date"
+              name="endDate"
+              formControlName="endDate"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="rangePicker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #rangePicker>
+            <mat-date-range-picker-actions>
+              <button mat-button matDateRangePickerCancel type="button">
+                Cancel
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                matDateRangePickerApply
+                type="button"
+              >
+                Apply
+              </button>
+            </mat-date-range-picker-actions>
+          </mat-date-range-picker>
+        </mat-form-field>
+        <span style="margin-left: 1rem;">
+            <button type="submit" style="font-weight: 500;" class="btn btn-primary apply-btn">Apply</button>
+        <button
+          type="button"
+          class="btn"
+          (click)="clear()"
+          style="
+            background: #004cf1;
+            color: white;
+            margin-right: 5px;
+            width: 5rem;
+          "
+        >
+          Clear
+        </button> 
+        </span>
+         
+      </div>
+     
+    
+    <div class="col-2" style="text-align: end; padding-right: 3rem;">
+        
         <button
           type="button"
           class="btn adminCreate"
@@ -16,8 +95,11 @@
           Go to User&nbsp;
           <i class="fa fa-user fa-1x"></i>
         </button>
-      </span>
+      
     </div>
+</div>
+</form>
+
     <mat-divider class="mt-3"></mat-divider>
 
 </div>

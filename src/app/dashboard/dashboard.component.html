@@ -113,81 +113,23 @@
 </div>
 
 <div class="row" style="padding: 1%">
-  <div class="col-lg-12">
+  <div class="col-lg-6">
     <mat-card>
+      <div *ngIf="isLoad" class="loader-top">
+        <mat-spinner class="loader" diameter="50"></mat-spinner>
+        <span class="loader-text">Loading... Please wait</span>
+      </div>
       <mat-card-title>
         <div class="row pb-2">
           <div style="text-decoration: underline;" class="col-12 pt-2">
             <label>Advanced Filter</label>
           </div>
-          <!-- <div class="col-6 example-button-row">
-            <button
-              [ngClass]="{
-                grey: (survey && question) || !survey,
-                blue: survey && !question
-              }"
-              style="background: #b1dcf7"
-              id="week"
-              mat-raised-button
-              (click)="weekData('#b1dcf7')"
-            >
-              <img
-                class="pb-1"
-                *ngIf="(survey && question) || !survey"
-                src="assets/tanla_survey_grey.svg"
-                alt=""
-              />
-              <img
-                class="pb-1"
-                *ngIf="survey && !question"
-                src="assets/tanla_filter_questionaries_onclick_128.svg"
-                alt=""
-              />
-              Survey
-            </button>
-            <button
-              [ngClass]="{ blue: question, grey: !question }"
-              id="month"
-              mat-raised-button
-              (click)="monthData('#b1dcf7')"
-            >
-              <img
-                src="assets/tanla_filter_survey_onclick_128.svg"
-                *ngIf="question"
-                alt=""
-              />
-              <img
-                src="assets/tanla_question_grey.svg"
-                *ngIf="!question"
-                alt=""
-              />
-              Questionnaire
-            </button>
-            <button
-              [ngClass]="{ blue: date, grey: !date }"
-              id="year"
-              mat-raised-button
-              (click)="yearData('#b1dcf7')"
-            >
-              <img
-                *ngIf="date"
-                src="assets/tanla_filter_total_daterange_onclick_128.svg"
-                alt=""
-              />
-              <img
-                *ngIf="!date"
-                src="assets/tanla_filter_total_daterange_128.svg"
-                alt=""
-              />
-              Date Range
-            </button>
-          </div> -->
         </div>
       </mat-card-title>
       <mat-card-content>
         <form class="example-form">
           <div class="row">
-            <div class="col-3">
+            <div class="col-12 mb-2">
               <mat-form-field style="width: 90%; height: 2.9rem;" appearance="outline">
                 <mat-label>Date Range</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
@@ -198,7 +140,7 @@
                 <mat-date-range-picker #picker></mat-date-range-picker>
               </mat-form-field>
             </div>
-            <div class="col-3">
+            <div class="col-12">
              
               <mat-form-field style="width: 90%; border-top-width: 0px;" appearance="outline">
                 <mat-label>Survey</mat-label>
@@ -208,7 +150,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-3">
+            <div class="col-12">
               <mat-form-field style="width: 90%;" appearance="outline">
                 <mat-label>Services</mat-label>
                 <mat-select placeholder="Select service" (selectionChange)="changeFn1($event.value)" [formControl]="categoryList" disableOptionCentering multiple>
@@ -216,7 +158,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-3">
+            <div class="col-12">
               <mat-form-field style="width: 90%;" appearance="outline">
                 <mat-label>Questions</mat-label>
                 <mat-select placeholder="Select questions" [disabled]="!surveyList" [formControl]="toppings" multiple disableOptionCentering>
@@ -228,7 +170,7 @@
         </form>
         <br *ngIf="!date" />
         <div class="row">
-          <div class="col-1" style="width: 70px">
+          <div class="col-1">
             <img src="assets/tanla_total_respoondent_128.svg" alt="" />
           </div>
           <div class="col-5" [ngClass]="{ 'mb-4': date }">
@@ -237,10 +179,22 @@
             >
             <br />
             <label style="color: grey; font-weight: bold; font-size: 1.4rem">
-              {{ totalFilRes }}</label
+              {{ totalFilRes ? totalFilRes : '-' }}</label
             >
           </div>
-          <div class="col-6" style="text-align: end">
+          <div class="col-1">
+            <img src="assets/tanla_total_respoondent_128.svg" alt="" />
+          </div>
+          <div class="col-5" [ngClass]="{ 'mb-4': date }">
+            <label style="color: grey; font-size: 1rem" for="">
+              Average Rating</label
+            >
+            <br />
+            <label style="color: grey; font-weight: bold; font-size: 1.4rem">
+              {{ avg ? avg : '-' }}</label
+            >
+          </div>
+          <div class="mt-2" style="align-items: end; text-align: end;">
             <button
               (click)="filter()"
               type="submit"
@@ -266,123 +220,148 @@
           </div>
         </div>
         <br *ngIf="!date" />
-        <div class="row">
-          <div class="col-3">
-            <mat-card style="padding: 0 !important; border-radius: 10px">
-              <mat-card-header
-                style="
-                  background-color: #3cb371;
-                  color: white;
-                  padding-left: 30%;
-                  border-radius: 10px 10px 0 0;
-                "
-              >
-                <mat-card-title class="pt-3">Promoter</mat-card-title>
-              </mat-card-header>
-              <mat-divider></mat-divider>
-              <mat-card-content
-                style="border-radius: 0 0 10px 10px; background-color: #a8e9a842"
-                class="text-center"
-              >
-                <h1 class="p-4">{{ filteredPromo }} %</h1>
-                <span
-                  style="
-                    display: block;
-                    position: absolute;
-                    bottom: 8px;
-                    right: 16px;
-                  "
-                >
-                </span>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="col-3">
-            <mat-card style="padding: 0 !important; border-radius: 10px">
-              <mat-card-header
-                style="
-                  background-color: #ef820d;
-                  color: white;
-                  padding-left: 30%;
-                  border-radius: 10px 10px 0 0;
-                "
-              >
-                <mat-card-title class="pt-3">Passive</mat-card-title>
-              </mat-card-header>
-              <mat-divider></mat-divider>
-              <mat-card-content
-                style="border-radius: 0 0 10px 10px; background-color: #ffe5b487"
-                class="text-center"
-              >
-                <h1 class="p-4">{{ filteredPassive }} %</h1>
-                <span
-                  style="
-                    display: block;
-                    position: absolute;
-                    bottom: 8px;
-                    right: 16px;
-                  "
-                >
-                </span>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="col-3">
-            <mat-card style="padding: 0 !important; border-radius: 10px">
-              <mat-card-header
-                style="
-                  background-color: #dc143c;
-                  color: white;
-                  padding-left: 30%;
-                  border-radius: 10px 10px 0 0;
-                "
-              >
-                <mat-card-title class="pt-3">Detractor</mat-card-title>
-              </mat-card-header>
-              <mat-divider></mat-divider>
-              <mat-card-content
-                style="border-radius: 0 0 10px 10px; background-color: #cea09f85"
-                class="text-center"
-              >
-                <h1 class="p-4">{{ filteredDetractor }} %</h1>
-                <span
-                  style="
-                    display: block;
-                    position: absolute;
-                    bottom: 8px;
-                    right: 16px;
-                  "
-                >
-                </span>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="col-3">
-            <mat-card style="padding: 0 !important; border-radius: 10px">
-              <mat-card-header
-                style="
-                  background-color: rgb(96 134 241);
-                  color: white;
-                  padding-left: 25%;
-                  border-radius: 10px 10px 0 0;
-                "
-              >
-                <mat-card-title class="pt-3">Overall Score</mat-card-title>
-              </mat-card-header>
-              <mat-divider></mat-divider>
-              <mat-card-content
-                style="
-                  border-radius: 0 0 10px 10px;
-                  background-color: rgb(173 169 231 / 31%);
-                "
-                class="text-center"
-              >
-                <h1 class="p-4">{{ filteredOverall }} %</h1>
-              </mat-card-content>
-            </mat-card>
+        
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="col-lg-6">
+    <mat-card>
+      <mat-card-title>
+        <div class="row pb-2">
+          <div style="text-decoration: underline;" class="col-12 pt-2">
+            <label>Response Analysis</label>
           </div>
         </div>
-      </mat-card-content>
+      </mat-card-title>
+      <div [hidden]="!chart" style="height: 23.5rem;">
+        <canvas id="canvas" responsive=false height="13rem" width="28px"></canvas>  
+      </div>
+      <div [hidden]="!chart1" style="height: 23.5rem;">
+        <canvas id="canvas1" responsive=false height="13rem" width="28px"></canvas>  
+      </div>
+    </mat-card>
+    </div>
+</div>
+<div class="row" style="padding: 1%">
+  <div class="col-lg-12">
+    <mat-card>
+      <div class="row">
+        <div class="col-3">
+          <mat-card style="padding: 0 !important; border-radius: 10px">
+            <mat-card-header
+              style="
+                background-color: #3cb371;
+                color: white;
+                padding-left: 30%;
+                border-radius: 10px 10px 0 0;
+              "
+            >
+              <mat-card-title class="pt-3">Promoter</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content
+              style="border-radius: 0 0 10px 10px; background-color: #a8e9a842"
+              class="text-center"
+            >
+              <h1 class="p-4">{{ filteredPromo }} %</h1>
+              <span
+                style="
+                  display: block;
+                  position: absolute;
+                  bottom: 8px;
+                  right: 16px;
+                "
+              >
+              </span>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-3">
+          <mat-card style="padding: 0 !important; border-radius: 10px">
+            <mat-card-header
+              style="
+                background-color: #ef820d;
+                color: white;
+                padding-left: 30%;
+                border-radius: 10px 10px 0 0;
+              "
+            >
+              <mat-card-title class="pt-3">Passive</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content
+              style="border-radius: 0 0 10px 10px; background-color: #ffe5b487"
+              class="text-center"
+            >
+              <h1 class="p-4">{{ filteredPassive }} %</h1>
+              <span
+                style="
+                  display: block;
+                  position: absolute;
+                  bottom: 8px;
+                  right: 16px;
+                "
+              >
+              </span>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-3">
+          <mat-card style="padding: 0 !important; border-radius: 10px">
+            <mat-card-header
+              style="
+                background-color: #dc143c;
+                color: white;
+                padding-left: 30%;
+                border-radius: 10px 10px 0 0;
+              "
+            >
+              <mat-card-title class="pt-3">Detractor</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content
+              style="border-radius: 0 0 10px 10px; background-color: #cea09f85"
+              class="text-center"
+            >
+              <h1 class="p-4">{{ filteredDetractor }} %</h1>
+              <span
+                style="
+                  display: block;
+                  position: absolute;
+                  bottom: 8px;
+                  right: 16px;
+                "
+              >
+              </span>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-3">
+          <mat-card style="padding: 0 !important; border-radius: 10px">
+            <mat-card-header
+              style="
+                background-color: rgb(96 134 241);
+                color: white;
+                padding-left: 25%;
+                border-radius: 10px 10px 0 0;
+              "
+            >
+              <mat-card-title class="pt-3">Overall Score</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content
+              style="
+                border-radius: 0 0 10px 10px;
+                background-color: rgb(173 169 231 / 31%);
+              "
+              class="text-center"
+            >
+              <h1 class="p-4">{{ filteredOverall }} %</h1>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
     </mat-card>
   </div>
 </div>

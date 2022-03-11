@@ -8,9 +8,12 @@ import { LoginService } from '../../../app/services/login.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  email: any;
   constructor(public router: Router, public login: LoginService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.email = localStorage.getItem('email')
+  }
   logout() {
     let payload = {
       "ProcessVariables": {"emailId":localStorage.getItem('email')}

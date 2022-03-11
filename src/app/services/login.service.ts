@@ -31,7 +31,7 @@ export class LoginService {
 
   logout(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/logoutAPI',
+      this.dbUrl + 'npsfeedback/api/UserLogoutAPI',
       log
     );
   }

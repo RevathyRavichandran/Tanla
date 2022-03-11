@@ -142,6 +142,7 @@ export class SurveyPopupComponent implements OnInit {
   downloadTemplate() {
     let content =
       'Category Name,Questions,option,option,option,option,option,score,score,score,score,score,\n';
+      content+='SMS,Which *features* of our *SMS product* do you love the most?,Very good,Good,Average,Bad,Very bad,10,8,5,3,1';
     const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
     saveAs(file, 'Question template'); 
   }

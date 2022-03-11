@@ -44,13 +44,13 @@ export class FeedbackComponent implements OnInit {
   downloadFeedback = '';
   downloadFeedbackName = '';
 
-  searchSurvey=[];
+  searchSurvey = [];
   promo = new FormControl();
   pass = new FormControl();
   det = new FormControl();
-  promotor: boolean=false;
-  detractor: boolean=false;
-  passive: boolean=false;
+  promotor: boolean = false;
+  detractor: boolean = false;
+  passive: boolean = false;
   dataSource = new MatTableDataSource([]);
   filteredSurveySearch: Observable<any[]>;
   filteredMobileSearch: Observable<any[]>;
@@ -106,7 +106,7 @@ export class FeedbackComponent implements OnInit {
   stateList: StateGroup[] = [
     {
       letter: 'Promoters',
-      names: ['9', '10']
+      names: ['9', '10'],
     },
     {
       letter: 'Passive',
@@ -136,7 +136,7 @@ export class FeedbackComponent implements OnInit {
       passives: new FormControl(null),
       promotors: new FormControl(null),
       score: new FormControl(null),
-      category: new FormControl(null)
+      category: new FormControl(null),
     });
     this.searchSurveyContext = [];
     this.searchMobileContext = [];
@@ -244,9 +244,11 @@ export class FeedbackComponent implements OnInit {
   pageChanged(event) {
     let payload = { ProcessVariables: { current_page: parseInt(event) } };
     this.feedbackService.feedbackPagination(payload).subscribe((res) => {
-      console.log(res)
       let result = res['ProcessVariables'];
-      this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
+      this.totalPages =
+        result['total_pages'] === 0 || !result['total_pages']
+          ? 1
+          : result['total_pages'] * 5;
       this.currentPage = result['current_page'] ? result['current_page'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
@@ -272,6 +274,26 @@ export class FeedbackComponent implements OnInit {
           panelClass: ['error-snack-bar'],
         });
       };
+  }
+
+  selectAll(ev) {
+    if (ev._selected && this.promotor) {
+      this.categoryList.setValue([
+        9,10
+      ]);
+      ev._selected = true;
+    } else if (ev._selected && this.passive) {
+      this.categoryList.setValue([
+        7,8
+      ]);
+      ev._selected = true;
+    } else if (ev._selected && this.detractor) {
+      this.categoryList.setValue([0, 1, 2, 3, 4, 5, 6]);
+      ev._selected = true;
+    }
+    if (ev._selected == false) {
+      this.categoryList.setValue([]);
+    }
   }
 
   searchData(value) {
@@ -303,82 +325,125 @@ export class FeedbackComponent implements OnInit {
   showSurvey(event) {
     this.filterSur = [];
     let payload = {
-      "ProcessVariables":{"surveyName":event.target.value,"feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":""}
-      }
-    this.feedbackService.autofill(payload).subscribe(res => {
+      ProcessVariables: {
+        surveyName: event.target.value,
+        feedbackQuestion: '',
+        feedbackQuestionType: '',
+        feedbackAnswer: '',
+        score: '',
+        employee_company: '',
+      },
+    };
+    this.feedbackService.autofill(payload).subscribe((res) => {
       if (res.ProcessVariables.output_data) {
-        res.ProcessVariables.output_data.forEach(element => {
-          this.filterSur.push(element.label)
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterSur.push(element.label);
         });
       }
-    })
+    });
   }
 
   showSurveyType(event) {
     this.filterSurType = [];
     let payload = {
-      "ProcessVariables":{"surveyName":"", "surveyType": event.target.value, "feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":""}
-      }
-    this.feedbackService.autofill(payload).subscribe(res => {
+      ProcessVariables: {
+        surveyName: '',
+        surveyType: event.target.value,
+        feedbackQuestion: '',
+        feedbackQuestionType: '',
+        feedbackAnswer: '',
+        score: '',
+        employee_company: '',
+      },
+    };
+    this.feedbackService.autofill(payload).subscribe((res) => {
       if (res.ProcessVariables.output_data) {
-        res.ProcessVariables.output_data.forEach(element => {
-          this.filterSurType.push(element.label)
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterSurType.push(element.label);
         });
       }
-    })
+    });
   }
 
   showCategory(event) {
     this.filterSer = [];
     let payload = {
-      "ProcessVariables":{"surveyName":"","feedbackQuestion":"","feedbackQuestionType":event.target.value,"feedbackAnswer":"","score":"","employee_company":""}
-      }
-    this.feedbackService.autofill(payload).subscribe(res => {
+      ProcessVariables: {
+        surveyName: '',
+        feedbackQuestion: '',
+        feedbackQuestionType: event.target.value,
+        feedbackAnswer: '',
+        score: '',
+        employee_company: '',
+      },
+    };
+    this.feedbackService.autofill(payload).subscribe((res) => {
       if (res.ProcessVariables.output_data) {
-        res.ProcessVariables.output_data.forEach(element => {
-          this.filterSer.push(element.label)
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterSer.push(element.label);
         });
       }
-    })
+    });
   }
   showCompany(event) {
     this.filterCom = [];
     let payload = {
-      "ProcessVariables":{"surveyName":"","feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":event.target.value}
+      ProcessVariables: {
+        surveyName: '',
+        feedbackQuestion: '',
+        feedbackQuestionType: '',
+        feedbackAnswer: '',
+        score: '',
+        employee_company: event.target.value,
+      },
+    };
+    this.feedbackService.autofill(payload).subscribe((res) => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterCom.push(element.label);
+        });
       }
-      this.feedbackService.autofill(payload).subscribe(res => {
-        if (res.ProcessVariables.output_data) {
-          res.ProcessVariables.output_data.forEach(element => {
-            this.filterCom.push(element.label)
-          });
-        }
-      })
+    });
   }
   showQuestion(event) {
     this.filterQue = [];
     let payload = {
-      "ProcessVariables":{"surveyName":"","feedbackQuestion":event.target.value,"feedbackQuestionType":"","feedbackAnswer":"","score":"","employee_company":""}
+      ProcessVariables: {
+        surveyName: '',
+        feedbackQuestion: event.target.value,
+        feedbackQuestionType: '',
+        feedbackAnswer: '',
+        score: '',
+        employee_company: '',
+      },
+    };
+    this.feedbackService.autofill(payload).subscribe((res) => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterQue.push(element.label);
+        });
       }
-      this.feedbackService.autofill(payload).subscribe(res => {
-        if (res.ProcessVariables.output_data) {
-          res.ProcessVariables.output_data.forEach(element => {
-            this.filterQue.push(element.label)
-          });
-        }
-      })
+    });
   }
   showAnswer(event) {
     this.filterAns = [];
     let payload = {
-      "ProcessVariables":{"surveyName":"","feedbackQuestion":"","feedbackQuestionType":"","feedbackAnswer":event.target.value,"score":"","employee_company":""}
+      ProcessVariables: {
+        surveyName: '',
+        feedbackQuestion: '',
+        feedbackQuestionType: '',
+        feedbackAnswer: event.target.value,
+        score: '',
+        employee_company: '',
+      },
+    };
+    this.feedbackService.autofill(payload).subscribe((res) => {
+      if (res.ProcessVariables.output_data) {
+        res.ProcessVariables.output_data.forEach((element) => {
+          this.filterAns.push(element.label);
+        });
       }
-      this.feedbackService.autofill(payload).subscribe(res => {
-        if (res.ProcessVariables.output_data) {
-          res.ProcessVariables.output_data.forEach(element => {
-            this.filterAns.push(element.label)
-          });
-        }
-      })
+    });
   }
 
   apply() {
@@ -394,26 +459,27 @@ export class FeedbackComponent implements OnInit {
     let surType = filteredVal.surveyType ? filteredVal.surveyType : '';
     let payload = {
       ProcessVariables: {
-        "from_date":start,
-        "to_date":end,
-        "surveyType": surType,
-        "surveyName":survey,
-        "feedbackQuestionType":category,
-        "feedbackAnswer":answer,
-        "feedbackQuestion":question,
-        "score_list":score,
-        "employee_company":company
+        from_date: start,
+        to_date: end,
+        surveyType: surType,
+        surveyName: survey,
+        feedbackQuestionType: category,
+        feedbackAnswer: answer,
+        feedbackQuestion: question,
+        score_list: score,
+        employee_company: company,
       },
-    }
-    this.feedbackService.feedbackPagination(payload).subscribe(res => {
+    };
+    this.feedbackService.feedbackPagination(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
+      this.totalPages =
+        result['total_pages'] === 0 || !result['total_pages']
+          ? 1
+          : result['total_pages'] * 5;
       this.currentPage = result['currentPage'] ? result['currentPage'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
-      console.log(result['outputData'] )
       if (!this.noRecords) {
-
       }
 
       if (this.noRecords) {
@@ -506,7 +572,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   downloadTemplate() {
-    let payload = { ProcessVariables: { } };
+    let payload = { ProcessVariables: {} };
     this.feedbackService.filterFeedback(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
       this.downloadFeedback = result.attachment.content;
@@ -520,8 +586,8 @@ export class FeedbackComponent implements OnInit {
       } else {
         this.toastr.error('Filtered feedback is empty!', 'Error');
       }
-    })
-    
+    });
+
     // this.isLoad = true;
     // let payload = {
     //   ProcessVariables: { selectedField: '1', perPage: 1000000 },
@@ -619,9 +685,9 @@ export class FeedbackComponent implements OnInit {
     this.searchQuestionContext = [];
     this.searchAnswerContext = [];
     this.searchScoreContext = [
-      {label: 'Promotor', value: 'Promotor'},
-      {label: 'Passive', value: 'Passive'},
-      {label: 'Detractor', value: 'Detractor'}
+      { label: 'Promotor', value: 'Promotor' },
+      { label: 'Passive', value: 'Passive' },
+      { label: 'Detractor', value: 'Detractor' },
     ];
     this.searchCategoryContext = [];
     [0, 1, 2, 3, 4, 5, 6].forEach((val) => {
@@ -630,44 +696,44 @@ export class FeedbackComponent implements OnInit {
     let arr = [];
     if (dataValue) {
       dataValue.forEach((element) => {
-      [
-        'employeeCompany',
-        'employeePhoneNumber',
-        'feedbackAnswer',
-        'feedbackQuestion',
-        'catagoryName'
-      ].forEach((ele, index) => {
-        if (!arr.includes(element[ele])) {
-          arr.push(element[ele]);
-          if (index === 0) {
-            this.searchCompanyContext.push({
-              label: element[ele],
-              value: element[ele],
-            });
-          } else if (index === 1) {
-            this.searchMobileContext.push({
-              label: element[ele],
-              value: element[ele],
-            });
-          } else if (index === 2) {
-            this.searchAnswerContext.push({
-              label: element[ele],
-              value: element[ele],
-            });
-          } else if (index === 3) {
-            this.searchQuestionContext.push({
-              label: element[ele],
-              value: element[ele],
-            });
-          } else {
-            this.searchCategoryContext.push({
-              label: element[ele],
-              value: element[ele],
-            });
+        [
+          'employeeCompany',
+          'employeePhoneNumber',
+          'feedbackAnswer',
+          'feedbackQuestion',
+          'catagoryName',
+        ].forEach((ele, index) => {
+          if (!arr.includes(element[ele])) {
+            arr.push(element[ele]);
+            if (index === 0) {
+              this.searchCompanyContext.push({
+                label: element[ele],
+                value: element[ele],
+              });
+            } else if (index === 1) {
+              this.searchMobileContext.push({
+                label: element[ele],
+                value: element[ele],
+              });
+            } else if (index === 2) {
+              this.searchAnswerContext.push({
+                label: element[ele],
+                value: element[ele],
+              });
+            } else if (index === 3) {
+              this.searchQuestionContext.push({
+                label: element[ele],
+                value: element[ele],
+              });
+            } else {
+              this.searchCategoryContext.push({
+                label: element[ele],
+                value: element[ele],
+              });
+            }
           }
-        }
+        });
       });
-    });
     }
     this.filterCommonMethod();
   }
@@ -686,7 +752,10 @@ export class FeedbackComponent implements OnInit {
     this.isLoad = true;
     this.feedbackService.feedbackPagination(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
-      this.totalPages = result['total_pages'] === 0 || !result['total_pages'] ? 1 : result['total_pages'] * 5;
+      this.totalPages =
+        result['total_pages'] === 0 || !result['total_pages']
+          ? 1
+          : result['total_pages'] * 5;
       this.currentPage = result['current_page'] ? result['current_page'] : 1;
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
@@ -700,7 +769,6 @@ export class FeedbackComponent implements OnInit {
         // date.creDate = moment(serv_utc, 'YYYY-MM-DD HH:mm:ss').format(
         //   'YYYY-MM-DD HH:mm:ss'
         // );
-
         // if (date.employeePhoneNumber.startsWith('+')) {
         //   date.phone =
         //     date.employeePhoneNumber.substring(0, 3) +
@@ -721,7 +789,7 @@ export class FeedbackComponent implements OnInit {
         //       date.employeePhoneNumber.length
         //     );
         // }
-      // });
+        // });
       }
       this.isLoad = false;
       if (this.noRecords) {
@@ -749,13 +817,13 @@ export class FeedbackComponent implements OnInit {
   }
 
   getScore(event) {
-    this.promotor = event === 'Promotor' ? true: false;
-    this.detractor = event === 'Detractor' ? true: false;
-    this.passive = event === 'Passive' ? true: false;
+    this.promotor = event === 'Promotor' ? true : false;
+    this.detractor = event === 'Detractor' ? true : false;
+    this.passive = event === 'Passive' ? true : false;
   }
 
   ngOnInit(): void {
-    let payload = { ProcessVariables: {  } };
+    let payload = { ProcessVariables: {} };
     let body = { ProcessVariables: { selectedField: '1', perPage: 100000 } };
     this.feedbackService.feedbackPagination(body).subscribe((res) => {
       this.data = res['ProcessVariables']['outputData'];

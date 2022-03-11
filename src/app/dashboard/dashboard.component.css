@@ -56,3 +56,17 @@ button {
   ::ng-deep.mat-form-field-wrapper {
     padding-bottom: 0em;
 }
+.loader-text {
+  right: 60px;
+  position: relative;
+  top: 15px;
+  font-size: larger;
+  font-weight: 100;
+  color: #007fad;
+}
+
+.loader-top {
+  top: 45%;
+  left: 90%;
+  position: absolute;
+}

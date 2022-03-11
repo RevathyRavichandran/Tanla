@@ -37,5 +37,12 @@ export class UserService {
     );
   }
 
+  audit_autofill(user: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/audit_autofill',
+      user
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

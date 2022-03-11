@@ -8,6 +8,12 @@
     [dataLabels]="chartOptions?.dataLabels"
   ></apx-chart>
 </div> -->
-<div id="chart-container" style="position: relative; height:40vh;">
+<!-- <div id="chart-container" style="position: relative; height:40vh;">
     <canvas #myCanvas id="canvas" baseChart [chartType]="chartType" [datasets]="chartData" [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"></canvas>
+</div> -->
+<div [hidden]="!data" style="height: 23.5rem;">
+  <canvas id="canvas" responsive = false height="13rem" width="28px"></canvas>  
+</div>
+<div [hidden]="data" style="height: 23.5rem;">
+  <h1 style="text-align: center; padding-top: 20%;">No Content</h1>
 </div>
