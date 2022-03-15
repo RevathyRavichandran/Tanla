@@ -128,7 +128,6 @@ export class AuditComponent implements OnInit {
       let result = res['ProcessVariables'];
       if (result.attachment) {
         let content = result.attachment.content;
-        console.log(content)
         content = atob(content);
         const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
         saveAs(file, result.attachment.name);

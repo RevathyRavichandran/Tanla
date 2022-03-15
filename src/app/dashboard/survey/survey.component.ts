@@ -175,7 +175,6 @@ export class SurveyComponent implements OnInit {
         //   }
         // })
       } else {
-        console.log('test cancel')
         let payload = { ProcessVariables: { currentPage: 1 } };
         this.commonMethod(payload);
         // this.userList.forEach((val, index) => {
