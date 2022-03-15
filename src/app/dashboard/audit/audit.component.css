@@ -37,4 +37,8 @@ button {
   border-radius: 9999px;
   font-size: 15px;
 }
-
+.download {
+  padding-top: 1.5rem;
+  position: absolute;
+  margin-left: 0.7rem;
+}

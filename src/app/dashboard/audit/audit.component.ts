@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, FormGroup } from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-audit',
@@ -58,13 +59,13 @@ export class AuditComponent implements OnInit {
 
   commonMethod(payload, call) {
     this.isLoad = true;
-    this.user.audit(payload).subscribe((res) => {
+    this.user.audit_pagination(payload).subscribe((res) => {
       if (call==='filter') {
         this.toastr.success('Filtered applied successfully', 'Success');
       }
       this.isLoad = false;
       let result = res['ProcessVariables'];
-      this.totalPages = result['total_pages'] * 5;
+      this.totalPages = result['total_pages'] * 15;
       this.currentPage = result['current_page'];
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
@@ -95,7 +96,7 @@ export class AuditComponent implements OnInit {
   }
 
   pageChanged(event) {
-    let payload = { ProcessVariables: { currentPage: event } };
+    let payload = { ProcessVariables: { current_page: event } };
     this.commonMethod(payload, 'page');
   }
   showUser(event) {
@@ -119,6 +120,23 @@ export class AuditComponent implements OnInit {
   }
   endNewDate(event) {
     this.startDate = event.value;   
+  }
+
+  downloadTemplate() {
+    let payload = { ProcessVariables: {} };
+    this.user.audit(payload).subscribe((res)  => {
+      let result = res['ProcessVariables'];
+      if (result.attachment) {
+        let content = result.attachment.content;
+        console.log(content)
+        content = atob(content);
+        const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
+        saveAs(file, result.attachment.name);
+        this.toastr.success('Audit report downloaded successfully', 'Success');
+      } else {
+        this.toastr.error('Audit report is empty!', 'Error');
+      }
+    });
   }
 
   apply() {

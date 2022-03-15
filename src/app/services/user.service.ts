@@ -44,5 +44,12 @@ export class UserService {
     );
   }
 
+  audit_pagination(user: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/Audit_Report_Pagination',
+      user
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

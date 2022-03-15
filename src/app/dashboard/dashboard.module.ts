@@ -48,6 +48,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ApproveSurveyComponent } from './approve-survey/approve-survey.component';
+import 'chartjs-plugin-labels';
 
 @NgModule({
   declarations: [

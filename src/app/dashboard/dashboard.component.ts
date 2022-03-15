@@ -7,6 +7,7 @@ import { dashboardService } from '../services/dashboard.service';
 import { SurveyService } from '../services/survey.service';
 import { ToastrService } from 'ngx-toastr';
 import Chart from 'chart.js';
+import 'chartjs-plugin-labels';
 
 @Component({
   selector: 'app-dashboard',
@@ -61,6 +62,10 @@ export class DashboardComponent implements OnInit {
   data: boolean = false;
   chart1: any;
   chart: any;
+  fromDateFilter: any = '';
+  toDateFilter: any = '';
+  surveyFilter: any = '';
+  categoryFilter: any = '';
 
   ngOnInit() {
     let live = { ProcessVariables: { perPage: 100000 } };
@@ -109,7 +114,7 @@ export class DashboardComponent implements OnInit {
       this.questionList = [...res.questionList];
     });
     if (!this.data) {
-      this.chart = new Chart('canvas', {
+      this.chart1 = new Chart('canvas', {
         type: 'doughnut',
         data: {
           labels: ['Promotor(0%)', 'Passive(0%)', 'Detractor(0%)'],
@@ -125,15 +130,28 @@ export class DashboardComponent implements OnInit {
           ],
         },
         options: {
+          plugins: {
+            labels: [
+              {
+                render: function (args) {
+                  return '%0';
+                },
+                fontSize: 14,
+                fontStyle: 'bold',
+                fontColor: '#000',
+                arc: true,
+              },
+            ],
+          },
           legend: {
             position: 'right',
             labels: {
               fontSize: 16,
             },
           },
-
-          // responsive: false,
-          // cutoutPercentage: 75,
+          animation: {
+            duration: 3000,
+          },
           tooltips: {
             enabled: false,
           },
@@ -170,13 +188,15 @@ export class DashboardComponent implements OnInit {
   addNewDate(event) {
     this.endDate = event.value;
     if (this.endDate) {
+      this.fromDateFilter = this.startDate;
+      this.toDateFilter = this.endDate;
       let payloadSur = {
         ProcessVariables: {
           from_date: this.startDate,
           to_date: this.endDate,
-          selectedSurveyName: '',
+          selectedSurveyName: this.surveyFilter,
           selected_question: '',
-          selectedQuestionType: '',
+          selectedQuestionType: this.categoryFilter,
         },
       };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
@@ -235,8 +255,10 @@ export class DashboardComponent implements OnInit {
             this.filteredPassive === '0' &&
             this.filteredDetractor === '0'
           ) {
-            this.chart1 = false;
-            this.chart = new Chart('canvas', {
+            if (this.chart1) {
+              this.chart1.destroy();
+            }
+            this.chart1 = new Chart('canvas', {
               type: 'doughnut',
               data: {
                 labels: ['Promotor(0%)', 'Passive(0%)', 'Detractor(0%)'],
@@ -252,24 +274,40 @@ export class DashboardComponent implements OnInit {
                 ],
               },
               options: {
+                plugins: {
+                  labels: [
+                    {
+                      render: function (args) {
+                        return '% 0';
+                      },
+                      fontSize: 14,
+                      fontStyle: 'bold',
+                      fontColor: '#000',
+                      arc: true,
+                    },
+                  ],
+                },
                 legend: {
                   position: 'right',
                   labels: {
                     fontSize: 16,
                   },
                 },
-      
-                // responsive: false,
-                // cutoutPercentage: 75,
+
+                animation: {
+                  duration: 3000,
+                },
                 tooltips: {
                   enabled: false,
                 },
               },
             });
           } else {
-            this.chart = false;
-            
-            this.chart1 = new Chart('canvas1', {
+            if (this.chart1) {
+              this.chart1.destroy();
+            }
+
+            this.chart1 = new Chart('canvas', {
               type: 'doughnut',
               data: {
                 labels: [
@@ -289,14 +327,28 @@ export class DashboardComponent implements OnInit {
                 ],
               },
               options: {
+                plugins: {
+                  labels: [
+                    {
+                      render: function (args) {
+                        return args.label + '\n' + args.value + ' %';
+                      },
+                      fontSize: 14,
+                      fontStyle: 'bold',
+                      fontColor: '#000',
+                      arc: true,
+                    },
+                  ],
+                },
+                animation: {
+                  duration: 3000,
+                },
                 legend: {
                   position: 'right',
                   labels: {
                     fontSize: 16,
                   },
                 },
-                // responsive: false,
-                // cutoutPercentage: 75,
                 tooltips: {
                   enabled: true,
                 },
@@ -325,12 +377,15 @@ export class DashboardComponent implements OnInit {
     });
   }
   changeFn(selection) {
+    this.surveyFilter = selection;
     if (selection) {
       let payloadSur = {
         ProcessVariables: {
-          selectedSurveyName: selection,
+          from_date: this.fromDateFilter,
+          to_date: this.toDateFilter,
+          selectedSurveyName: this.surveyFilter,
           selected_question: '',
-          selectedQuestionType: '',
+          selectedQuestionType: this.categoryFilter,
         },
       };
       this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
@@ -341,33 +396,21 @@ export class DashboardComponent implements OnInit {
     }
   }
   changeFn1(selection) {
-    if (selection && this.surveyList.value) {
-      let payloadSur = {
-        ProcessVariables: {
-          selectedSurveyName: this.surveyList.value,
-          selected_question: '',
-          selectedQuestionType: selection,
-        },
-      };
-      this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
-        this.surveyNameList = [...res.surveyList];
-        this.serviceList = [...res.catagoryList];
-        this.questionList = [...res.questionList];
-      });
-    } else {
-      let payloadSur = {
-        ProcessVariables: {
-          selectedSurveyName: this.surveyList.value,
-          selected_question: '',
-          selectedQuestionType: selection,
-        },
-      };
-      this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
-        this.surveyNameList = [...res.surveyList];
-        this.serviceList = [...res.catagoryList];
-        this.questionList = [...res.questionList];
-      });
-    }
+    this.categoryFilter = selection;
+    let payloadSur = {
+      ProcessVariables: {
+        from_date: this.fromDateFilter,
+        to_date: this.toDateFilter,
+        selectedSurveyName: this.surveyFilter,
+        selected_question: '',
+        selectedQuestionType: this.categoryFilter,
+      },
+    };
+    this.dashboaService.listdashboard(payloadSur).subscribe((res) => {
+      this.surveyNameList = [...res.surveyList];
+      this.serviceList = [...res.catagoryList];
+      this.questionList = [...res.questionList];
+    });
   }
   searchData(value) {
     this.searchSurvey = [];
