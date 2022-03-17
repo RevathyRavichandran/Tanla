@@ -96,7 +96,11 @@ export class AuditComponent implements OnInit {
   }
 
   pageChanged(event) {
-    let payload = { ProcessVariables: { current_page: event } };
+    let filteredVal = this.fg.value;
+    let start = filteredVal.startDate ? filteredVal.startDate : '';
+    let end = filteredVal.endDate ? filteredVal.endDate : '';
+    let user = filteredVal.userName ? filteredVal.userName : '';
+    let payload = { ProcessVariables: { current_page: event, from_date: start, to_date: end, user_name: user } };
     this.commonMethod(payload, 'page');
   }
   showUser(event) {
