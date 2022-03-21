@@ -17,7 +17,7 @@ export class AdminPopupComponent implements OnInit {
   roleList: any = ['creator', 'approver'];
   selectedRole: string[];
 
-  constructor(public dialogRef: MatDialogRef<AdminPopupComponent>, 
+  constructor(public dialogRef: MatDialogRef<AdminPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, public toastr: ToastrService,
     private userService: UserService) { }
 
@@ -51,7 +51,7 @@ export class AdminPopupComponent implements OnInit {
         }
       )
     }
-    
+
   }
 
   showReason(event) {
@@ -64,6 +64,7 @@ export class AdminPopupComponent implements OnInit {
         ProcessVariables: {
         "userName":this.f.userName.value,
         "department":this.f.department.value,
+        "employeeNumber": this.f.employeeNo.value,
         "phoneNo":this.f.mobileNumber.value,
         "designation":this.f.designation.value,
         "activeStatus":this.reason ? '0':'1',
@@ -82,6 +83,7 @@ export class AdminPopupComponent implements OnInit {
         ProcessVariables: {
         "name":this.f.userName.value,
         "department":this.f.department.value,
+        "employeeNumber": this.f.employeeNo.value,
         "phone_number":this.f.mobileNumber.value,
         "designation":this.f.designation.value,
         "activeStatus":this.reason ? '0':'1',
@@ -97,7 +99,7 @@ export class AdminPopupComponent implements OnInit {
       }
     );
     }
-    
+
   }
 
   get f() { return this.fg.controls; }

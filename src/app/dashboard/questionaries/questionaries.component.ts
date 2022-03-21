@@ -80,10 +80,12 @@ export class QuestionariesComponent implements OnInit {
     let payload = { ProcessVariables: {
       category: val.category,
       categoryQuestion: data.question,
-      MCQQuestionList: answers
+      MCQQuestionList: answers,
+      surveyName: this.name ? this.name : this.selectedSurvey
     } };
     this.appService.createQuestion(payload).subscribe(
       (res) => {
+        this.toastr.success('Question created successfully', 'Success')
         let load = { ProcessVariables: { surveyName: this.name ? this.name : this.selectedSurvey } };
         this.commonMethod(load);
         this.isLoad = true;
@@ -192,7 +194,7 @@ export class QuestionariesComponent implements OnInit {
       if (result.isConfirmed) {
         this.datas.forEach((data) => {
           if (data.category === category) {
-            let question = data.questions.filter((ques) => ques.id === id)[0];
+            let question = data.questions.filter((ques) => ques.id === id);
             let payload = {
               ProcessVariables: {
                 questionsInput: [

@@ -35,7 +35,7 @@ export class ConfigurationComponent implements OnInit {
   ) {}
 
   submit() {
-    if (this.surveyDate && this.company123) {
+    if ((this.surveyDate && this.company123) || (this.data.skip_limit && this.company123)) {
       let d = new Date(this.surveyDate);
       d.setHours(0, 0, 0, 0);
       let a = moment(d, 'DD/MM/YYYY');
@@ -47,7 +47,7 @@ export class ConfigurationComponent implements OnInit {
             selected_company: this.company123,
             selected_survey: this.data.selected_survey,
             validateTo: this.data.expiry_limit,
-            expiry_limit: diffDays.toString(),
+            expiry_limit: diffDays.toString() === 'NaN' ? '': diffDays.toString(),
             skip_limit: this.data.skip_limit.toString(),
           },
         })
@@ -61,7 +61,7 @@ export class ConfigurationComponent implements OnInit {
             skip_limit: null,
           };
         });
-    }    
+    }
   }
 
   ngOnInit() {
@@ -106,6 +106,8 @@ export class ConfigurationComponent implements OnInit {
       this.isLoad = false;
       if (result['surveyList'] !== '') {
         this.companyList = result['selected_company'];
+      }
+      if (this.survey) {
         this.data.skip_limit = result['skip_limit'];
       }
       if (payload.ProcessVariables.selected_company) {

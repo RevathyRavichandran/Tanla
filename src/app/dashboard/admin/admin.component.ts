@@ -60,7 +60,7 @@ export class AdminComponent implements OnInit {
     let payload = { ProcessVariables: { currentPage: 1 } };
     this.commonMethod(payload);
   }
-  
+
 
   commonMethod(payload) {
     this.isLoad = true;
@@ -107,10 +107,8 @@ export class AdminComponent implements OnInit {
       width: '1000px',
     });
     dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
         let payload = { ProcessVariables: { currentPage: 1 } };
         this.commonMethod(payload);
-      }
     });
   }
 
@@ -120,9 +118,9 @@ export class AdminComponent implements OnInit {
       width: '1000px',
       data: user,
     });
-    dialogRef.afterClosed().subscribe((res) => {      
+    dialogRef.afterClosed().subscribe((res) => {
         let payload = { ProcessVariables: { currentPage: 1 } };
-        this.commonMethod(payload);      
+        this.commonMethod(payload);
     });
   }
 
