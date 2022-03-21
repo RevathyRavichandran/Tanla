@@ -86,8 +86,8 @@
                         </div>
                     </th>
                 </tr>
-                <tr *ngFor="let data of datas">
-                    <th>{{ data.id }}</th>
+                <tr *ngFor="let data of datas; index as i">
+                    <th>{{ i+1 }}</th>
                     <th>{{ data.category}}</th>
                     <th>
                         <div class="row col-12" [ngClass]="{ 'set-border': data.questions.length !== i+1 }" *ngFor="let question of data.questions; index as i">

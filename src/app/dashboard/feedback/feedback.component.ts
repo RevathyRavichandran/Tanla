@@ -242,7 +242,30 @@ export class FeedbackComponent implements OnInit {
   }
 
   pageChanged(event) {
-    let payload = { ProcessVariables: { current_page: parseInt(event) } };
+    let filteredVal = this.fg.value;
+    let answer = filteredVal.answer ? filteredVal.answer : '';
+    let category = filteredVal.category ? filteredVal.category : '';
+    let company = filteredVal.company ? filteredVal.company : '';
+    let start = filteredVal.startDate ? filteredVal.startDate : '';
+    let end = filteredVal.endDate ? filteredVal.endDate : '';
+    let question = filteredVal.question ? filteredVal.question : '';
+    let survey = filteredVal.survey ? filteredVal.survey : '';
+    let score = this.categoryList.value;
+    let surType = filteredVal.surveyType ? filteredVal.surveyType : '';
+    let payload = {
+      ProcessVariables: {
+        from_date: start,
+        to_date: end,
+        surveyType: surType,
+        surveyName: survey,
+        feedbackQuestionType: category,
+        feedbackAnswer: answer,
+        feedbackQuestion: question,
+        score_list: score,
+        employee_company: company,
+        current_page: parseInt(event)
+      },
+    };
     this.feedbackService.feedbackPagination(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
       this.totalPages =

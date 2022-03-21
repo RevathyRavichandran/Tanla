@@ -29,10 +29,11 @@ export class QuestionariesComponent implements OnInit {
   alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
   createQuestion() {
+    let unique = [...new Set(this.categories)];
     const dialogRef = this.dialog.open(PopupComponent, {
       width: '1000px',
       data: {
-        categories: this.categories,
+        categories: unique,
         category: this.categories[0],
         question: '',
         editMode: false,
