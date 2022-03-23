@@ -313,7 +313,7 @@ export class DashboardComponent implements OnInit {
                 labels: [
                   'Promotor(' + this.filteredPromoCount + ')',
                   'Passive(' + this.filteredPassiveCount + ')',
-                  'Detractor(' + this.filteredPassiveCount + ')',
+                  'Detractor(' + this.filteredDetractorCount + ')',
                 ],
                 datasets: [
                   {

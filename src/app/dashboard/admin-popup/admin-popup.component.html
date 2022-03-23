@@ -5,7 +5,7 @@
   {{ data ? "Modify" : "Create" }} User
 </h1>
 <form [formGroup]="fg" (ngSubmit)="saveUser(data)">
-  <mat-dialog-content class="mat-typography">
+
     <div class="container row">
       <div class="form-group col-6">
         <label for="username">
@@ -89,13 +89,12 @@
         </ng-select>
       </div>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions class="mb-1 mt-1" align="end">
-    <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
-      Save
-    </button>
-    <button type="button" class="btn mt-1 close-btn" (click)="cancelUser()">
-      Cancel
-    </button>
-  </mat-dialog-actions>
+    <div class="mb-1 mt-1" align="end">
+      <button type="submit" class="btn add-btn mt-1" [disabled]="fg.invalid">
+        Save
+      </button>
+      <button type="button" class="btn mt-1 close-btn" (click)="cancelUser()">
+        Cancel
+      </button>
+    </div>
 </form>

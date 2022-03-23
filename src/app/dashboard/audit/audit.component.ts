@@ -46,7 +46,7 @@ export class AuditComponent implements OnInit {
       this.fg = new FormGroup({
         userName: new FormControl(null),
         startDate: new FormControl(null),
-        endDate: new FormControl(null),       
+        endDate: new FormControl(null),
       });
      }
 
@@ -55,7 +55,7 @@ export class AuditComponent implements OnInit {
     let payload = { ProcessVariables: { currentPage: 1 } };
     this.commonMethod(payload, 'init');
   }
-  
+
 
   commonMethod(payload, call) {
     this.isLoad = true;
@@ -115,6 +115,7 @@ export class AuditComponent implements OnInit {
         res.ProcessVariables.output_data.forEach((element) => {
           this.filterUser.push(element.label);
         });
+        this.filterUser = [...new Set(this.filterUser)]
       }
     });
   }
@@ -123,11 +124,15 @@ export class AuditComponent implements OnInit {
     this.endDate = event.value;
   }
   endNewDate(event) {
-    this.startDate = event.value;   
+    this.startDate = event.value;
   }
 
   downloadTemplate() {
-    let payload = { ProcessVariables: {} };
+    let filteredVal = this.fg.value;
+    let start = filteredVal.startDate ? filteredVal.startDate : '';
+    let end = filteredVal.endDate ? filteredVal.endDate : '';
+    let user = filteredVal.userName ? filteredVal.userName : '';
+    let payload = { ProcessVariables: { from_date: start, to_date: end, user_name: user } };
     this.user.audit(payload).subscribe((res)  => {
       let result = res['ProcessVariables'];
       if (result.attachment) {

@@ -362,6 +362,7 @@ export class FeedbackComponent implements OnInit {
         res.ProcessVariables.output_data.forEach((element) => {
           this.filterSur.push(element.label);
         });
+        this.filterSur = [...new Set(this.filterSur)]
       }
     });
   }
@@ -384,6 +385,7 @@ export class FeedbackComponent implements OnInit {
         res.ProcessVariables.output_data.forEach((element) => {
           this.filterSurType.push(element.label);
         });
+        this.filterSurType = [...new Set(this.filterSurType)]
       }
     });
   }
@@ -405,6 +407,7 @@ export class FeedbackComponent implements OnInit {
         res.ProcessVariables.output_data.forEach((element) => {
           this.filterSer.push(element.label);
         });
+        this.filterSer = [...new Set(this.filterSer)]
       }
     });
   }
@@ -425,6 +428,7 @@ export class FeedbackComponent implements OnInit {
         res.ProcessVariables.output_data.forEach((element) => {
           this.filterCom.push(element.label);
         });
+        this.filterCom = [...new Set(this.filterCom)]
       }
     });
   }
@@ -446,6 +450,7 @@ export class FeedbackComponent implements OnInit {
           this.filterQue.push(element.label);
         });
       }
+      this.filterQue = [...new Set(this.filterQue)]
     });
   }
   showAnswer(event) {
@@ -465,6 +470,7 @@ export class FeedbackComponent implements OnInit {
         res.ProcessVariables.output_data.forEach((element) => {
           this.filterAns.push(element.label);
         });
+        this.filterAns = [...new Set(this.filterAns)]
       }
     });
   }
@@ -595,7 +601,29 @@ export class FeedbackComponent implements OnInit {
   }
 
   downloadTemplate() {
-    let payload = { ProcessVariables: {} };
+    let filteredVal = this.fg.value;
+    let answer = filteredVal.answer ? filteredVal.answer : '';
+    let category = filteredVal.category ? filteredVal.category : '';
+    let company = filteredVal.company ? filteredVal.company : '';
+    let start = filteredVal.startDate ? filteredVal.startDate : '';
+    let end = filteredVal.endDate ? filteredVal.endDate : '';
+    let question = filteredVal.question ? filteredVal.question : '';
+    let survey = filteredVal.survey ? filteredVal.survey : '';
+    let score = this.categoryList.value;
+    let surType = filteredVal.surveyType ? filteredVal.surveyType : '';
+    let payload = {
+      ProcessVariables: {
+        from_date: start,
+        to_date: end,
+        surveyType: surType,
+        surveyName: survey,
+        feedbackQuestionType: category,
+        feedbackAnswer: answer,
+        feedbackQuestion: question,
+        score_list: score,
+        employee_company: company
+      },
+    };
     this.feedbackService.filterFeedback(payload).subscribe((res) => {
       let result = res['ProcessVariables'];
       this.downloadFeedback = result.attachment.content;

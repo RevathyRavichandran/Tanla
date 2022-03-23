@@ -105,6 +105,7 @@ export class AdminComponent implements OnInit {
   createUser() {
     const dialogRef = this.dialog.open(AdminPopupComponent, {
       width: '1000px',
+      height: '480px'
     });
     dialogRef.afterClosed().subscribe((res) => {
         let payload = { ProcessVariables: { currentPage: 1 } };
