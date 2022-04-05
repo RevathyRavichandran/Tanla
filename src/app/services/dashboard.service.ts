@@ -19,10 +19,10 @@ export class dashboardService {
   }
 
   getDashboardPercentage(payload): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/dashboard count API`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/dashboard count API`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'ApTpbPTQ+S4nTNYHHBzmesprv7se9zQWF8DYnyxoFVwfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -35,10 +35,10 @@ export class dashboardService {
   }
 
   getChartData(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/surveyNameCount_dashboard`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/surveyNameCount_dashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -51,10 +51,10 @@ export class dashboardService {
   }
 
   getQuestionData(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionViceFilter`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/questionViceFilter`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -66,10 +66,10 @@ export class dashboardService {
     );
   }
   getQuestion(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionFilterDashboard`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/questionFilterDashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -81,10 +81,10 @@ export class dashboardService {
     );
   }
   dashCal(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/calculationDashboadAPi`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/calculationDashboadAPi`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -96,10 +96,10 @@ export class dashboardService {
     );
   }
   listdashboard(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/Advanced_Filter`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/Advanced_Filter`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -111,10 +111,10 @@ export class dashboardService {
     );
   }
   questionCal(processVar): Observable<any> {
-    let url = `https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/questionCalculation`;
+    let url = `https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/questionCalculation`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 

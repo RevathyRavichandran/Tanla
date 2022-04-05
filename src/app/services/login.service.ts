@@ -10,28 +10,28 @@ export class LoginService {
 
   login(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/login_userCheck',
+      this.dbUrl + 'aupoc/api/login_userCheck',
       log
     );
   }
 
   resetPwd(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/resetPassword',
+      this.dbUrl + 'aupoc/api/resetPassword',
       log
     );
   }
 
   forgotPwd(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/forgotPassword',
+      this.dbUrl + 'aupoc/api/forgotPassword',
       log
     );
   }
 
   logout(log: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/UserLogoutAPI',
+      this.dbUrl + 'aupoc/api/UserLogoutAPI',
       log
     );
   }

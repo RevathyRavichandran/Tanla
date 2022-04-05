@@ -1,0 +1,205 @@
+<div style="background-color: white">
+    <form class="example-form" [formGroup]="fg" (ngSubmit)="apply()">
+      <div class="row" style="align-items: center">
+        <div class="col-2" style="padding-left: 1.5rem;">
+          <h1 style="padding-left: 3%; padding-top: 1%; font-weight: bold">
+            User Report
+          </h1>
+        </div>
+        <div class="col-3">
+          <div class="input-group">
+            <input
+              type="search"
+              class="form-control"
+              id="userName"
+              (keyup)="showUser($event)"
+              aria-label="Search"
+              formControlName="userName"
+              style="
+                font-family: FontAwesome, Arial;
+                font-style: normal;
+                border-radius: 20px !important;
+              "
+              placeholder="&#xF002; Search by User Name"
+              [matAutocomplete]="auto9"
+            />
+            <mat-autocomplete #auto9="matAutocomplete">
+              <mat-option *ngFor="let search of filterUser" [value]="search">
+                <span>{{ search }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+        </div>
+        <div class="col-5 pt-3">
+          <mat-form-field appearance="outline" class="example-form-field">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="rangePicker">
+              <input
+                matStartDate
+                placeholder="Start date"
+                name="startDate"
+                formControlName="startDate"
+              />
+              <input
+                matEndDate
+                placeholder="End date"
+                name="endDate"
+                formControlName="endDate"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="rangePicker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #rangePicker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDateRangePickerCancel type="button">
+                  Cancel
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  matDateRangePickerApply
+                  type="button"
+                >
+                  Apply
+                </button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+          </mat-form-field>
+          <span style="margin-left: 1rem">
+            <button
+              type="submit"
+              style="font-weight: 500"
+              class="btn btn-primary apply-btn"
+            >
+              Apply
+            </button>
+            <button
+              type="button"
+              class="btn"
+              (click)="clear()"
+              style="
+                background: #1e7eae;
+                color: white;
+                margin-right: 5px;
+                width: 5rem;
+              "
+            >
+              Clear
+            </button>
+          </span>
+          <span class="download" matTooltip="Download" matTooltipPosition="above">
+            <mat-icon
+              style="transform: scale(1.3); color:#1e7eae; cursor: pointer"
+              (click)="downloadTemplate()"
+              >file_download</mat-icon
+            >
+          </span>
+        </div>
+  
+        <div class="col-2" style="text-align: end; padding-right: 3rem">
+          <button
+            type="button"
+            class="btn adminCreate"
+            (click)="goToAdmin()"
+            style="background: #069c33; font-weight: 500; color: white"
+          >
+            Go to User&nbsp;
+            <i class="fa fa-user fa-1x"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  
+    <mat-divider class="mt-3"></mat-divider>
+  </div>
+  <div class="row" style="padding: 1%">
+    <div class="col-lg-12" *ngIf="noRecords">
+      <mat-card>
+        <div style="text-align: center">
+          <img
+            style="height: 300px; width: 300px"
+            src="assets/no_files_records_256.png"
+            alt=""
+          />
+        </div>
+        <div style="text-align: center">
+          <h1 style="color: #1e7eae">No Records Found</h1>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-lg-12" *ngIf="!noRecords">
+      <div class="row" style="padding: 1%">
+        <div class="col-lg-12">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+              <th class="sno" mat-header-cell *matHeaderCellDef>S/N</th>
+              <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            </ng-container>
+            <ng-container matColumnDef="api_type">
+              <th mat-header-cell *matHeaderCellDef>Employee No</th>
+              <td mat-cell *matCellDef="let element">
+                232
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="created_at">
+                <th mat-header-cell *matHeaderCellDef>Created At</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.created_at }}
+                </td>
+              </ng-container>
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef>Role</th>
+                <td mat-cell *matCellDef="let element">
+                  Approver
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="active">
+                <th mat-header-cell *matHeaderCellDef>Active/Inactive</th>
+                <td mat-cell *matCellDef="let element">
+                  Active
+                </td>
+              </ng-container>
+            <ng-container matColumnDef="request">
+              <th mat-header-cell *matHeaderCellDef>Request</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.request }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="response">
+              <th mat-header-cell *matHeaderCellDef>Response</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.response }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="updated_at">
+              <th mat-header-cell *matHeaderCellDef>Updated At</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.updated_at }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="user_name">
+              <th mat-header-cell *matHeaderCellDef>User Name</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.user_name }}
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngb-pagination
+    [collectionSize]="totalPages"
+    [(page)]="currentPage"
+    [maxSize]="5"
+    [boundaryLinks]="true"
+    [pageSize]="pageSize"
+    (pageChange)="pageChanged(currentPage)"
+    class="d-flex justify-content-center"
+  ></ngb-pagination>
+  

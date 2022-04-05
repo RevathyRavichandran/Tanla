@@ -54,29 +54,58 @@
   <nav id="sidebar">
 
     <ul class="list-unstyled components">
-      <p>Dummy Heading</p>
-      <li class="active">
-        <a href="#homeSubmenu" data-bs-toggle="collapse" aria-expanded="false">Home</a>
+      <li class="">
+        <a href="#homeSubmenu" style="font-weight: bold;"  data-bs-toggle="collapse" aria-expanded="false"><img class="center" *ngIf="rla0.isActive || rla1.isActive || rla2.isActive || rla4.isActive || rla6.isActive || rla7.isActive || rla8.isActive" src="./assets/tanla_configuration_grey_128.svg" alt="">
+          <img class="center" *ngIf="!rla0.isActive && !rla1.isActive && !rla2.isActive && !rla4.isActive && !rla6.isActive && !rla7.isActive && !rla8.isActive" src="./assets/tanla_configuration_128.svg" alt="">&nbsp;Survey</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
-          <li><a href="#">Home 1</a></li>
-          <li><a href="#">Home 2</a></li>
-          <li><a href="#">Home 3</a></li>
+          <li *ngIf="role"><a #rla5="routerLinkActive" routerLinkActive="nav-active active" routerLink="/survey"><img class="center" *ngIf="!rla5.isActive" src="./assets/tanla_survey_grey_128.svg" alt="">
+            <img class="center" *ngIf="rla5.isActive" src="./assets/tanla_survey_red_128.svg" alt="">
+              Survey Creation</a></li>
+          <li *ngIf="!role"><a #rla5="routerLinkActive" routerLinkActive="nav-active active" routerLink="/approveSurvey"><img class="center" *ngIf="!rla5.isActive" src="./assets/tanla_survey_grey_128.svg" alt="">
+            <img class="center" *ngIf="rla5.isActive" src="./assets/tanla_survey_red_128.svg" alt="">
+              Approve Survey</a></li>
+          <li><a #rla3="routerLinkActive" routerLinkActive="nav-active active" routerLink="/configuration"><img class="center" *ngIf="!rla3.isActive" src="./assets/tanla_configuration_grey_128.svg" alt="">
+            <img class="center" *ngIf="rla3.isActive" src="./assets/tanla_configuration_128.svg" alt="">
+            Configuration</a> </li>
         </ul>
       </li>
       <li>
-        <a href="#">About</a>
-        <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false">Pages</a>
+        <a #rla2="routerLinkActive" routerLinkActive="nav-active active" routerLink="/questionnaire"><img class="center" *ngIf="!rla2.isActive" src="./assets/tanla_masters_grey_128.svg" alt="">
+          <img class="center" *ngIf="rla2.isActive" src="./assets/tanla_masters_red_128.svg" alt="">
+          Questionnaire</a>
+      </li>
+      <li>
+        <a #rla4="routerLinkActive" routerLinkActive="nav-active active" routerLink="/respondentMasters"><img class="center" *ngIf="!rla4.isActive" src="./assets/tanla_respondent_grey_128.svg" alt="">
+          <img class="center" *ngIf="rla4.isActive" src="./assets/tanla_respondent_red_128.svg" alt="">
+          Respondent Master</a>
+      </li>
+      <li>
+        <a href="#pageSubmenu" data-bs-toggle="collapse" style="font-weight: bold;" aria-expanded="false"><img class="center" *ngIf="!rla1.isActive && !rla0.isActive && !rla7.isActive" src="./assets/feedback_grey_128.svg" alt="">
+          <img class="center" *ngIf="rla1.isActive || rla0.isActive || rla7.isActive" src="./assets/tanla_feedback_red_128.svg" alt="">&nbsp;Reports</a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li><a href="#">Page 1</a></li>
-          <li><a href="#">Page 2</a></li>
-          <li><a href="#">Page 3</a></li>
+          <li><a #rla0="routerLinkActive" routerLinkActive="nav-active active" routerLink="/dashboard" [routerLinkActiveOptions]="{ exact: true }">
+            <img class="center" *ngIf="!rla0.isActive" src="./assets/tanla_dashboard_grey_128.svg" alt="">
+            <img class="center" *ngIf="rla0.isActive" src="./assets/tanla_dashboard_red_128.svg" alt="">
+            Dashboard</a></li>
+          <li><a #rla1="routerLinkActive" routerLinkActive="nav-active active" routerLink="/feedbackReport"><img class="center" *ngIf="!rla1.isActive" src="./assets/feedback-org.svg" alt="">
+            <img class="center" *ngIf="rla1.isActive" src="./assets/feedback.svg" alt="">
+            Feedback Report</a></li>
+          <li><a #rla7="routerLinkActive" routerLinkActive="nav-active active" routerLink="/audit"><img class="center" *ngIf="!rla7.isActive" src="./assets/assessments-org.svg" alt="">
+            <img class="center" *ngIf="rla7.isActive" src="./assets/assessments.svg" alt="">
+            &nbsp;Audit Report</a></li>
         </ul>
       </li>
       <li>
-        <a href="#">Portfolio</a>
-      </li>
-      <li>
-        <a href="#">Contact</a>
+        <a href="#pageSubmenu1" data-bs-toggle="collapse" style="font-weight: bold;" aria-expanded="false"><img class="center" *ngIf="!rla6.isActive && !rla8.isActive" src="./assets/tanla_admin_red_128.svg" alt="">
+          <img class="center" *ngIf="rla6.isActive || rla8.isActive" src="./assets/tanla_admin_128.svg" alt="">&nbsp;Admin</a>
+        <ul class="collapse list-unstyled" id="pageSubmenu1">
+          <li><a #rla6="routerLinkActive" routerLinkActive="nav-active active" routerLink="/admin"><img class="center" *ngIf="!rla6.isActive" src="./assets/add-account-org.svg" alt="">
+            <img class="center" *ngIf="rla6.isActive" src="./assets/add-account.svg" alt="">
+            &nbsp;User Creation</a></li>
+          <li><a #rla8="routerLinkActive" routerLinkActive="nav-active active" routerLink="/userReport"><img class="center" *ngIf="!rla8.isActive" src="./assets/reader-org.svg" alt="">
+            <img class="center" *ngIf="rla8.isActive" src="./assets/reader.svg" alt="">
+            &nbsp;User Report</a></li>
+        </ul>
       </li>
     </ul>
   </nav>

@@ -11,42 +11,42 @@ export class UserService {
 
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/employee_registration',
+      this.dbUrl + 'aupoc/api/employee_registration',
       user
     );
   }
 
   listUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/list user details',
+      this.dbUrl + 'aupoc/api/list user details',
       user
     );
   }
 
   updateUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/updateUserDetailsAPI',
+      this.dbUrl + 'aupoc/api/updateUserDetailsAPI',
       user
     );
   }
 
   audit(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/Audit_Report',
+      this.dbUrl + 'aupoc/api/Audit_Report',
       user
     );
   }
 
   audit_autofill(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/audit_autofill',
+      this.dbUrl + 'aupoc/api/audit_autofill',
       user
     );
   }
 
   audit_pagination(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/Audit_Report_Pagination',
+      this.dbUrl + 'aupoc/api/Audit_Report_Pagination',
       user
     );
   }

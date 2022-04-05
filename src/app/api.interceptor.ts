@@ -16,7 +16,7 @@ export class ApiInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const req = request.clone({
       headers: new HttpHeaders({
-        "authentication-token": 'ApTpbPTQ+S4nTNYHHBzmesprv7se9zQWF8DYnyxoFVwfXZJCEMLuKFgxM9RtZPcl'
+        "authentication-token": 'H2LwjJnF1TydQkhaynR2xXxmcpuVGDoUj1svOQEuBn0fXZJCEMLuKFgxM9RtZPcl'
       })
     });
     return next.handle(req);

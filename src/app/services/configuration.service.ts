@@ -10,14 +10,14 @@ export class ConfigService {
 
   updateConfig(config: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/updateConfiguration',
+      this.dbUrl + 'aupoc/api/updateConfiguration',
       config
     );
   }
 
   listConfig(config: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/Configuration_API',
+      this.dbUrl + 'aupoc/api/Configuration_API',
       config
     );
   }

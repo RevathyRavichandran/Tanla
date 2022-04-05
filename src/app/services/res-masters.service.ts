@@ -10,21 +10,21 @@ export class ResMastersService {
 
   getAllRecord(feedback: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/RespondantList',
+      this.dbUrl + 'aupoc/api/RespondantList',
       feedback
     );
   }
 
   downloadFile(file: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/downloadEmptyCSV',
+      this.dbUrl + 'aupoc/api/downloadEmptyCSV',
       file
     );
   }
 
   uploadFile(content: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/respondantUploadAPI',
+      this.dbUrl + 'aupoc/api/respondantUploadAPI',
       content
     );
   }

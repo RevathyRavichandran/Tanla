@@ -7,7 +7,7 @@ import SampleJson from '../../assets/db.json';
 })
 export class AppService {
   arr = SampleJson['questionaries'];
-  private dbUrl = "https://appiyo.karix.solutions/appiyo/d/app/npsfeedback/api/";
+  private dbUrl = "https://appiyo.karix.solutions/appiyo/d/app/aupoc/api/";
 
   constructor(private http: HttpClient) {}
 
