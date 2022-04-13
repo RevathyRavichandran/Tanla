@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   login() {
-    if (this.f.password.value === 'tanla@123') {
+    if (this.f.password.value === 'twixor@123') {
       this.router.navigateByUrl('/resetPassword');
     } else {
       let payload = {
