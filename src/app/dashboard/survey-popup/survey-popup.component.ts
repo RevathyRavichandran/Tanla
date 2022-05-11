@@ -47,11 +47,11 @@ export class SurveyPopupComponent implements OnInit {
     this.minDate = new Date();
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
     let payload = {
-      "ProcessVariables": {}
-      }
-    this.surveyService.selectSurveytype(payload).subscribe(res=> {
+      ProcessVariables: {},
+    };
+    this.surveyService.selectSurveytype(payload).subscribe((res) => {
       this.serviceType = res.ProcessVariables.serviceType;
-    })
+    });
     let category = [];
     let ansInit = [{ category: '' }];
     ansInit.forEach((element) => {
@@ -65,11 +65,13 @@ export class SurveyPopupComponent implements OnInit {
       name: new FormControl(null, Validators.required),
       category: new FormArray(category),
       start: new FormControl(null, Validators.required),
-      end: new FormControl(null, Validators.required)
+      end: new FormControl(null, Validators.required),
     });
   }
 
-  get f() { return this.fg.controls; }
+  get f() {
+    return this.fg.controls;
+  }
 
   saveSurvey() {
     let surveyName = this.selectedService + '-' + this.fg.value.name;
@@ -85,28 +87,44 @@ export class SurveyPopupComponent implements OnInit {
           name: this.fileName,
           operation: 'upload',
           mime: 'application/vnd.ms-excel',
-          size: this.fileSize
+          size: this.fileSize,
         },
       },
     };
     if (this.fileContent !== '' && this.fileContent !== null) {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
-        let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
-        let surveyName = this.selectedService + '-' + this.fg.value.name;
-        let surType = this.serviceType.indexOf(this.selectedService) + 1;
-        var payload = {
-          ProcessVariables: { surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
-        };
-        this.surveyService.createSurvey(payload).subscribe((res) => {
+      let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
+      let surveyName = this.selectedService + '-' + this.fg.value.name;
+      let surType = this.serviceType.indexOf(this.selectedService) + 1;
+      var payload = {
+        ProcessVariables: {
+          surveyName: surveyName,
+          fromDate: startDate,
+          toDate: endDate,
+          surveyTypeId: surType,
+        },
+      };
+      this.surveyService.createSurvey(payload).subscribe((res) => {
+        if (!res.ProcessVariables.isTrue) {
+          this.toastr.error('Survey name should be unique', 'Error');
+        } else {
           this.surveyService.uploadFile(body).subscribe((res) => {
             if (res) {
-              this.toastr.success('Questinnaire uploaded successfully', 'Success');
+              this.toastr.success('Survey created successfully', 'Success');
+              this.toastr.success(
+                'Questinnaire uploaded successfully',
+                'Success'
+              );
+              this.dialogRef.close(true);
             } else {
-              this.toastr.error('There was some problem with questionnaire upload', 'Error');
+              this.toastr.error(
+                'There was some problem with questionnaire upload',
+                'Error'
+              );
             }
           });
-          this.dialogRef.close(true);
-        });      
+        }        
+      });
     } else {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
       let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
@@ -118,7 +136,13 @@ export class SurveyPopupComponent implements OnInit {
       });
       let category = catArr.toString();
       var payload2 = {
-        ProcessVariables: { catagoryName: category, surveyName: surveyName, fromDate: startDate, toDate: endDate, surveyTypeId: surType },
+        ProcessVariables: {
+          catagoryName: category,
+          surveyName: surveyName,
+          fromDate: startDate,
+          toDate: endDate,
+          surveyTypeId: surType,
+        },
       };
       this.surveyService.createSurvey(payload2).subscribe((res) => {
         if (!res.ProcessVariables.isTrue) {
@@ -142,9 +166,10 @@ export class SurveyPopupComponent implements OnInit {
   downloadTemplate() {
     let content =
       'Category Name,Questions,option,option,option,option,option,score,score,score,score,score,\n';
-      content+='SMS,Which *features* of our *SMS product* do you love the most?,Very good,Good,Average,Bad,Very bad,10,8,5,3,1';
+    content +=
+      'SMS,Which *features* of our *SMS product* do you love the most?,Very good,Good,Average,Bad,Very bad,10,8,5,3,1';
     const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
-    saveAs(file, 'Question template'); 
+    saveAs(file, 'Question template');
   }
 
   public changeListener(files: FileList) {
