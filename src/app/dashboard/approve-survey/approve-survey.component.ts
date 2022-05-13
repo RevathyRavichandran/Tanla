@@ -68,7 +68,7 @@ export class ApproveSurveyComponent implements OnInit {
   }
 
   changeGender(event, survey) {
-    if ((document.getElementById('approve') as HTMLInputElement).checked) {
+    if ((document.getElementById('approve') as HTMLInputElement).checked || event.target.value == 'approve') {
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to approve this survey?',
@@ -97,7 +97,7 @@ export class ApproveSurveyComponent implements OnInit {
           window.location.reload();
         }
       });
-    } else if ((document.getElementById('reject') as HTMLInputElement).checked) {
+    } else if ((document.getElementById('reject') as HTMLInputElement).checked || event.target.value == 'reject') {
       Swal.fire({
         title: 'Are you sure?',
         text: 'Do you want to reject this survey?',
@@ -129,7 +129,8 @@ export class ApproveSurveyComponent implements OnInit {
               Swal.fire(
                 'Survey rejected successfully',
                 'success'
-              );              
+              );
+              window.location.reload();          
             });
           }
         } else {

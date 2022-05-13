@@ -35,7 +35,7 @@ export class ConfigurationComponent implements OnInit {
   ) {}
 
   submit() {
-    if ((this.surveyDate && this.company123) || (this.data.skip_limit && this.company123)) {
+    if ((this.surveyDate && this.company123) || ((this.data.skip_limit || this.data.skip_limit == 0 ) && this.company123)) {      
       let d = new Date(this.surveyDate);
       d.setHours(0, 0, 0, 0);
       let a = moment(d, 'DD/MM/YYYY');
