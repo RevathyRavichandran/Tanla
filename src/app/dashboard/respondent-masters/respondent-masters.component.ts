@@ -22,6 +22,7 @@ export class RespondentMastersComponent implements OnInit {
   fileName = null;
   fileContent = '';
   name = '';
+  liveSurvey='';
   fileSize = 0;
   surveyNameList: any = [];
   selectedSurvey: string[];
@@ -48,10 +49,13 @@ export class RespondentMastersComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
-    let payloadSur = { ProcessVariables: {} };
+    let payloadSur = { ProcessVariables: { perPage: 100000 } };
     this.survey.listSurvey(payloadSur).subscribe((res) => {
       let result = res['ProcessVariables'];
       result['surveyList'].forEach(element => {
+        if(element.activeStatus == '1') {
+          this.liveSurvey = element.surveyName;
+        }
         this.surveyNameList.push(element.surveyName);
         
       });
@@ -147,7 +151,7 @@ export class RespondentMastersComponent implements OnInit {
     this.isLoad = true;
     let payload = {
       ProcessVariables: {
-        surveyName: localStorage.getItem('survey'),
+        surveyName: this.liveSurvey,
         attachment: {
           content: btoa(this.fileContent),
           name: this.fileName,

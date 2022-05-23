@@ -116,6 +116,7 @@ export class QuestionariesComponent implements OnInit {
             dialogRef.afterClosed().subscribe((result) => {
               let payload = {
                 ProcessVariables: {
+                  surveyName: this.name ? this.name : this.selectedSurvey,
                   questionsInput: [
                     {
                       id: id,
@@ -282,7 +283,7 @@ export class QuestionariesComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
-    let payloadSur = { ProcessVariables: {} };
+    let payloadSur = { ProcessVariables: { perPage: 100000 } };
     this.survey.listSurvey(payloadSur).subscribe((res) => {
       let result = res['ProcessVariables'];
       result['surveyList'].forEach((element) => {
