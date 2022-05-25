@@ -38,19 +38,19 @@
                     </ng-container>
                     <ng-container matColumnDef="surveyType">
                         <th mat-header-cell [attr.rowspan]="2" class="text-center" *matHeaderCellDef>Survey Type</th>
-                        <td mat-cell *matCellDef="let element">
+                        <td class="text-center" mat-cell *matCellDef="let element">
                             {{ element.surveyType }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="surveyName">
                         <th mat-header-cell [attr.rowspan]="2" class="text-center" *matHeaderCellDef>Survey Name</th>
-                        <td mat-cell *matCellDef="let element">
+                        <td class="text-center" mat-cell *matCellDef="let element">
                             {{ element.surveyName }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="catagoryName">
                         <th [attr.rowspan]="2" mat-header-cell class="text-center" *matHeaderCellDef>Category</th>
-                        <td mat-cell *matCellDef="let element">
+                        <td class="text-center" mat-cell *matCellDef="let element">
                             {{ element.catagoryName }}
                         </td>
                     </ng-container>
@@ -72,7 +72,7 @@
                     </ng-container>
                     <ng-container matColumnDef="status">
                         <th [attr.rowspan]="2" mat-header-cell class="text-center" *matHeaderCellDef>Status</th>
-                        <td mat-cell *matCellDef="let element">
+                        <td mat-cell *matCellDef="let element" class="text-center">
                             <span *ngIf="element.surveyStatus == '1'">Pending</span>
                             <span *ngIf="element.surveyStatus == '2'">Approved</span>
                             <span *ngIf="element.surveyStatus == '3'">Rejected</span>

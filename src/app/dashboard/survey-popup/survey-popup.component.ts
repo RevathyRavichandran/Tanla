@@ -112,7 +112,7 @@ export class SurveyPopupComponent implements OnInit {
             if (res) {
               this.toastr.success('Survey created successfully', 'Success');
               this.toastr.success(
-                'Questinnaire uploaded successfully',
+                'Questionnaire uploaded successfully',
                 'Success'
               );
               this.dialogRef.close(true);

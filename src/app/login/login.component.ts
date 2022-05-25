@@ -26,47 +26,50 @@ export class LoginComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   login() {
-    if (this.f.password.value === 'tanla@123') {
-      this.router.navigateByUrl('/resetPassword');
-    } else {
-      let payload = {
-        "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.password.value}
-        }
-      this.log.login(payload).subscribe(loginData => {
-        if (loginData.ProcessVariables.failCount > 3) {
-          Swal.fire({
-            title: 'Warning',
-            text: 'You have exceeded the maximum number of login attempts. Please reset your password.',
-            icon: 'warning',
-            showCancelButton: true,
-            showCloseButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Reset',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigateByUrl('/forgotPassword')
-            } else {
-              
-            }
-          })
+    let payload = {
+      "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.password.value}
+      }
+    this.log.login(payload).subscribe(loginData => {
+      
+      if (loginData.ProcessVariables.failCount > 3) {
+        Swal.fire({
+          title: 'Warning',
+          text: 'You have exceeded the maximum number of login attempts. Please reset your password.',
+          icon: 'warning',
+          showCancelButton: true,
+          showCloseButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Reset',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigateByUrl('/forgotPassword')
+          } else {
+            
+          }
+        })
+      }
+      else if (loginData.ProcessVariables) {
+        if (this.f.password.value === 'tanla@123' && loginData.ProcessVariables.login_status === '1') {
+          this.router.navigateByUrl('/resetPassword');
         } else {
-          if (loginData.ProcessVariables.count === '1') {
-          this.router.navigateByUrl('/dashboard');
+        if (loginData.ProcessVariables.count === '1') {
+        this.router.navigateByUrl('/dashboard');
 
-          this.toastr.success('Logged in successfully', 'Success');
-          localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
-          localStorage.setItem('email', this.f.email.value);
-          localStorage.setItem('status', loginData.ProcessVariables.employeeRole);
-        } else {
-          this.toastr.error('Invalid Email ID and Password', 'Error');
-          localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
-          localStorage.setItem('email', this.f.email.value);
-        }
-        }
-        
-      })      
-    }
+        this.toastr.success('Logged in successfully', 'Success');
+        localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
+        localStorage.setItem('email', this.f.email.value);
+        localStorage.setItem('status', loginData.ProcessVariables.employeeRole);
+      } else {
+        this.toastr.error('Invalid Email ID and Password', 'Error');
+        localStorage.setItem('loginCheck', loginData.ProcessVariables.login_status);
+        localStorage.setItem('email', this.f.email.value);
+      }
+      }
+      } 
+      
+    })      
+    
   }
   // tslint:disable-next-line: typedef
   get f() { return this.fg.controls; }

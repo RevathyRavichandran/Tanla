@@ -30,9 +30,9 @@ export class AuditComponent implements OnInit {
   displayedColumns= [
     'id',
     'api_type',
-    'created_at',
     'request',
     'response',
+    'created_at',
     'updated_at',
     'user_name'
   ];
@@ -69,13 +69,19 @@ export class AuditComponent implements OnInit {
       this.currentPage = result['current_page'];
       this.pageSize = result['perPage'];
       this.noRecords = result['outputData'] ? false : true;
+
       this.isLoad = false;
       if (this.noRecords) {
+        
         this.snackBar.open('There are no records found!!!', '', {
           horizontalPosition: 'right',
           verticalPosition: 'top',
           duration: 2000,
           panelClass: ['error-snack-bar'],
+        });
+      } else {
+        result['outputData'].forEach(element => {
+          element.updated_at = element.updated_at.split('T')[1].split('Z')[0];
         });
       }
       this.dataSource = new MatTableDataSource(result['outputData']);

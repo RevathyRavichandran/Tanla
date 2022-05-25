@@ -37,7 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
       }
     this.login.forgotPwd(payload).subscribe(forgot => {
       if (forgot.ProcessVariables.errorCode == '1') {
-        this.toastr.error('Please check emp ID and email ID', 'Error');
+        this.toastr.error('Please check Emp ID and Email ID', 'Error');
       } else {
         this.router.navigateByUrl('/passwordChanged');
       }      

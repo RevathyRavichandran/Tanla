@@ -142,9 +142,9 @@
             </div>
             <div class="col-12">
 
-              <mat-form-field style="width: 90%; border-top-width: 0px;" appearance="outline">
+              <mat-form-field  style="width: 90%; border-top-width: 0px;" appearance="outline">
                 <mat-label>Survey</mat-label>
-                <mat-select style="border-top-width: 0px;" placeholder="Select survey"
+                <mat-select style="border-top-width: 0px;" placeholder="Select survey" panelClass="my-panel-class"
                   [formControl]="surveyList" (selectionChange)="changeFn($event.value)" multiple disableOptionCentering>
                   <mat-option *ngFor="let survey of surveyNameList" [value]="survey">{{survey}}</mat-option>
                 </mat-select>
@@ -153,7 +153,7 @@
             <div class="col-12">
               <mat-form-field style="width: 90%;" appearance="outline">
                 <mat-label>Services</mat-label>
-                <mat-select placeholder="Select service" (selectionChange)="changeFn1($event.value)" [formControl]="categoryList" disableOptionCentering multiple>
+                <mat-select panelClass="my-panel-class" placeholder="Select service" (selectionChange)="changeFn1($event.value)" [formControl]="categoryList" disableOptionCentering multiple>
                   <mat-option *ngFor="let survey of serviceList" [value]="survey">{{survey}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -161,7 +161,7 @@
             <div class="col-12">
               <mat-form-field style="width: 90%;" appearance="outline">
                 <mat-label>Questions</mat-label>
-                <mat-select placeholder="Select questions" [disabled]="!surveyList" [formControl]="toppings" multiple disableOptionCentering>
+                <mat-select panelClass="my-panel-class" placeholder="Select questions" [disabled]="!surveyList" [formControl]="toppings" multiple disableOptionCentering>
                   <mat-option *ngFor="let question of questionList" [value]="question">{{question}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -174,11 +174,11 @@
             <img src="assets/tanla_total_respoondent_128.svg" alt="" />
           </div>
           <div class="col-5" [ngClass]="{ 'mb-4': date }">
-            <label style="color: grey; font-size: 1rem" for="">
+            <label style="color: grey; font-size: 1rem; margin-left: 1rem;" for="">
               Total Respondent</label
             >
             <br />
-            <label style="color: grey; font-weight: bold; font-size: 1.4rem; margin-left: 1rem;">
+            <label style="color: grey; font-weight: bold; font-size: 1.4rem; margin-left: 2rem;">
               {{ totalFilRes ? totalFilRes : '-' }}</label
             >
           </div>
@@ -186,11 +186,11 @@
             <img src="assets/tanla_total_respoondent_128.svg" alt="" />
           </div>
           <div class="col-5" [ngClass]="{ 'mb-4': date }">
-            <label style="color: grey; font-size: 1rem" for="">
+            <label style="color: grey; font-size: 1rem; margin-left: 1rem;" for="">
               Average Rating</label
             >
             <br />
-            <label style="color: grey; font-weight: bold; font-size: 1.4rem; margin-left: 1rem;">
+            <label style="color: grey; font-weight: bold; font-size: 1.4rem; margin-left: 2rem;">
               {{ avg ? avg : '-' }}</label
             >
           </div>
@@ -261,7 +261,7 @@
               style="border-radius: 0 0 10px 10px; background-color: #a8e9a842"
               class="text-center"
             >
-              <h1 class="p-4">{{ filteredPromo }} %</h1>
+              <h1 class="p-4">{{ filteredPromo == 'NA' ? '0' : filteredPromo }} %</h1>
               <span
                 style="
                   display: block;
@@ -291,7 +291,7 @@
               style="border-radius: 0 0 10px 10px; background-color: #ffe5b487"
               class="text-center"
             >
-              <h1 class="p-4">{{ filteredPassive }} %</h1>
+              <h1 class="p-4">{{ filteredPassive == 'NA' ? '0' : filteredPassive }} %</h1>
               <span
                 style="
                   display: block;
@@ -321,7 +321,7 @@
               style="border-radius: 0 0 10px 10px; background-color: #cea09f85"
               class="text-center"
             >
-              <h1 class="p-4">{{ filteredDetractor }} %</h1>
+              <h1 class="p-4">{{ filteredDetractor == 'NA' ? '0' : filteredDetractor }} %</h1>
               <span
                 style="
                   display: block;
@@ -354,7 +354,7 @@
               "
               class="text-center"
             >
-              <h1 class="p-4">{{ filteredOverall }} %</h1>
+              <h1 class="p-4">{{ filteredOverall == 'NA' ? '0' : filteredOverall }} %</h1>
             </mat-card-content>
           </mat-card>
         </div>

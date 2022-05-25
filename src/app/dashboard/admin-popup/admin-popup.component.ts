@@ -38,24 +38,70 @@ export class AdminPopupComponent implements OnInit {
       }
     )
     } else {
+      if(this.reason) {
+        this.fg = new FormGroup(
+        {
+          "userName": new FormControl(this.data?.name || null, Validators.required),
+          "employeeNo": new FormControl(this.data?.employeeNumber || null),
+          "mobileNumber": new FormControl(this.data?.phoneNo || null, Validators.required),
+          "status": new FormControl(this.data?.isActive || null, Validators.required),
+          "reason": new FormControl(this.data?.reason=='-' ? '' : this.data?.reason || null, Validators.required),
+          "emailId": new FormControl(this.data?.emailId || null),
+          "department": new FormControl(this.data?.department || null, Validators.required),
+          "designation": new FormControl(this.data?.designation || null, Validators.required)
+        }
+      )
+      } else {
+        this.fg = new FormGroup(
+          {
+            "userName": new FormControl(this.data?.name || null, Validators.required),
+            "employeeNo": new FormControl(this.data?.employeeNumber || null),
+            "mobileNumber": new FormControl(this.data?.phoneNo || null, Validators.required),
+            "status": new FormControl(this.data?.isActive || null, Validators.required),
+            "reason": new FormControl(this.data?.reason=='-' ? '' : this.data?.reason || null),
+            "emailId": new FormControl(this.data?.emailId || null),
+            "department": new FormControl(this.data?.department || null, Validators.required),
+            "designation": new FormControl(this.data?.designation || null, Validators.required)
+          }
+        )
+      }
+      
+    }
+    if (this.data && this.data.employee_role) {
+       this.selectedRole = this.data.employee_role;
+    }   
+
+  }
+
+  showReason(event) {
+    this.reason = event.target.value === '1' ? false : true;
+    if (this.reason) {
       this.fg = new FormGroup(
         {
           "userName": new FormControl(this.data?.name || null, Validators.required),
           "employeeNo": new FormControl(this.data?.employeeNumber || null),
           "mobileNumber": new FormControl(this.data?.phoneNo || null, Validators.required),
           "status": new FormControl(this.data?.isActive || null, Validators.required),
-          "reason": new FormControl(this.data?.reason || null, Validators.required),
+          "reason": new FormControl(this.data?.reason=='-' ? '' : this.data?.reason || null, Validators.required),
+          "emailId": new FormControl(this.data?.emailId || null),
+          "department": new FormControl(this.data?.department || null, Validators.required),
+          "designation": new FormControl(this.data?.designation || null, Validators.required)
+        }
+      )
+    } else {
+      this.fg = new FormGroup(
+        {
+          "userName": new FormControl(this.data?.name || null, Validators.required),
+          "employeeNo": new FormControl(this.data?.employeeNumber || null),
+          "mobileNumber": new FormControl(this.data?.phoneNo || null, Validators.required),
+          "status": new FormControl(this.data?.isActive || null, Validators.required),
+          "reason": new FormControl(this.data?.reason=='-' ? '' : this.data?.reason || null),
           "emailId": new FormControl(this.data?.emailId || null),
           "department": new FormControl(this.data?.department || null, Validators.required),
           "designation": new FormControl(this.data?.designation || null, Validators.required)
         }
       )
     }
-
-  }
-
-  showReason(event) {
-    this.reason = event.target.value === '1' ? false : true;
   }
 
   saveUser(data) {

@@ -86,8 +86,7 @@ export class ApproveSurveyComponent implements OnInit {
           };
           this.survey.approveSurvey(payload).subscribe((res) => {
             Swal.fire(
-              'Survey approved successfully',
-              'success'
+              'Survey approved successfully'
             );
             
           });
@@ -127,8 +126,7 @@ export class ApproveSurveyComponent implements OnInit {
             };
             this.survey.approveSurvey(payload).subscribe((res) => {
               Swal.fire(
-                'Survey rejected successfully',
-                'success'
+                'Survey rejected successfully'
               );
               window.location.reload();          
             });

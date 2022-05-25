@@ -31,8 +31,9 @@
                 >
                 <mat-form-field style="width: 100%;" appearance="outline">
                   <mat-label>Companies</mat-label>
-                  <mat-select placeholder="Select companies" (selectionChange)="showCompany($event.value)" [disabled]="!surveyList" multiple disableOptionCentering>
-                    <mat-option *ngFor="let company of companyList" [value]="company">{{company}}</mat-option>
+                  <mat-select panelClass="my-panel-class" placeholder="Select companies" (selectionChange)="showCompany($event.value)" [disabled]="!surveyList" multiple disableOptionCentering>
+                    <mat-option
+                     *ngFor="let company of companyList" overlayPanelClass="test" [value]="company">{{company}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <!-- <select [disabled]="!survey" class="form-control form-select mb-3" (change)="showCompany($event)" id="company" name="selected_company" [(ngModel)]="data.selected_company">

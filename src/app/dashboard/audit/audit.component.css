@@ -38,7 +38,13 @@ button {
   font-size: 15px;
 }
 .download {
-  padding-top: 1.5rem;
+  padding-top: 1rem;
   position: absolute;
   margin-left: 0.7rem;
+}
+:host::ng-deep.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+:host::ng-deep.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0 1em 0;
 }

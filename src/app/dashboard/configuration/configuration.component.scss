@@ -47,7 +47,7 @@ select[readonly] option{
   display:none;
 }
 
-::ng-deep.ng-select .ng-select-container {
+:host::ng-deep.ng-select .ng-select-container {
     font-size: 15px;
 }
 

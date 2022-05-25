@@ -147,9 +147,9 @@
     [boundaryLinks]="true"
     [pageSize]="pageSize"
     (pageChange)="pageChanged(currentPage)"
-    class="d-flex col-lg-6"
+    class="d-flex col-lg-6 col-sm-4 col-md-5"
   ></ngb-pagination>
-  <span *ngIf="role" class="input-group col-lg-3" style="padding-bottom: 2rem">
+  <span *ngIf="role" class="input-group col-lg-2 col-sm-2 col-md-3" style="padding-bottom: 2rem; width: 30%;">
     <input
       id="fileName"
       type="search"
@@ -177,10 +177,9 @@
     </button>
   </span>
 
-  <button *ngIf="role"
+  <button *ngIf="role" style="width: 14%;"
     type="button"
-    style="height: 4rem"
-    class="btn col-lg-2 upload-btn"
+    class="btn col-lg-2 col-sm-4 col-md-3 upload-btn"
     (click)="submit()"
   >
     Upload Respondent
