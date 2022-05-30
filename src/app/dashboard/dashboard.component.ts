@@ -86,6 +86,7 @@ export class DashboardComponent implements OnInit {
                 this.totCount = res.ProcessVariables.overallCount;
                 this.totalRes = res.ProcessVariables.npsFeedbackCount;
                 this.overallScore = res.ProcessVariables.overallCount;
+                this.overallScore = Math.abs(this.overallScore);
                 this.promotersPercentage = parseFloat(
                   res.ProcessVariables.promoPercentage
                 ).toFixed(2);
