@@ -36,7 +36,6 @@ export class PasswordSetComponent implements OnInit {
       "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.passwordNew.value, "curnt_pass":this.f.password.value}
       }
     this.login.resetPwd(payload).subscribe(reset => {
-      console.log(reset.ProcessVariables.error_code == '1')
       if (reset.ProcessVariables.error_code == '1') {
         this.router.navigateByUrl('/passwordChanged');
       } else if (reset.ProcessVariables.error_code == '2'){
