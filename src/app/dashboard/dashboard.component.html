@@ -114,7 +114,7 @@
 
 <div class="row" style="padding: 1%">
   <div class="col-lg-6">
-    <mat-card>
+    <mat-card style="width: calc(100% - 30px);   height: calc(100% - 1px)">
       <div *ngIf="isLoad" class="loader-top">
         <mat-spinner class="loader" diameter="50"></mat-spinner>
         <span class="loader-text">Loading... Please wait</span>
@@ -194,7 +194,7 @@
               {{ avg ? avg : '-' }}</label
             >
           </div>
-          <div class="mt-2" style="align-items: end; text-align: end;">
+          <div class="mt-4" style="align-items: end; text-align: end;">
             <button
               (click)="filter()"
               type="submit"
@@ -226,7 +226,7 @@
   </div>
 
   <div class="col-lg-6">
-    <mat-card>
+    <mat-card style="width: calc(100% - 30px);   height: calc(100% - 1px)">
       <mat-card-title>
         <div class="row pb-2">
           <div style="text-decoration: underline;" class="col-12 pt-2">
@@ -234,8 +234,8 @@
           </div>
         </div>
       </mat-card-title>
-      <div [hidden]="!chart1" style="height: 23.5rem;">
-        <canvas id="canvas" responsive=false height="13rem" width="28px"></canvas>
+      <div [hidden]="!chart1">
+        <canvas id="canvas" responsive=true  maintainAspectRatio=true></canvas>
       </div>
     </mat-card>
     </div>
@@ -344,7 +344,7 @@
                 border-radius: 10px 10px 0 0;
               "
             >
-              <mat-card-title class="pt-3">Overall Score</mat-card-title>
+              <mat-card-title class="pt-3">Overall NPS Score</mat-card-title>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content
