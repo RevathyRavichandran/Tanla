@@ -601,6 +601,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   downloadTemplate() {
+    this.isLoad = true;
     if (!this.noRecords) {
       let filteredVal = this.fg.value;
       let answer = filteredVal.answer ? filteredVal.answer : '';
@@ -626,6 +627,7 @@ export class FeedbackComponent implements OnInit {
         },
       };
       this.feedbackService.filterFeedback(payload).subscribe((res) => {
+        this.isLoad = false;
         let result = res['ProcessVariables'];
         this.downloadFeedback = result.attachment.content;
         this.downloadFeedbackName = result.attachment.name;
@@ -878,9 +880,6 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {
     let payload = { ProcessVariables: {} };
     let body = { ProcessVariables: { selectedField: '1', perPage: 100000 } };
-    this.feedbackService.feedbackPagination(body).subscribe((res) => {
-      this.data = res['ProcessVariables']['outputData'];
-      this.commonMethod(payload);
-    });
+    this.commonMethod(payload);
   }
 }

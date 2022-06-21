@@ -70,3 +70,14 @@ button {
   left: 90%;
   position: absolute;
 }
+
+@media (min-width: 1300px) and (max-width: 1400px) {
+  .npsScore {
+    font-size: 1.3rem !important;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1299px) {
+  .npsScore {
+    font-size: 1.2rem !important;
+  }
+}
