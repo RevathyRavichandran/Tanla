@@ -130,6 +130,12 @@
               {{element.column2}}
             </td>
           </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element" style="width: 15px; text-align: center;">
+              <mat-icon (click)="delete(element?.phoneNo, element?.surveyName)" class="close-icon" color="warn">close</mat-icon>
+            </td>
+          </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

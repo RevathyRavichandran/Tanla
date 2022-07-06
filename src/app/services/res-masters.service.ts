@@ -29,5 +29,12 @@ export class ResMastersService {
     );
   }
 
+  deleteRespondent(res: any): Observable<any> {
+    return this.http.post<any>(
+      this.dbUrl + 'npsfeedback/api/deleteRespondantAPI',
+      res
+    );
+  }
+
   constructor(private http: HttpClient) {}
 }

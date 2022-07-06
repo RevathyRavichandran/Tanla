@@ -88,3 +88,6 @@ input::-webkit-search-cancel-button {
     border: 1px solid #ced4da;
     font-size: 15px;
 }
+.close-icon {
+  cursor: pointer;
+}
