@@ -17,6 +17,7 @@
           </h1>
         </mat-card-title>
         <circle-progress
+          [title]="promotersPercentage"
           [percent]="promotersPercentage"
           [radius]="55"
           [outerStrokeWidth]="16"
@@ -43,6 +44,7 @@
           </h1>
         </mat-card-title>
         <circle-progress
+          [title]="passivesPercentage"
           [percent]="passivesPercentage"
           [radius]="55"
           [outerStrokeWidth]="16"
@@ -69,6 +71,7 @@
           </h1>
         </mat-card-title>
         <circle-progress
+          [title]="detractorsPercentage"
           [percent]="detractorsPercentage"
           [radius]="55"
           [outerStrokeWidth]="16"
@@ -95,6 +98,7 @@
           </h2>
         </mat-card-title>
         <circle-progress
+          [title]="totCount"
           [percent]="overallScore"
           [radius]="55"
           [outerStrokeWidth]="16"

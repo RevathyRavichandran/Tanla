@@ -89,13 +89,10 @@ export class DashboardComponent implements OnInit {
                 this.overallScore = Math.abs(this.overallScore);
                 this.promotersPercentage = parseFloat(
                   res.ProcessVariables.promoPercentage
-                ).toFixed(2);
+                ).toFixed(0);
                 this.passivesPercentage = parseFloat(
                   res.ProcessVariables.passivePercentage
-                ).toFixed(2);
-                this.detractorsPercentage = parseFloat(
-                  res.ProcessVariables.detractorsPercentage
-                ).toFixed(2);
+                ).toFixed(0);
               }
             });
         }
