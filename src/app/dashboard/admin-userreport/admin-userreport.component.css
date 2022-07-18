@@ -1,0 +1,55 @@
+table {
+    width: 100%;
+    background: white;
+  }
+  
+  .mat-header-cell {
+    font-size: 15px;
+    color:#1e7eae;
+    font-weight: bolder;
+    padding-left: 0.5rem;
+  }
+  
+  .mat-cell {
+    font-size: 15px;
+    font-weight: 400;
+    padding-left: 0.5rem;
+  }
+  
+  th {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  th,
+  td {
+    border: solid 1px rgba(206, 202, 202, 0.3);
+    padding: 0.8rem;
+  }
+  
+  .adminCreate {
+    padding: 10px;
+    border-radius: 9999px;
+    font-size: 15px;
+  }
+  button {
+    padding: 10px;
+    border-radius: 9999px;
+    font-size: 15px;
+  }
+  .download {
+    padding-top: 1.5rem;
+    position: absolute;
+    margin-left: 0.7rem;
+  }
+  ::ng-deep.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #1e7eae !important;
+    border-color: #1e7eae !important;
+  }
+  
+  ::ng-deep.page-link {
+    color: #1e7eae;
+  }
+  

@@ -6,7 +6,7 @@
         type="button"
         class="btn surveyCreate"
         (click)="createSurvey()"
-        style="background: #2d69eb; color: white"
+        style="background: #1e7eae; color: white"
       >
         Create Survey&nbsp;
         <i class="fa fa-file fa-1x"></i>
@@ -22,7 +22,7 @@
                 <img style="height: 300px; width: 300px" src="assets/no_files_records_256.png" alt="" />
             </div>
             <div style="text-align: center">
-                <h1 style="color: #2d69eb">No Records Found</h1>
+                <h1 style="color: #1e7eae">No Records Found</h1>
             </div>
         </mat-card>
     </div>
@@ -92,7 +92,7 @@
                         <td mat-cell *matCellDef="let element">
                             <button mat-button>
                           <mat-icon
-                            style="transform: scale(0.8); color: blue; cursor: pointer"
+                            style="transform: scale(0.8); color:#1e7eae; cursor: pointer"
                             (click)="downloadSurvey(element.surveyName)"
                             >file_download</mat-icon
                           >
@@ -104,7 +104,7 @@
                         <td mat-cell *matCellDef="let element">
                             <button mat-button>
                           <mat-icon
-                            style="transform: scale(0.8); color: blue; cursor: pointer"
+                            style="transform: scale(0.8); color:#1e7eae; cursor: pointer"
                             (click)="downloadQuestion(element.surveyName)"
                             >file_download</mat-icon
                           >

@@ -1,7 +1,7 @@
 <button mat-icon-button class="close-button" [mat-dialog-close]="true">
   <mat-icon class="close-icon" color="warn">close</mat-icon>
 </button>
-<h1 class="text-center" style="color: blue" mat-dialog-title>Create Survey</h1>
+<h1 class="text-center" style="color:#1e7eae" mat-dialog-title>Create Survey</h1>
 <form [formGroup]="fg" (ngSubmit)="saveSurvey()">
   <mat-dialog-content class="mat-typography">
     <div class="container">
@@ -145,7 +145,7 @@
           type="button"
           class="btn"
           (click)="fileUpload()"
-          style="background: #2d69eb; color: white; margin-right: 1rem"
+          style="background: #1e7eae; color: white; margin-right: 1rem"
         >
           <img src="assets\tanla_upload_128.svg" alt="" />
           Attach Survey
@@ -159,7 +159,7 @@
         type="button"
         class="btn m-2"
         (click)="downloadTemplate()"
-        style="background: #2d69eb; color: white"
+        style="background: #1e7eae; color: white"
       >
         <img src="assets/tanla_download_128.svg" alt="" />
         Questionnaire Template
@@ -186,7 +186,7 @@
       type="button"
       class="btn m-2"
       (click)="downloadQuestion(data.surveyName)"
-      style="background: #2d69eb; color: white"
+      style="background: #1e7eae; color: white"
     >
       <img src="assets/tanla_download_128.svg" alt="" />
       Questionnaire Download

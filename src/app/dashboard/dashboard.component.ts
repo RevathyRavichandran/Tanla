@@ -12,7 +12,7 @@ import 'chartjs-plugin-labels';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   constructor(
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   proCount = '';
   pasCount = '';
   detCount = '';
-  totCount = '';
+  totCount: any;
   filteredOverall = 'NA';
   filteredPromoCount = '';
   filteredDetractorCount = '';
@@ -86,15 +86,23 @@ export class DashboardComponent implements OnInit {
                 this.totCount = res.ProcessVariables.overallCount;
                 this.totalRes = res.ProcessVariables.npsFeedbackCount;
                 this.overallScore = res.ProcessVariables.overallCount;
+                this.overallScore = Math.abs(this.overallScore);
                 this.promotersPercentage = parseFloat(
                   res.ProcessVariables.promoPercentage
-                ).toFixed(2);
+                ).toFixed(0);
                 this.passivesPercentage = parseFloat(
                   res.ProcessVariables.passivePercentage
-                ).toFixed(2);
+                ).toFixed(0);
                 this.detractorsPercentage = parseFloat(
                   res.ProcessVariables.detractorsPercentage
-                ).toFixed(2);
+                ).toFixed(0);
+                this.totCount = parseFloat(
+                  res.ProcessVariables.overallCount
+                ).toFixed(0);
+                this.promotersPercentage = isNaN(this.promotersPercentage) ? 0 : this.promotersPercentage;
+                this.detractorsPercentage = isNaN(this.detractorsPercentage) ? 0 : this.detractorsPercentage;
+                this.passivesPercentage = isNaN(this.passivesPercentage) ? 0 : this.passivesPercentage;
+                this.totCount = isNaN(this.totCount) ? 0 : this.totCount;
               }
             });
         }

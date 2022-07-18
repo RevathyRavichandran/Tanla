@@ -7,6 +7,8 @@ import { SurveyService } from '../../../app/services/survey.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-respondent-masters',
@@ -22,6 +24,7 @@ export class RespondentMastersComponent implements OnInit {
   fileName = null;
   fileContent = '';
   name = '';
+  liveSurvey='';
   fileSize = 0;
   surveyNameList: any = [];
   selectedSurvey: string[];
@@ -34,7 +37,8 @@ export class RespondentMastersComponent implements OnInit {
     'company',
     'department',
     'col-1',
-    'col-2'
+    'col-2',
+    'delete'
   ];
   role: boolean = true;
 
@@ -43,15 +47,19 @@ export class RespondentMastersComponent implements OnInit {
   constructor(
     public resMastersService: ResMastersService,
     private snackBar: MatSnackBar,
-    public survey: SurveyService
+    public survey: SurveyService,
+    public toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.role = localStorage.getItem('status') === 'creator' ? true : false;
-    let payloadSur = { ProcessVariables: {} };
+    let payloadSur = { ProcessVariables: { perPage: 100000 } };
     this.survey.listSurvey(payloadSur).subscribe((res) => {
       let result = res['ProcessVariables'];
       result['surveyList'].forEach(element => {
+        if(element.activeStatus == '1') {
+          this.liveSurvey = element.surveyName;
+        }
         this.surveyNameList.push(element.surveyName);
         
       });
@@ -147,7 +155,7 @@ export class RespondentMastersComponent implements OnInit {
     this.isLoad = true;
     let payload = {
       ProcessVariables: {
-        surveyName: localStorage.getItem('survey'),
+        surveyName: this.liveSurvey,
         attachment: {
           content: btoa(this.fileContent),
           name: this.fileName,
@@ -209,5 +217,39 @@ export class RespondentMastersComponent implements OnInit {
         }
       };
     }
+  }
+  delete(phone, survey) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        let payload = {
+          ProcessVariables: {
+            "survey_name":survey,"phone_number":phone
+          }
+      }
+      this.resMastersService.deleteRespondent(payload).subscribe(res => {
+        if(res.ProcessVariables.errorCode == '1') {
+          Swal.fire(
+            'Survey approved successfully'
+          );
+          window.location.reload();
+        } else {
+          this.toastr.error(
+            'Something went wrong',
+            'Error'
+          );
+        }
+      })
+      }
+    });
   }
 }

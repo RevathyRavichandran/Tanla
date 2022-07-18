@@ -11,7 +11,7 @@ table {
 
 .mat-header-cell {
   font-size: 15px;
-  color: blue;
+  color:#1e7eae;
   font-weight: bolder;
   padding-left: 0.5rem;
 }
@@ -46,7 +46,7 @@ td {
 
 .mat-header-cell {
   font-size: 1rem;
-  color: blue;
+  color:#1e7eae;
   font-weight: 500;
   padding-left: 0.5rem;
 }
@@ -64,4 +64,14 @@ th,
 td {
   border-right: solid 1px rgb(206, 202, 202);
   border-left: solid 1px rgb(206, 202, 202);
+}
+::ng-deep.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #1e7eae !important;
+  border-color: #1e7eae !important;
+}
+
+::ng-deep.page-link {
+  color: #1e7eae;
 }

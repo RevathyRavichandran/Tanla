@@ -29,7 +29,7 @@ table {
 
 .mat-header-cell {
     font-size: 15px;
-    color: blue;
+    color:#1e7eae;
     font-weight: bolder;
     padding-left: 0.5rem;
 }
@@ -41,7 +41,7 @@ table {
 }
 .mat-header-cell {
     font-size: 1rem;
-    color: blue;
+    color:#1e7eae;
     font-weight: 500;
     padding-left: 0.5rem;
   }
@@ -58,3 +58,9 @@ td {
     margin-right: 1rem;
     width: 5rem;
 }
+::ng-deep.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #1e7eae !important;
+    border-color: #1e7eae !important;
+  }

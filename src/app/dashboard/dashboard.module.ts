@@ -49,6 +49,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ApproveSurveyComponent } from './approve-survey/approve-survey.component';
 import 'chartjs-plugin-labels';
+import { AdminUserreportComponent } from './admin-userreport/admin-userreport.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import 'chartjs-plugin-labels';
     AdminComponent,
     AdminPopupComponent,
     AuditComponent,
-    ApproveSurveyComponent
+    ApproveSurveyComponent,
+    AdminUserreportComponent
   ],
   imports: [
     BrowserModule,

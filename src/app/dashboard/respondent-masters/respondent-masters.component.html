@@ -44,7 +44,7 @@
           type="button"
           class="btn"
           (click)="downloadTemplate()"
-          style="background: #2d69eb; color: white"
+          style="background: #1e7eae; color: white"
         >
           <img src="assets/tanla_download_128.svg" alt="" />
           Respondent Template
@@ -130,6 +130,12 @@
               {{element.column2}}
             </td>
           </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element" style="width: 15px; text-align: center;">
+              <mat-icon (click)="delete(element?.phoneNo, element?.surveyName)" class="close-icon" color="warn">close</mat-icon>
+            </td>
+          </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -147,9 +153,9 @@
     [boundaryLinks]="true"
     [pageSize]="pageSize"
     (pageChange)="pageChanged(currentPage)"
-    class="d-flex col-lg-6"
+    class="d-flex col-lg-6 col-sm-4 col-md-5"
   ></ngb-pagination>
-  <span *ngIf="role" class="input-group col-lg-3" style="padding-bottom: 2rem">
+  <span *ngIf="role" class="input-group col-lg-2 col-sm-2 col-md-3" style="padding-bottom: 2rem; width: 30%;">
     <input
       id="fileName"
       type="search"
@@ -169,7 +175,7 @@
       type="button"
       class="btn"
       (click)="fileUpload()"
-      style="background: #2d69eb; color: white; margin-right: 1rem"
+      style="background: #1e7eae; color: white; margin-right: 1rem"
     >
       <img src="assets\tanla_upload_128.svg" alt="" />
 
@@ -177,10 +183,9 @@
     </button>
   </span>
 
-  <button *ngIf="role"
+  <button *ngIf="role" style="width: 14%;"
     type="button"
-    style="height: 4rem"
-    class="btn col-lg-2 upload-btn"
+    class="btn col-lg-2 col-sm-4 col-md-3 upload-btn"
     (click)="submit()"
   >
     Upload Respondent

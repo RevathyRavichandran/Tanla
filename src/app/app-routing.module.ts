@@ -14,6 +14,7 @@ import { SuccessPageComponent } from './success-page/success-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthGuard } from './services/authguard.service';
 import { ApproveSurveyComponent } from './dashboard/approve-survey/approve-survey.component';
+import { AdminUserreportComponent } from './dashboard/admin-userreport/admin-userreport.component';
 
 const routes: Routes = [
   {
@@ -79,6 +80,11 @@ const routes: Routes = [
   {
     path: 'audit',
     component: AuditComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'userReport',
+    component: AdminUserreportComponent,
     canActivate: [AuthGuard]
   }
 ];

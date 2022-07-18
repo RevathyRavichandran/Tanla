@@ -9,8 +9,8 @@
 	 xml:space="preserve">
 <defs>
 </defs>
-<rect y="79.6" fill="#DE1F26" width="104.801" height="4"/>
-<path fill="#DE1F26" d="M32.801,83.6h-19.2V29.2h19.2V83.6z M17.601,79.6h11.2V33.2h-11.2V79.6z"/>
-<path fill="#DE1F26" d="M62,83.6H42.801V14.8H62V83.6z M46.801,79.6H58V18.8H46.801V79.6z"/>
-<path fill="#DE1F26" d="M91.2,83.6H72V0h19.2V83.6z M76,79.6h11.2V4H76V79.6z"/>
+<rect y="79.6" fill="#1e7eae" width="104.801" height="4"/>
+<path fill="#1e7eae" d="M32.801,83.6h-19.2V29.2h19.2V83.6z M17.601,79.6h11.2V33.2h-11.2V79.6z"/>
+<path fill="#1e7eae" d="M62,83.6H42.801V14.8H62V83.6z M46.801,79.6H58V18.8H46.801V79.6z"/>
+<path fill="#1e7eae" d="M91.2,83.6H72V0h19.2V83.6z M76,79.6h11.2V4H76V79.6z"/>
 </svg>
