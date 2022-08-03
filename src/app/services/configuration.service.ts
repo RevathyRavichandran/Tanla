@@ -6,18 +6,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ConfigService {
-  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/app/';
+  private dbUrl = 'https://compute.twixor.digital/d/app/nps_twixor_survey/api/';
 
   updateConfig(config: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/updateConfiguration',
+      this.dbUrl + 'updateConfiguration',
       config
     );
   }
 
   listConfig(config: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/Configuration_API',
+      this.dbUrl + 'Configuration_API',
       config
     );
   }

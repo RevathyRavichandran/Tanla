@@ -6,47 +6,47 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/app/';
+  private dbUrl = 'https://compute.twixor.digital/d/app/nps_twixor_survey/api/';
   
 
   createUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/employee_registration',
+      this.dbUrl + 'employee_registration',
       user
     );
   }
 
   listUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/list user details',
+      this.dbUrl + 'list user details',
       user
     );
   }
 
   updateUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/updateUserDetailsAPI',
+      this.dbUrl + 'updateUserDetailsAPI',
       user
     );
   }
 
   audit(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/Audit_Report',
+      this.dbUrl + 'Audit_Report',
       user
     );
   }
 
   audit_autofill(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/audit_autofill',
+      this.dbUrl + 'audit_autofill',
       user
     );
   }
 
   audit_pagination(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/Audit_Report_Pagination',
+      this.dbUrl + 'Audit_Report_Pagination',
       user
     );
   }

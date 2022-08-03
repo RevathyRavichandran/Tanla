@@ -6,32 +6,32 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ResMastersService {
-  private dbUrl = 'https://appiyo.karix.solutions/appiyo/d/app/';
+  private dbUrl = 'https://compute.twixor.digital/d/app/nps_twixor_survey/api/';
 
   getAllRecord(feedback: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/RespondantList',
+      this.dbUrl + 'RespondantList',
       feedback
     );
   }
 
   downloadFile(file: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/downloadEmptyCSV',
+      this.dbUrl + 'downloadEmptyCSV',
       file
     );
   }
 
   uploadFile(content: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/respondantUploadAPI',
+      this.dbUrl + 'respondantUploadAPI',
       content
     );
   }
 
   deleteRespondent(res: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'npsfeedback/api/deleteRespondantAPI',
+      this.dbUrl + 'deleteRespondantAPI',
       res
     );
   }
