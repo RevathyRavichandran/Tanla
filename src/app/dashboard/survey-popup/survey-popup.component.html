@@ -106,6 +106,7 @@
                 placeholder="Enter your category here...."
                 formControlName="category"
                 name="category"
+                (change)="onChangeEvent($event)"
               ></textarea>
               <br />
             </div>
@@ -141,7 +142,7 @@
           (change)="changeListener($event.target.files)"
           style="display: none"
         />
-        <button [disabled]="!selectedService || !fg.value.name ? true : null"
+        <button [disabled]="!selectedService || !fg.value.name || eventCategory ? true : null"
           type="button"
           class="btn"
           (click)="fileUpload()"

@@ -20,6 +20,7 @@ export class SurveyPopupComponent implements OnInit {
   fileSize = 0;
   serviceType: any = [];
   selectedService: string[];
+  eventCategory: boolean = false;
 
   get categoryArr() {
     return this.fg.get('category') as FormArray;
@@ -99,14 +100,16 @@ export class SurveyPopupComponent implements OnInit {
         };
         this.surveyService.createSurvey(payload).subscribe((res) => {
           this.surveyService.uploadFile(body).subscribe((res) => {
-            if (res) {
-              this.toastr.success('Questinnaire uploaded successfully', 'Success');
-            } else {
+            if(res.ProcessVariables.error.code == "Failure") {
               this.toastr.error('There was some problem with questionnaire upload', 'Error');
+            } else {              
+                this.toastr.success('Survey and Questinnaire uploaded successfully', 'Success');              
             }
           });
+        });  
+        setTimeout(() => {
           this.dialogRef.close(true);
-        });      
+        }, 2000);
     } else {
       let endDate = moment(this.fg.value.end).format('YYYY/MM/DD');
       let startDate = moment(this.fg.value.start).format('YYYY/MM/DD');
@@ -131,6 +134,13 @@ export class SurveyPopupComponent implements OnInit {
     }
   }
 
+  onChangeEvent(event: any){
+    if(event.target.value) {
+      this.eventCategory = true;
+    } else {
+      this.eventCategory = false;
+    }
+  }
   cancelSurvey() {
     this.dialogRef.close();
   }

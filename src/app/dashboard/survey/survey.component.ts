@@ -126,12 +126,11 @@ export class SurveyComponent implements OnInit {
       ProcessVariables: { surveyName: name },
     };
     this.survey.downloadSurvey(payload).subscribe((res) => {
-
       let content = res.ProcessVariables.attachment.content;
       content = atob(content);
       const file = new Blob([content], { type: 'text/csv;charset=UTF-8' });
       saveAs(file, name);
-      this.toastr.success('Survey downloaded successfully', 'Success');
+      this.toastr.success("Survey's respondent downloaded successfully", 'Success');
     });
   }
 

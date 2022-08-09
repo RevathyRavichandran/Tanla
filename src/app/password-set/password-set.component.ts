@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup,  Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-password-set',
@@ -12,7 +13,7 @@ export class PasswordSetComponent implements OnInit {
 
   fg: FormGroup;
 
-  constructor(public router: Router, public login: LoginService) {}
+  constructor(public router: Router, public login: LoginService, public toastr: ToastrService, ) {}
 
   ngOnInit(): void {
     this.fg = new FormGroup({
@@ -32,10 +33,14 @@ export class PasswordSetComponent implements OnInit {
   // tslint:disable-next-line: typedef
   submit() {
     let payload = {
-      "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.passwordNew.value}
+      "ProcessVariables": {"emailId":this.f.email.value,"password":this.f.passwordNew.value,"curnt_pass":this.f.password.value}
       }
     this.login.resetPwd(payload).subscribe(reset => {
-      this.router.navigateByUrl('/passwordChanged');
+      if(reset.ProcessVariables.error_code=="2") {
+        this.toastr.error('Invalid current password', 'Error')
+      } else {
+        this.router.navigateByUrl('/passwordChanged');
+      }      
     })
   }
 
