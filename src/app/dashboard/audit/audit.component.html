@@ -18,7 +18,7 @@
             style="
               font-family: FontAwesome, Arial;
               font-style: normal;
-              border-radius: 20px !important;
+              border-radius: 10px !important;
             "
             placeholder="&#xF002; Search by User Name"
             [matAutocomplete]="auto9"
@@ -30,7 +30,7 @@
           </mat-autocomplete>
         </div>
       </div>
-      <div class="col-5 pt-3">
+      <div class="col-3 pt-3">
         <mat-form-field appearance="outline" class="example-form-field">
           <mat-label>Enter a date range</mat-label>
           <mat-date-range-input [rangePicker]="rangePicker">
@@ -67,6 +67,9 @@
             </mat-date-range-picker-actions>
           </mat-date-range-picker>
         </mat-form-field>
+        
+      </div>
+      <div class="col-4 pt-2" style="text-align: center;">
         <span style="margin-left: 1rem">
           <button
             type="submit"
@@ -98,7 +101,7 @@
         </span>
       </div>
 
-      <div class="col-2" style="text-align: end; padding-right: 3rem">
+      <!-- <div class="col-2" style="text-align: end; padding-right: 3rem">
         <button
           type="button"
           class="btn adminCreate"
@@ -108,7 +111,7 @@
           Go to User&nbsp;
           <i class="fa fa-user fa-1x"></i>
         </button>
-      </div>
+      </div> -->
     </div>
   </form>
 

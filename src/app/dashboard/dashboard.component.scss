@@ -48,12 +48,12 @@ button {
   color: black;
 }
 
-:ng-deep.ng-select .ng-select-container {
+:host:ng-deep.ng-select .ng-select-container {
   border-radius: 9999px !important;
     border: 1px solid #ced4da;
-    font-size: 15px;
+    font-size: 12px;
 }
-::ng-deep.mat-form-field-wrapper {
+:host::ng-deep.mat-form-field-wrapper {
   padding-bottom: 0em;
 }
 .loader-text {
@@ -73,11 +73,18 @@ position: absolute;
 
 @media (min-width: 1300px) and (max-width: 1400px) {
 .npsScore {
-  font-size: 1.3rem !important;
+  font-size: 12px !important;
 }
 }
 @media (min-width: 1200px) and (max-width: 1299px) {
 .npsScore {
-  font-size: 1.2rem !important;
+  font-size: 12px !important;
 }
 }
+
+:host::ng-deep .mat-typography h1 {
+  font: 400 24px/32px Roboto,"Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  margin: 0 0 26px !important;
+}
+

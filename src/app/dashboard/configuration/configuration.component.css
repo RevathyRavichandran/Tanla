@@ -8,7 +8,7 @@ button {
   padding: 10px;
   border-radius: 9999px;
   border: 1px solid #8080804f;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .funkystyling {
@@ -29,7 +29,7 @@ input[type=number]::-webkit-outer-spin-button {
   border: none;
   background-color: #069c33;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-right: 0.35rem;
   padding: 0.3rem;
 }

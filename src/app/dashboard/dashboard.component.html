@@ -4,136 +4,199 @@
   </h1>
   <mat-divider></mat-divider>
 </div>
-<div class="pt-2"><b style="padding-left: 1rem; font-size: 1.3rem;">Survey Title - {{latestSurvey}}</b></div>
+<!-- <div class="pt-2"><b style="padding-left: 1rem; font-size: 1.3rem;">Survey Title - {{latestSurvey}}</b></div> -->
 <div class="row" style="padding: 1%">
-  <div class="col-lg-3">
-    <mat-card style="height: 10rem">
-      <mat-card-title-group>
-        <mat-card-title>
-          <h1 style="color: #3cb371"><b>Promoter</b></h1>
-          <br />
-          <h1 style="color: #3cb371; font-size: 25px">
-            <b><img src="assets/tanla_respondent_promoters_128.svg" alt="" /> {{ proCount }}</b>
-          </h1>
-        </mat-card-title>
-        <circle-progress
-          [title]="promotersPercentage"
-          [percent]="promotersPercentage"
-          [radius]="55"
-          [outerStrokeWidth]="16"
-          [innerStrokeWidth]="8"
-          [outerStrokeColor]="'#3CB371'"
-          [innerStrokeColor]="'#90EE90'"
-          [animation]="true"
-          [titleFontSize]="30"
-          [unitsFontSize]="25"
-          [showTitle]="true"
-          [animationDuration]="300"
-        ></circle-progress>
-      </mat-card-title-group>
-    </mat-card>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class=" text-center ">
+              <circle-progress
+              [title]="promotersPercentage"
+              [percent]="promotersPercentage"
+              [radius]="45"
+              [outerStrokeWidth]="16"
+              [innerStrokeWidth]="8"
+              [outerStrokeColor]="'#3CB371'"
+              [innerStrokeColor]="'#90EE90'"
+              [animation]="true"
+              [titleFontSize]="20"
+              [unitsFontSize]="20"
+              [showTitle]="true"
+              [animationDuration]="300">
+            </circle-progress>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <img src="assets/tanla_respondent_promoters_128.svg" alt="" /><span [countUp]="promotersPercentage" >0</span>
+              <h2>Promoter</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          Total Promoter Respondents - {{ proCount }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-3">
-    <mat-card style="height: 10rem">
-      <mat-card-title-group>
-        <mat-card-title>
-          <h1 style="color: #ef820d"><b>Passive</b></h1>
-          <br />
-          <h1 style="color: #ef820d; font-size: 30px">
-            <b><img src="assets/tanla_respondent_passive_128.svg" alt="" />{{ pasCount }}</b>
-          </h1>
-        </mat-card-title>
-        <circle-progress
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <circle-progress
           [title]="passivesPercentage"
           [percent]="passivesPercentage"
-          [radius]="55"
+          [radius]="45"
           [outerStrokeWidth]="16"
           [innerStrokeWidth]="8"
           [outerStrokeColor]="'#ef820d'"
           [innerStrokeColor]="'#FFE5B4'"
           [animation]="true"
-          [titleFontSize]="30"
-          [unitsFontSize]="25"
+          [titleFontSize]="20"
+          [unitsFontSize]="20"
           [showTitle]="true"
           [animationDuration]="300"
         ></circle-progress>
-      </mat-card-title-group>
-    </mat-card>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <img src="assets/tanla_respondent_passive_128.svg" alt="" /><span [countUp]="passivesPercentage" >0</span>
+              <h2>Passive</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          Total Passive Respondents - {{ pasCount }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-3">
-    <mat-card style="height: 10rem">
-      <mat-card-title-group>
-        <mat-card-title>
-          <h1 style="color: #dc143c"><b>Detractor</b></h1>
-          <br />
-          <h1 style="color: #dc143c; font-size: 30px">
-            <b><img src="assets/tanla_respondent_detractors_128.svg" alt="" />{{ detCount }}</b>
-          </h1>
-        </mat-card-title>
-        <circle-progress
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <circle-progress
           [title]="detractorsPercentage"
           [percent]="detractorsPercentage"
-          [radius]="55"
+          [radius]="45"
           [outerStrokeWidth]="16"
           [innerStrokeWidth]="8"
           [outerStrokeColor]="'#DC143C'"
           [innerStrokeColor]="'#CEA09F'"
           [animation]="true"
-          [titleFontSize]="30"
-          [unitsFontSize]="25"
+          [titleFontSize]="20"
+          [unitsFontSize]="20"
           [showTitle]="true"
           [animationDuration]="300"
         ></circle-progress>
-      </mat-card-title-group>
-    </mat-card>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+                <img src="assets/tanla_respondent_detractors_128.svg" alt="" /><span [countUp]="detractorsPercentage" >0</span>
+                <h2>Detractor</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          Total detractor respondents - {{ detCount }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-3">
-    <mat-card style="height: 10rem">
-      <mat-card-title-group>
-        <mat-card-title>
-          <h2 class="npsScore" style="color: rgb(96 134 241)"><b>Overall NPS Score</b></h2>
-          
-          <h2 style="color: rgb(96 134 241); font-size: 30px">
-            <b>{{ totCount }}</b>
-          </h2>
-        </mat-card-title>
-        <circle-progress
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <circle-progress
           [title]="totCount"
           [percent]="overallScore"
-          [radius]="55"
+          [radius]="45"
           [outerStrokeWidth]="16"
           [innerStrokeWidth]="8"
           [outerStrokeColor]="'rgb(96 134 241)'"
           [innerStrokeColor]="'rgb(173 169 231 / 50%)'"
           [animation]="true"
-          [titleFontSize]="30"
-          [unitsFontSize]="25"
+          [titleFontSize]="20"
+          [unitsFontSize]="20"
           [showTitle]="true"
           [animationDuration]="300"
         ></circle-progress>
-      </mat-card-title-group>
-    </mat-card>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category"></p>
+              <span [countUp]="overallScore" >0</span>
+              <h2>NPS Score</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <hr>
+        <div class="stats">
+          Overall NPS Respondents - {{ proCount }}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="row" style="padding: 1%">
-  <div class="col-lg-6">
-    <mat-card style="width: calc(100% - 30px);   height: calc(100% - 1px)">
-      <div *ngIf="isLoad" class="loader-top">
-        <mat-spinner class="loader" diameter="50"></mat-spinner>
-        <span class="loader-text">Loading... Please wait</span>
-      </div>
-      <mat-card-title>
-        <div class="row pb-2">
-          <div style="text-decoration: underline;" class="col-12 pt-2">
-            <label>Advanced Filter</label>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header " style="background-color: white">
+        <div class="row mb-3" >
+          <div class="col-6">
+            <h2 class="card-title">Advanced Filters</h2>
+          </div>
+          <div class="col-1">
+            <!-- <img src="assets/tanla_total_respoondent_128.svg" alt="" /> -->
+          </div>
+          <div class="col-1">
+            <!-- <img src="assets/tanla_total_respoondent_128.svg" alt="" /> -->
+          </div>
+          <div class="col-2 pt-3">
+            <!-- <img src="assets/tanla_total_respoondent_128.svg" alt="" /> -->
+            <label style="color: grey; font-size: 1rem; margin-left: 1rem;" for="">
+              Total Responses - {{ totalFilRes ? totalFilRes : '0' }}</label
+            >
+            <br />
+            
+          </div>
+          
+          <div class="col-2 pt-3">
+            <!-- <img src="assets/tanla_total_respoondent_128.svg" alt="" /> -->
+            <label style="color: grey; font-size: 1rem; margin-left: 1rem;" for="">
+              Average Rating - {{ avg ? avg : '0' }}</label
+            >
+            <br />
+            
           </div>
         </div>
-      </mat-card-title>
-      <mat-card-content>
+        
         <form class="example-form">
-          <div class="row">
-            <div class="col-12 mb-2">
+          <div class="row" style="margin-bottom: 1rem;">
+            <div class="col-3 mb-2">
               <mat-form-field style="width: 90%; height: 2.9rem;" appearance="outline">
                 <mat-label>Date Range</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
@@ -144,7 +207,7 @@
                 <mat-date-range-picker #picker></mat-date-range-picker>
               </mat-form-field>
             </div>
-            <div class="col-12">
+            <div class="col-3">
 
               <mat-form-field  style="width: 90%; border-top-width: 0px;" appearance="outline">
                 <mat-label>Survey</mat-label>
@@ -154,7 +217,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-12">
+            <div class="col-3">
               <mat-form-field style="width: 90%;" appearance="outline">
                 <mat-label>Services</mat-label>
                 <mat-select panelClass="my-panel-class" placeholder="Select service" (selectionChange)="changeFn1($event.value)" [formControl]="categoryList" disableOptionCentering multiple>
@@ -162,7 +225,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-12">
+            <div class="col-3">
               <mat-form-field style="width: 90%;" appearance="outline">
                 <mat-label>Questions</mat-label>
                 <mat-select panelClass="my-panel-class" placeholder="Select questions" [disabled]="!surveyList" [formControl]="toppings" multiple disableOptionCentering>
@@ -172,64 +235,42 @@
             </div>
           </div>
         </form>
-        <br *ngIf="!date" />
-        <div class="row">
-          <div class="col-1">
-            <img src="assets/tanla_total_respoondent_128.svg" alt="" />
-          </div>
-          <div class="col-5" [ngClass]="{ 'mb-4': date }">
-            <label style="color: grey; font-size: 1rem; margin-left: 1rem;" for="">
-              Total Responses</label
-            >
-            <br />
-            <label style="color: grey; font-weight: bold; font-size: 1.4rem; margin-left: 2rem;">
-              {{ totalFilRes ? totalFilRes : '-' }}</label
-            >
-          </div>
-          <div class="col-1">
-            <img src="assets/tanla_total_respoondent_128.svg" alt="" />
-          </div>
-          <div class="col-5" [ngClass]="{ 'mb-4': date }">
-            <label style="color: grey; font-size: 1rem; margin-left: 1rem;" for="">
-              Average Rating</label
-            >
-            <br />
-            <label style="color: grey; font-weight: bold; font-size: 1.4rem; margin-left: 2rem;">
-              {{ avg ? avg : '-' }}</label
-            >
-          </div>
-          <div class="mt-4" style="align-items: end; text-align: end;">
-            <button
-              (click)="filter()"
-              type="submit"
-              style="font-weight: 500"
-              class="btn float-right apply-btn"
-            >
-              Apply
-            </button>
-            <button
-              type="button"
-              class="btn float-right"
-              (click)="clear()"
-              style="
-                background: #1e7eae;
-                color: white;
-                right: 0;
-                margin-right: 5px;
-                width: 5rem;
-              "
-            >
-              Clear
-            </button>
-          </div>
+        <div class="mt-4 mb-3" style="align-items: end; text-align: center;">
+          <button
+            (click)="filter()"
+            type="submit"
+            style="font-weight: 500"
+            class="btn float-right apply-btn"
+          >
+            Apply
+          </button>
+          <button
+            type="button"
+            class="btn float-right"
+            (click)="clear()"
+            style="
+              background: #1e7eae;
+              color: white;
+              right: 0;
+              margin-right: 5px;
+              width: 5rem;
+            "
+          >
+            Clear
+          </button>
         </div>
-        <br *ngIf="!date" />
-
-      </mat-card-content>
-    </mat-card>
+      </div>
+      <!-- <div class="card-body ">
+        <canvas id=chartHours width="400" height="100"></canvas>
+      </div> -->
+      
+    </div>
   </div>
-
-  <div class="col-lg-6">
+  <br>
+</div>
+<br>
+<div class="row"  style="padding: 1%">
+  <div class="col-md-5">
     <mat-card style="width: calc(100% - 30px);   height: calc(100% - 1px)">
       <mat-card-title>
         <div class="row pb-2">
@@ -242,127 +283,129 @@
         <canvas id="canvas" responsive=true  maintainAspectRatio=true></canvas>
       </div>
     </mat-card>
-    </div>
-</div>
-<div class="row" style="padding: 1%">
-  <div class="col-lg-12">
-    <mat-card>
-      <div class="row">
-        <div class="col-3">
-          <mat-card style="padding: 0 !important; border-radius: 10px">
-            <mat-card-header
+  </div>
+  <div class="col-md-7">
+  <mat-card>
+    <h2 class="card-title">Filtered Response</h2>   
+    <div class="row">
+     
+      <div class="col-md-6">
+        <mat-card style="padding: 0 !important; border-radius: 10px">
+          <mat-card-header
+            style="
+              background-color: #3cb371;
+              color: white;
+              padding-left: 30%;
+              border-radius: 10px 10px 0 0;
+            "
+          >
+            <mat-card-title class="pt-3">Promoter</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content
+            style="border-radius: 0 0 10px 10px; background-color: #a8e9a842"
+            class="text-center"
+          >
+            <h1 class="p-4">{{ filteredPromo == 'NA' ? '0' : filteredPromo }} %</h1>
+            <span
               style="
-                background-color: #3cb371;
-                color: white;
-                padding-left: 30%;
-                border-radius: 10px 10px 0 0;
+                display: block;
+                position: absolute;
+                bottom: 8px;
+                right: 16px;
               "
             >
-              <mat-card-title class="pt-3">Promoter</mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content
-              style="border-radius: 0 0 10px 10px; background-color: #a8e9a842"
-              class="text-center"
-            >
-              <h1 class="p-4">{{ filteredPromo == 'NA' ? '0' : filteredPromo }} %</h1>
-              <span
-                style="
-                  display: block;
-                  position: absolute;
-                  bottom: 8px;
-                  right: 16px;
-                "
-              >
-              </span>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div class="col-3">
-          <mat-card style="padding: 0 !important; border-radius: 10px">
-            <mat-card-header
-              style="
-                background-color: #ef820d;
-                color: white;
-                padding-left: 30%;
-                border-radius: 10px 10px 0 0;
-              "
-            >
-              <mat-card-title class="pt-3">Passive</mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content
-              style="border-radius: 0 0 10px 10px; background-color: #ffe5b487"
-              class="text-center"
-            >
-              <h1 class="p-4">{{ filteredPassive == 'NA' ? '0' : filteredPassive }} %</h1>
-              <span
-                style="
-                  display: block;
-                  position: absolute;
-                  bottom: 8px;
-                  right: 16px;
-                "
-              >
-              </span>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div class="col-3">
-          <mat-card style="padding: 0 !important; border-radius: 10px">
-            <mat-card-header
-              style="
-                background-color: #dc143c;
-                color: white;
-                padding-left: 30%;
-                border-radius: 10px 10px 0 0;
-              "
-            >
-              <mat-card-title class="pt-3">Detractor</mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content
-              style="border-radius: 0 0 10px 10px; background-color: #cea09f85"
-              class="text-center"
-            >
-              <h1 class="p-4">{{ filteredDetractor == 'NA' ? '0' : filteredDetractor }} %</h1>
-              <span
-                style="
-                  display: block;
-                  position: absolute;
-                  bottom: 8px;
-                  right: 16px;
-                "
-              >
-              </span>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div class="col-3">
-          <mat-card style="padding: 0 !important; border-radius: 10px">
-            <mat-card-header
-              style="
-                background-color: rgb(96 134 241);
-                color: white;
-                padding-left: 25%;
-                border-radius: 10px 10px 0 0;
-              "
-            >
-              <mat-card-title class="pt-3">Overall Score</mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content
-              style="
-                border-radius: 0 0 10px 10px;
-                background-color: rgb(173 169 231 / 31%);
-              "
-              class="text-center"
-            >
-              <h1 class="p-4">{{ filteredOverall == 'NA' ? '0' : filteredOverall }} %</h1>
-            </mat-card-content>
-          </mat-card>
-        </div>
+            </span>
+          </mat-card-content>
+        </mat-card>
       </div>
+  <div class="col-md-6">
+    <mat-card style="padding: 0 !important; border-radius: 10px">
+      <mat-card-header
+        style="
+          background-color: #ef820d;
+          color: white;
+          padding-left: 30%;
+          border-radius: 10px 10px 0 0;
+        "
+      >
+        <mat-card-title class="pt-3">Passive</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content
+        style="border-radius: 0 0 10px 10px; background-color: #ffe5b487"
+        class="text-center"
+      >
+        <h1 class="p-4">{{ filteredPassive == 'NA' ? '0' : filteredPassive }} %</h1>
+        <span
+          style="
+            display: block;
+            position: absolute;
+            bottom: 8px;
+            right: 16px;
+          "
+        >
+        </span>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6">
+    <mat-card style="padding: 0 !important; border-radius: 10px">
+      <mat-card-header
+        style="
+          background-color: #dc143c;
+          color: white;
+          padding-left: 30%;
+          border-radius: 10px 10px 0 0;
+        "
+      >
+        <mat-card-title class="pt-3">Detractor</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content
+        style="border-radius: 0 0 10px 10px; background-color: #cea09f85"
+        class="text-center"
+      >
+        <h1 class="p-4">{{ filteredDetractor == 'NA' ? '0' : filteredDetractor }} %</h1>
+        <span
+          style="
+            display: block;
+            position: absolute;
+            bottom: 8px;
+            right: 16px;
+          "
+        >
+        </span>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6">
+    <mat-card style="padding: 0 !important; border-radius: 10px">
+      <mat-card-header
+        style="
+          background-color: rgb(96 134 241);
+          color: white;
+          padding-left: 25%;
+          border-radius: 10px 10px 0 0;
+        "
+      >
+        <mat-card-title class="pt-3">Overall Score</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content
+        style="
+          border-radius: 0 0 10px 10px;
+          background-color: rgb(173 169 231 / 31%);
+        "
+        class="text-center"
+      >
+        <h1 class="p-4">{{ filteredOverall == 'NA' ? '0' : filteredOverall }} %</h1>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
+</mat-card>
+</div>
+</div>
+
+

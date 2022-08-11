@@ -6,21 +6,21 @@ table {
 button {
   padding: 10px;
   border-radius: 9999px;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .mat-header-cell {
-  font-size: 17px;
+  font-size: 15px;
   color: #1e7eae;
   padding: 0.5rem;
 }
 
 th {
-  font-size: 1rem;
+  font-size: 12px;
 }
 
 .mat-cell {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 400;
   padding: 0.8rem;
 }
@@ -62,7 +62,7 @@ td.mat-footer-cell:first-of-type {
 
 .example-additional-selection {
   opacity: 0.75;
-  font-size: 0.75em;
+  font-size: 12px;
 }
 .list-hide {
   display: none;

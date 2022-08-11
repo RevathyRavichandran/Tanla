@@ -287,7 +287,7 @@ export class QuestionariesComponent implements OnInit {
       let result = res['ProcessVariables'];
       result['surveyList'].forEach((element) => {
         this.surveyNameList.push(element.surveyName);
-        if (element && element.activeStatus == 1) {
+        if (element) {
           this.selectedSurvey = element.surveyName;
           let payload = {
             ProcessVariables: { surveyName: element.surveyName },

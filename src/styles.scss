@@ -1,0 +1,154 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~font-awesome/css/font-awesome.css';
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.error-snack-bar {
+    background-color: red;
+    color: white;
+}
+
+.success-snack-bar {
+    background-color: green;
+    color: white;
+}
+
+.sno {
+    width: 1rem;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.downloadCol {
+    width: 1.3rem;
+}
+
+.liveCol {
+    width: 1.3rem;
+}
+
+.submit-btn {
+    border: none;
+    background-color: #069c33; 
+    color: white;
+    margin-right: 0.35rem;
+  }
+
+  .apply-btn {
+    border: none;
+    background-color: #069c33;
+    color: white;
+    margin-right: 1rem;
+    width: 5rem;
+}
+.add-btn {
+    border: none;
+    background-color: #069c33;
+    color: white;
+    width: 6rem;
+    margin-right: 1rem;
+}
+
+.add-btn1 {
+    border: none;
+    background-color: #069c33;
+    color: white;
+    width: auto;
+    margin-right: 1rem;
+}
+
+.close-btn {
+    background-color: #1e7eae; color: white; width: 6rem;
+}
+
+.footer {
+    bottom: 0; 
+    position: fixed; 
+    text-align: center; 
+    width: 100%;
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+.card-body{
+    min-height: 140px;
+}
+
+hr{
+    margin: 5px 15px 15px;
+}
+
+.card-body + .card-footer {
+  padding-top: 0;
+}
+
+.card-footer {
+  h5 {
+    font-size: 1.25em;
+    margin-bottom: 0;
+  }
+}
+.card-stats{
+    .card-body{
+        padding: 15px 15px 0px;
+
+        .numbers{
+          text-align: right;
+          font-size: 2em;
+
+            p{
+                margin-bottom: 0;
+            }
+            .card-category {
+              font-size: 16px;
+              line-height: 1.4em;
+            }
+        }
+    }
+    .card-footer{
+        padding: 0px 15px 15px;
+
+        
+        hr{
+          margin-top: 10px;
+          margin-bottom: 15px;
+        }
+    }
+    .icon-big {
+        font-size: 3em;
+        min-height: 64px;
+
+        i{
+            line-height: 59px;
+        }
+    }
+
+
+}
+.card-body{
+    padding: 15px 15px 10px 15px;
+
+    &.table-full-width{
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.card-header{
+   padding: 15px 15px 0;
+  border: 0;
+
+  .card-title{
+      margin-top: 10px;
+  }
+}

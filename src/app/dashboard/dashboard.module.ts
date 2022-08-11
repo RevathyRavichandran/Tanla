@@ -24,7 +24,6 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { CountUpModule } from 'ngx-countup';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -50,6 +49,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { ApproveSurveyComponent } from './approve-survey/approve-survey.component';
 import 'chartjs-plugin-labels';
 import { AdminUserreportComponent } from './admin-userreport/admin-userreport.component';
+import { RespondentPopupComponent } from './respondent-popup/respondent-popup.component';
+import { CountUpModule } from 'ngx-countup';
 
 @NgModule({
   declarations: [
@@ -66,13 +67,14 @@ import { AdminUserreportComponent } from './admin-userreport/admin-userreport.co
     AdminPopupComponent,
     AuditComponent,
     ApproveSurveyComponent,
-    AdminUserreportComponent
+    AdminUserreportComponent,
+    RespondentPopupComponent
   ],
   imports: [
     BrowserModule,
     NgSelectModule,
  BrowserAnimationsModule,
- 
+ CountUpModule,
  ToastrModule.forRoot({
     timeOut: 3000,
     positionClass: 'toast-top-right',

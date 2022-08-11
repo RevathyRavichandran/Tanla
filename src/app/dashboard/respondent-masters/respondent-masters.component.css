@@ -5,7 +5,7 @@ table {
 
 button {
   border-radius: 9999px;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .input-group {
@@ -22,17 +22,17 @@ button {
 }
 
 .mat-header-cell {
-  font-size: 1rem;
+  font-size: 15px;
   color:  #1e7eae;
   font-weight: 500;
   padding-left: 0.5rem;
 }
 th {
-  font-size: 1rem;
+  font-size: 12px;
 }
 
 .mat-cell {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 400;
   padding-left: 0.5rem;
 }
@@ -86,7 +86,7 @@ input::-webkit-search-cancel-button {
  :host::ng-deep.ng-select .ng-select-container {
   border-radius: 9999px !important;
     border: 1px solid #ced4da;
-    font-size: 15px;
+    font-size: 12px;
 }
 .close-icon {
   cursor: pointer;

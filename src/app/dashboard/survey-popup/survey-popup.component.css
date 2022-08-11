@@ -24,7 +24,7 @@
 
 button {
     border-radius: 9999px;
-    font-size: 15px;
+    font-size: 12px;
 }
 input::-webkit-search-cancel-button {
     -webkit-appearance: none;

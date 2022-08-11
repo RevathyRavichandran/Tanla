@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class FeedbackService {
 
-  private dbUrl = "https://compute.twixor.digital/d/app/nps_twixor_survey/api/";
+  private dbUrl = "https://compute.twixor.digital/d/app/multisurvey_v0/api/";
 
   public getAllFeedback(feedback: any): Observable<any> {
-    return this.http.post<any>(this.dbUrl + 'Feedback screen API', feedback);
+    return this.http.post<any>(this.dbUrl + 'Feedback_screen_API', feedback);
   }
   public filterFeedback(feedback: any): Observable<any> {
     return this.http.post<any>(this.dbUrl + 'new_feedback_report', feedback);

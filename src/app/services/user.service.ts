@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private dbUrl = 'https://compute.twixor.digital/d/app/nps_twixor_survey/api/';
+  private dbUrl = 'https://compute.twixor.digital/d/app/multisurvey_v0/api/';
   
 
   createUser(user: any): Observable<any> {
@@ -18,7 +18,7 @@ export class UserService {
 
   listUser(user: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'list user details',
+      this.dbUrl + 'list_user_details',
       user
     );
   }

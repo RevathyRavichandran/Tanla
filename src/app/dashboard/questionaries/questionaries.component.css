@@ -4,7 +4,7 @@ table {
 }
 
 .header {
-    font-size: 1rem;
+    font-size: 15px;
     color:#1e7eae;
     height: 3rem;
     border-right: 1px solid rgba(192, 186, 186, 0.3);
@@ -12,13 +12,13 @@ table {
 }
 
 th {
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 button {
     border-radius: 9999px;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 th,
@@ -34,7 +34,7 @@ td {
 
 .fa-edit:before,
 .fa-pencil-square-o:before {
-    font-size: 1.3rem;
+    font-size: 12px;
     color: dodgerblue;
 }
 
@@ -75,5 +75,5 @@ td {
   :host::ng-deep.ng-select .ng-select-container {
     border-radius: 9999px !important;
       border: 1px solid #ced4da;
-      font-size: 15px;
+      font-size: 12px;
   }

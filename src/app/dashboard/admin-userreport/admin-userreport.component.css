@@ -11,13 +11,13 @@ table {
   }
   
   .mat-cell {
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 400;
     padding-left: 0.5rem;
   }
   
   th {
-    font-size: 1rem;
+    font-size: 12px;
     font-weight: 500;
   }
   
@@ -30,15 +30,15 @@ table {
   .adminCreate {
     padding: 10px;
     border-radius: 9999px;
-    font-size: 15px;
+    font-size: 12px;
   }
   button {
     padding: 10px;
     border-radius: 9999px;
-    font-size: 15px;
+    font-size: 12px;
   }
   .download {
-    padding-top: 1.5rem;
+    padding-top: 0.5rem;
     position: absolute;
     margin-left: 0.7rem;
   }
@@ -52,4 +52,7 @@ table {
   ::ng-deep.page-link {
     color: #1e7eae;
   }
-  
+  .form-control {
+    padding: 0.9rem;
+    font-size: 15px;
+  }

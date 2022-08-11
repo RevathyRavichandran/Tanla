@@ -19,10 +19,10 @@ export class dashboardService {
   }
 
   getDashboardPercentage(payload): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/dashboard count API`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/dashboard_count_API`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -35,10 +35,10 @@ export class dashboardService {
   }
 
   getChartData(processVar): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/surveyNameCount_dashboard`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/surveyNameCount_dashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -51,10 +51,10 @@ export class dashboardService {
   }
 
   getQuestionData(processVar): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/questionViceFilter`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/questionViceFilter`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -66,10 +66,10 @@ export class dashboardService {
     );
   }
   getQuestion(processVar): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/questionFilterDashboard`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/questionFilterDashboard`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -81,10 +81,10 @@ export class dashboardService {
     );
   }
   dashCal(processVar): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/calculationDashboadAPi`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/calculationDashboadAPi`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -96,10 +96,10 @@ export class dashboardService {
     );
   }
   listdashboard(processVar): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/Advanced_Filter`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/Advanced_Filter`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 
@@ -111,10 +111,10 @@ export class dashboardService {
     );
   }
   questionCal(processVar): Observable<any> {
-    let url = `https://compute.twixor.digital/d/app/nps_twixor_survey/api/questionCalculation`;
+    let url = `https://compute.twixor.digital/d/app/multisurvey_v0/api/questionCalculation`;
     let headers = new HttpHeaders({
       'authentication-token':
-        'irl6L9edYpPp1FuBOSid72sE+v53DJtSFdstm7S/BQEfXZJCEMLuKFgxM9RtZPcl',
+        '9qW9AvyhAGNjB36MkSs491gJccTJcG7oh2Vfnxfj09kfXZJCEMLuKFgxM9RtZPcl',
     });
     let options = { headers: headers };
 

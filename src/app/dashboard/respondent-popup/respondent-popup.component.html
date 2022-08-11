@@ -1,0 +1,54 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+  </button>
+<h1 class="text-center">Upload Respondent Here...</h1>
+<h3 style="font-weight: 500">Select Survey Name</h3>
+<ng-select [items]="surveyNameList"
+                   [multiple]="false"
+                   [ngModelOptions]="{standalone: true}"
+                   placeholder="Select survey"
+                   [(ngModel)]="selectedSurvey">
+</ng-select>
+<br>
+<h3 style="font-weight: 500">Attach Respondents</h3>
+<span class="input-group col-lg-2 col-sm-2 col-md-3">
+    <input
+      id="fileName"
+      type="search"
+      class="form-control"
+      name="fileName"
+      [(ngModel)]="fileName"
+      placeholder="Upload csv file"
+      aria-label="Search"
+    />
+    <input
+      type="file"
+      id="file"
+      (change)="changeListener1($event.target.files)"
+      style="display: none"
+    />
+    <button
+      type="button"
+      class="btn"
+      (click)="fileUpload()"
+      style="background: #1e7eae; color: white; margin-right: 1rem"
+    >
+      <img src="assets\tanla_upload_128.svg" alt="" />
+
+      Attach
+    </button>
+  </span>
+
+  <div class="mt-4" style="text-align:center">    
+    <span>
+        <button [disabled]="!selectedSurvey || !file"
+        type="button"
+        class="btn"
+        (click)="submit()"
+        style="background: #1e7eae; color: white"
+      >
+        <img src="assets/tanla_upload_128.svg" alt="" />
+        Upload Respondent
+      </button>
+    </span>
+  </div>

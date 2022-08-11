@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SurveyService {  
-  private dbUrl = 'https://compute.twixor.digital/d/app/nps_twixor_survey/api/';
+  private dbUrl = 'https://compute.twixor.digital/d/app/multisurvey_v0/api/';
 
   createSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
@@ -31,7 +31,7 @@ export class SurveyService {
 
   listSurvey(survey: any): Observable<any> {
     return this.http.post<any>(
-      this.dbUrl + 'list survey details',
+      this.dbUrl + 'list_survey_details',
       survey
     );
   }

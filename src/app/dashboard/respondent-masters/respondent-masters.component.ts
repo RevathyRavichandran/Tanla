@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { RespondentPopupComponent } from '../respondent-popup/respondent-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-respondent-masters',
@@ -48,7 +50,8 @@ export class RespondentMastersComponent implements OnInit {
     public resMastersService: ResMastersService,
     private snackBar: MatSnackBar,
     public survey: SurveyService,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -193,6 +196,7 @@ export class RespondentMastersComponent implements OnInit {
   }
 
   public changeListener(files: FileList) {
+    console.log(files)
     if (files && files.length > 0) {
       let file: File = files.item(0);
       this.fileName = file.name;
@@ -252,4 +256,19 @@ export class RespondentMastersComponent implements OnInit {
       }
     });
   }
+
+  upload() {
+    const dialogRef = this.dialog.open(RespondentPopupComponent, {
+      width: '900px',
+      height: '400px',
+      data: {
+        surveyNameList: this.surveyNameList
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      
+    });
+  }
+
 }

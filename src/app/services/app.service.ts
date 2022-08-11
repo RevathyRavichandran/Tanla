@@ -7,7 +7,7 @@ import SampleJson from '../../assets/db.json';
 })
 export class AppService {
   arr = SampleJson['questionaries'];
-  private dbUrl = "https://compute.twixor.digital/d/app/nps_twixor_survey/api/";
+  private dbUrl = "https://compute.twixor.digital/d/app/multisurvey_v0/api/";
 
   constructor(private http: HttpClient) {}
 
